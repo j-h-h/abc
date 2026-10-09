@@ -64,7 +64,7 @@
   if(note){const li=document.createElement('li');li.className='search-note';li.textContent=note;list.append(li)}list.hidden=!list.children.length;$('placeSearch').setAttribute('aria-expanded',String(!list.hidden));
  }
  function localSearch(){const text=$('placeSearch').value.trim();const c=state.map.getCenter();return N.stopSearch(state.stops,text,{lat:c.lat,lon:c.lng})}
- async function search(event){event?.preventDefault();const q=$('placeSearch').value.trim();if(q.length<2){toast('הקלד כתובת, מקום, שם תחנה או מספר תחנה');return;}
+ async function search(event){clearTimeout(searchTimer);event?.preventDefault();const q=$('placeSearch').value.trim();if(q.length<2){toast('הקלד כתובת, מקום, שם תחנה או מספר תחנה');return;}
   const local=localSearch();if(/^\d{3,7}$/.test(q)&&local.some(s=>s.code===q)){selectStop(q);return;}
   const revision=++state.searchRevision;searchController?.abort();searchController=new AbortController();$('searchSubmit').disabled=true;showResults(local,[],'מחפש כתובות ומקומות…');
   try{const raw=await json('./api/search?q='+encodeURIComponent(q),searchController.signal);if(revision!==state.searchRevision)return;showResults(local,raw.places||[],raw.places?.length?'':'לא נמצאה כתובת. נסה שם רחוב ועיר, או בחר תחנה.');}
