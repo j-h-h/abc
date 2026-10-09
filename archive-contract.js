@@ -33,5 +33,5 @@
   return {...next,partial:previous.partial||next.partial,rides:[...new Map([...previous.rides,...next.rides].map(r=>[r.rideId,r])).values()],
    observations:[...new Map([...previous.observations,...next.observations].map(r=>[r.observationId,r])).values()],filtered:previous.filtered+next.filtered};
  }
- root.SafeBusArchive={normalize,merge,version:'DEV-9.1.6'};
+ root.SafeBusArchive={normalize,merge,version:'DEV-9.1.7'};
 })(typeof window!=='undefined'?window:globalThis);
