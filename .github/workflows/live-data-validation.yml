@@ -13,5 +13,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
+      - name: Backend regression tests
+        working-directory: backend/live-data
+        run: npm test
       - name: Probe real upstream servers and isolated relay
         run: node backend/live-data/tools/probe.mjs
