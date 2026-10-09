@@ -1,6 +1,8 @@
 name: Update GTFS and deploy bus app
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [eifo-batuach-update]
   schedule:
     - cron: '30 2 * * *'
   push:
