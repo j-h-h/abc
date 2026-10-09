@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? 9.0.2</title>
+<title>איפה בטוח? 9.0.3</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css"/>
+<link rel="stylesheet" href="./styles.css?v=9.0.3"/>
 <script src="./gtfs-store.js"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
 
-<script defer src="./app.js"></script>
+<script defer src="./app.js?v=9.0.3"></script>
 </head><body>
 <div class="app">
 <header class="topbar">
- <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>9.0.2</small></div>
+ <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>9.0.3</small></div>
  <button id="settingsOpen" class="icon-button" title="הגדרות ומקורות" aria-label="הגדרות ומקורות">⚙</button>
 </header>
 <section class="chooser" aria-label="קו ותחנה">
@@ -25,6 +25,7 @@
 </section>
 <div id="nearbyLines" class="nearby-hint" aria-live="polite">טוען קווים לתחנה…</div><div id="directionWrap" class="direction-strip" hidden><label>כיוון <select id="direction" aria-label="בחירת כיוון נסיעה"></select></label></div>
 <div id="banner" class="banner" role="status" aria-live="polite">טוען מקורות…</div>
+<button type="button" id="healthStrip" class="health-strip" aria-label="מצב נתונים ופתיחת אבחון">⏳ מסלול · ⏳ מפה · ⏳ תחזיות — הצג פרטים</button>
 <div class="map-wrap">
   <div id="map" role="application" aria-label="מפת תחבורה גאוגרפית"></div>
   <div id="mapError" class="map-fallback" hidden>ספריית המפה לא נטענה. ודא שהאפליקציה נפתחה מהאתר ולא מקובץ הורדה.</div><div id="tileNotice" class="tile-notice" role="status" hidden>⚠ מפת הכבישים לא נטענה. תוואי הקו עשוי להופיע, אך בלי מפת רקע אי אפשר להתמצא בביטחון.</div>
@@ -47,7 +48,7 @@
  </section>
  <section><h2>חיבור נתונים חי</h2><p>האפליקציה תנסה שלושה מקורות ציבוריים לפי סדר. אם הדפדפן חוסם אותם בגלל CORS, אפשר להשתמש במתווך HTTPS פרטי שאפשר לפרוס ללא מחשב ביתי. לא מומלץ להשתמש במתווך של אדם זר.</p><label>כתובת מתווך (רשות) <input id="relayUrl" type="url" inputmode="url" dir="ltr" placeholder="https://example.workers.dev"/></label><button class="secondary" id="relayApply">עדכן חיבור</button></section>
 <section><h2>פקקים (רשות)</h2><p>שכבת עומסי תנועה של TomTom דורשת מפתח משלך. בלי מפתח לא תוצג שכבה מזויפת.</p><label>מפתח TomTom <input id="trafficKey" type="password" autocomplete="off" placeholder="מפתח אופציונלי"/></label><button class="secondary" id="trafficApply">הפעל שכבת פקקים</button></section>
- <section><h2>אבחון חיבורים</h2><button class="secondary" id="diagnose">בדוק מקורות</button><pre id="diagnostic" class="diagnostic">טרם בוצעה בדיקה</pre></section>
+ <section><h2>מה עובד ומה לא?</h2><p>מסלול, מפת רקע ומידע חי נבדקים בנפרד. אם מקור תחזיות חסום בדפדפן, נדרש מתווך שרת; זו אינה תקלה של מספר הקו.</p><button class="secondary" id="diagnose">בדוק שוב</button> <button class="secondary" id="copyDiagnostic">העתק דוח תקלה</button><pre id="diagnostic" class="diagnostic">פתח אבחון כדי לראות מצב.</pre></section>
  <section><h2>מידע</h2><p>הנתונים נשמרים במכשיר בלבד. אם מקור מסוים חסום בגלל CORS או אינו זמין, האפליקציה תדווח על כך. אין להשתמש באפליקציה כאמצעי בלעדי לתפיסת אוטובוס לפני אימות בשטח.</p></section>
 </aside>
 <script>if('serviceWorker' in navigator && location.protocol==='https:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
