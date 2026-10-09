@@ -3,21 +3,22 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? DEV-9.1.1</title>
+<title>איפה בטוח? DEV-9.1.2</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css?v=DEV-9.1.1"/>
+<link rel="stylesheet" href="./styles.css?v=DEV-9.1.2"/>
 <script src="./gtfs-store.js"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
-<script defer src="./vehicle-history.js?v=DEV-9.1.1"></script>
-<script defer src="./traffic-analysis.js?v=DEV-9.1.1"></script>
+<script defer src="./vehicle-history.js?v=DEV-9.1.2"></script>
+<script defer src="./traffic-analysis.js?v=DEV-9.1.2"></script>
 
-<script defer src="./app.js?v=DEV-9.1.1"></script>
+<script defer src="./live-contract.js?v=DEV-9.1.2"></script>
+<script defer src="./app.js?v=DEV-9.1.2"></script>
 </head><body>
 <div class="app">
 <header class="topbar">
- <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>DEV-9.1.1</small></div>
+ <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>DEV-9.1.2</small></div>
  <button id="settingsOpen" class="icon-button" title="הגדרות ומקורות" aria-label="הגדרות ומקורות">⚙</button>
 </header>
 <section class="chooser" aria-label="קו ותחנה">
@@ -51,7 +52,7 @@
  <label>מזהה SIRI של הקו (למתקדמים) <input id="siriRef" inputmode="numeric" placeholder="מזוהה מהמסלול, אם קיים"/></label>
  <label class="checkline"><input id="showOld" type="checkbox"/> הצג גם מיקומים ישנים מאוד</label>
  </section>
- <section><h2>חיבור נתונים חי</h2><p>האפליקציה תנסה שלושה מקורות ציבוריים לפי סדר. אם הדפדפן חוסם אותם בגלל CORS, אפשר להשתמש במתווך HTTPS פרטי שאפשר לפרוס ללא מחשב ביתי. לא מומלץ להשתמש במתווך של אדם זר.</p><label>כתובת מתווך (רשות) <input id="relayUrl" type="url" inputmode="url" dir="ltr" placeholder="https://example.workers.dev"/></label><button class="secondary" id="relayApply">עדכן חיבור</button></section>
+ <section><h2>חיבור נתונים חי</h2><p>בגרסת DEV מחובר כבר מתווך שרת ל־LIVE-WORK, כדי להימנע מחסימת מקורות בדפדפן. התחזיות נבדקות לפי קו, מפעיל, כיוון וחותמות זמן. אפשר להגדיר מתווך אישי אחר; השארת השדה ריק מפעילה את החיבור המובנה.</p><label>כתובת מתווך (רשות) <input id="relayUrl" type="url" inputmode="url" dir="ltr" placeholder="https://example.workers.dev"/></label><button class="secondary" id="relayApply">עדכן חיבור</button></section>
 <section><h2>פקקים (רשות)</h2><p>צביעת הכבישים לפי עומס מחייבת נתונים אמיתיים ממקור מורשה. חישוב עיכוב בזמני ההגעה מחייב בנוסף מהירויות וקטעי דרך תואמים; אין להסיק אותו מצבעי המפה בלבד. תחזית חיה של SIRI לא תוגדל שוב כדי לא לספור פקק פעמיים.</p><label>מפתח TomTom <input id="trafficKey" type="password" autocomplete="off" placeholder="מפתח אופציונלי"/></label><button class="secondary" id="trafficApply">הפעל שכבת פקקים</button></section>
  <section><h2>מה עובד ומה לא?</h2><p>מסלול, מפת רקע ומידע חי נבדקים בנפרד. אם מקור תחזיות חסום בדפדפן, נדרש מתווך שרת; זו אינה תקלה של מספר הקו.</p><button class="secondary" id="diagnose">בדוק שוב</button> <button class="secondary" id="copyDiagnostic">העתק דוח תקלה</button><pre id="diagnostic" class="diagnostic">פתח אבחון כדי לראות מצב.</pre></section>
  <section><h2>מידע</h2><p>הנתונים נשמרים במכשיר בלבד. אם מקור מסוים חסום בגלל CORS או אינו זמין, האפליקציה תדווח על כך. אין להשתמש באפליקציה כאמצעי בלעדי לתפיסת אוטובוס לפני אימות בשטח.</p></section>

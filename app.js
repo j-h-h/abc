@@ -1,4 +1,4 @@
-/* Eifo Batuach DEV-9.1.1 — no local computer/server required. */
+/* Eifo Batuach DEV-9.1.2 — no local computer/server required. */
 (function(root){'use strict';
  const C=root.SafeBusCore,D=root.SafeBusDataset,H=root.SafeBusHistory,T=root.SafeBusTraffic,$=id=>document.getElementById(id);
  const SOURCES={mot:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/',stride:'https://open-bus-stride-api.hasadna.org.il',curlbus:'https://curlbus.app/',busnearby:'https://api.busnearby.co.il/directions/index/stops/'};
@@ -117,7 +117,7 @@
    if(height<100)issues.push('רכיב המפה לא קיבל גובה. זו תקלה בתצוגה, לא בקו.');
    else if(state.tileProblem&&!state.tileSource)issues.push('מפת הכבישים אינה נטענת, אף שהמסלול הרשמי עשוי להיות תקין. ייתכן חסימת תמונות ברשת.');
    if(state.routeError)issues.push('מסלולים: '+state.routeError);
-   if(state.arrivalsError)issues.push('תחזיות: החיבור הישיר למקורות נכשל. דפדפן עלול לחסום CORS, ואז דרוש שרת מתווך.');
+   if(state.arrivalsError)issues.push('תחזיות: '+state.arrivalsError);
    if(state.gpsError)issues.push('GPS: '+state.gpsError+' — מקור Open Bus הוא ארכיון, לא GPS חי מאומת.');
    return {route,map,arrivals,issues,height,routePoints:state.route?.geometry?.coordinates?.length||0,tileSource:state.tileSource||'אין',forecastSource:state.sourceUsed||'אין'};
  }
@@ -129,17 +129,19 @@
  }
  function diagnosticText(){
    const h=healthSnapshot();
-   return ['איפה בטוח? DEV-9.1.1 — מצב המערכת',
+   return ['איפה בטוח? DEV-9.1.2 — מצב המערכת',
      'קו '+state.line+' · תחנה '+state.stop,
      'מסלול: '+h.route+' · '+h.routePoints+' נקודות תוואי',
      'מפה: '+h.map+' · מקור: '+h.tileSource+' · גובה: '+Math.round(h.height)+' פיקסלים',
      'תחזיות: '+h.arrivals+' · מקור: '+h.forecastSource,
+     'חיבור: '+(builtInLive()?'LIVE-WORK דרך שרת DEV באותה כתובת':state.relayUrl?'מתווך שהוגדר בהגדרות':'מקורות ישירים'),
+     ...(builtInLive()?['חותמת תגובת המקור: '+(state.liveResponseAt||'טרם התקבלה')+' · דיווחים שלא אומתו: '+(state.liveUnverified||0)]:[]),
      'GPS: '+(state.gpsError||'אין שגיאה מדווחת; אין בכך אישור שמיקום הרכבים חי'),
      '',...(h.issues.length?h.issues:['לא נמצאה תקלה מדווחת ברכיבים הראשיים.']),
      'כתובת: '+location.origin+location.pathname].join('\n');
  }
  function isTrustedRelay(value){try{const u=new URL(value);return u.protocol==='https:' && !u.username&&!u.password&&!u.search&&!u.hash&&!(/\s/.test(value));}catch{return false;}}
- async function fetchJson(url,timeout=11000){const host=new URL(url).hostname;if((state.sourceBackoff[host]||0)>Date.now())throw Error('המקור הגביל בקשות; ממשיכים למקור חלופי');const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);try{const r=await fetch(routedUrl(url),{signal:controller.signal,cache:'no-store',headers:{Accept:'application/json'}});if(r.status===429){const retry=Math.min(600,Math.max(30,Number(r.headers.get('Retry-After'))||120));state.sourceBackoff[host]=Date.now()+retry*1000;throw Error('המקור הגביל בקשות; השהיה של '+retry+' שניות למקור זה בלבד');}if(!r.ok)throw Error(`שגיאת שרת ${r.status}`);const type=r.headers.get('content-type')||'';if(!type.toLowerCase().includes('json'))throw Error('המקור אינו מחזיר JSON');return await r.json();}catch(e){if(e.name==='TypeError')throw Error('נכשלה גישה למקור (רשת או חסימת CORS בדפדפן)');if(e.name==='AbortError')throw Error('השרת לא השיב בזמן');throw e;}finally{clearTimeout(timer)}}
+ async function fetchJson(url,timeout=11000){const host=new URL(url).hostname;if((state.sourceBackoff[host]||0)>Date.now())throw Error('המקור הגביל בקשות; ממשיכים למקור חלופי');const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);try{const r=await fetch(routedUrl(url),{signal:controller.signal,cache:'no-store',headers:{Accept:'application/json'}});if(r.status===429){const retry=Math.min(600,Math.max(30,Number(r.headers.get('Retry-After'))||120));state.sourceBackoff[host]=Date.now()+retry*1000;throw Error('המקור הגביל בקשות; השהיה של '+retry+' שניות למקור זה בלבד');}if(!r.ok){const detail=await r.json().catch(()=>null);throw Error('שגיאת שרת '+r.status+(typeof detail?.error==='string'?' · '+detail.error.slice(0,100):''));}const type=r.headers.get('content-type')||'';if(!type.toLowerCase().includes('json'))throw Error('המקור אינו מחזיר JSON');return await r.json();}catch(e){if(e.name==='TypeError')throw Error('נכשלה גישה למקור (רשת או חסימת CORS בדפדפן)');if(e.name==='AbortError')throw Error('השרת לא השיב בזמן');throw e;}finally{clearTimeout(timer)}}
  function unwrap(v){if(!v||typeof v!=='object'||v.success===false)throw Error(v?.message||'מבנה תשובה לא תקין');if(!('data' in v))throw Error('לא התקבל שדה data');return v.data;}
  function serviceDay(){
   const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jerusalem',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
@@ -222,8 +224,28 @@
   }
   return {arrivals:arrivals.sort((a,b)=>a.minutes-b.minutes),vehicles:[]};
  }
+
+ function builtInLive(){return !!root.SafeBusLive&&!state.relayUrl&&['https:','http:'].includes(root.location?.protocol);}
+ function liveUrl(kind='arrivals'){
+  const url=new URL('./api/live',root.location.href);
+  url.searchParams.set('kind',kind);
+  if(kind==='arrivals'){url.searchParams.set('line',state.line);url.searchParams.set('stopCode',state.stop);url.searchParams.set('routeId',String(state.route?.properties?.routeId||''));}
+  return url.href;
+ }
+ async function getLiveArrivals(){
+  const properties=state.route.properties;
+  try{
+   const raw=await fetchJson(liveUrl(),22000);
+   const payload=root.SafeBusLive.normalize(raw,{routeId:properties.routeId,operatorRef:properties.agencyId,line:state.line,stopCode:state.stop,routeDesc:properties.routeDesc,direction:properties.headsign||properties.destination});
+   state.sourceUsed=payload.arrivals.length?'SIRI דרך LIVE-WORK':payload.status==='stale-source'?'LIVE-WORK נגיש · הדיווחים ישנים':'LIVE-WORK נגיש · אין דיווח הגעה מאומת';
+   state.liveStatus=payload.status;state.liveResponseAt=payload.sourceResponseAt;state.liveUnverified=payload.unverifiedCount;
+   return payload;
+  }catch(e){state.liveStatus='unavailable';throw Error('חיבור LIVE-WORK דרך שרת האתר נכשל: '+e.message);}
+ }
+
  async function getArrivals(){
   if(!state.route)throw Error('אין מסלול וכיוון מאומתים — תחזית לא תוצג');
+  if(builtInLive())return getLiveArrivals();
   const faults=[];let accessible=0;
   try{
     const ret=await getCurlbus();accessible++;state.curlbusError=null;
@@ -325,7 +347,7 @@
    updateHealth();
    const out=$('diagnostic');
    out.textContent=diagnosticText()+'\n\nבודק שרתי מידע…';
-   const cases=[['משרד התחבורה',SOURCES.mot+'Stops/GetStopByCode?stopcode='+state.stop],
+   const cases=builtInLive()?[['מתווך LIVE-WORK דרך שרת DEV',liveUrl('health')],['Open Bus (ארכיון)',SOURCES.stride+'/siri_routes/list?limit=1']]:[['משרד התחבורה',SOURCES.mot+'Stops/GetStopByCode?stopcode='+state.stop],
      ['curlbus',SOURCES.curlbus+state.stop],
      ['BusNearby',SOURCES.busnearby+'1:'+state.stop+'/stoptimes?numberOfDepartures=1&timeRange=1800&currentTime='+Math.floor(Date.now()/1000)],
      ['Open Bus (ארכיון)',SOURCES.stride+'/siri_routes/list?limit=1']];
@@ -334,7 +356,7 @@
      catch(e){return '✕ '+name+': '+e.message;}
    }));
    out.textContent=diagnosticText()+'\n\nבדיקות רשת:\n'+results.join('\n')+
-     '\n\nאם כל שירותי התחזיות חסומים בדפדפן, יש צורך במתווך שרת. GitHub Pages אינו מתווך ואינו פותר חסימת CORS.';
+     (builtInLive()?'\n\nבדיקת המתווך מאשרת נגישות בלבד; תחזית מוצגת רק לאחר בדיקת קו, מפעיל, כיוון וחותמות המקור. זמן דיווח SIRI אינו זמן מדידת GPS עצמאי.':'\n\nאם כל שירותי התחזיות חסומים בדפדפן, יש צורך במתווך שרת. GitHub Pages אינו מתווך ואינו פותר חסימת CORS.');
  }
  function updateTrafficStatus(){
   const e=$('trafficStatus'),legend=$('trafficLegend'),button=$('trafficToggle');
@@ -383,8 +405,8 @@
   }
   updateTrafficStatus();
  }
- function init(){initPrefs();setupMap();$('settingsOpen').onclick=()=>setPanel(true);$('settingsClose').onclick=()=>setPanel(false);$('shade').onclick=()=>setPanel(false);$('apply').onclick=applySelection;$('refresh').onclick=refreshAll;$('stop').addEventListener('input',()=>{clearTimeout(state.suggestTimer);state.suggestTimer=setTimeout(updateSuggestions,160);});$('diagnose').onclick=diagnose;$('healthStrip').onclick=()=>{setPanel(true);diagnose();};$('copyDiagnostic').onclick=async()=>{try{await navigator.clipboard.writeText($('diagnostic').textContent||diagnosticText());$('copyDiagnostic').textContent='✓ הועתק';}catch{$('diagnostic').textContent=diagnosticText()+'\nהדפדפן חסם העתקה אוטומטית';}};$('trafficApply').onclick=applyTraffic;$('trafficToggle').onclick=toggleTraffic;updateTrafficStatus();$('direction').onchange=()=>{const raw=$('direction').value;if(!/^\d+$/.test(raw))return;const k=Number(raw);if(Number.isInteger(k)&&state.allRoutes[k]){state.request++;state.vehicles.clear();state.arrivals=[];state.arrivalAt=0;state.arrivalsError=null;state.gpsError=null;state.vehicleLayer?.clearLayers();activeMarkers.clear();chooseRoute(k,true);drawArrivals();refreshAll();}};$('relayApply').onclick=()=>{const v=$('relayUrl').value.trim();if(v&&!isTrustedRelay(v)){setBanner('כתובת המתווך חייבת להיות HTTPS תקינה',true);return;}state.relayUrl=v;savePrefs();setBanner(v?'חיבור דרך המתווך הוגדר; בודק נתונים…':'המתווך הוסר; חיבור ישיר.');refreshAll();};$('siriRef').onchange=()=>{state.siriRef=$('siriRef').value.trim();savePrefs();};$('showOld').onchange=()=>{savePrefs();drawVehicles();};
+ function init(){initPrefs();setupMap();$('settingsOpen').onclick=()=>setPanel(true);$('settingsClose').onclick=()=>setPanel(false);$('shade').onclick=()=>setPanel(false);$('apply').onclick=applySelection;$('refresh').onclick=refreshAll;$('stop').addEventListener('input',()=>{clearTimeout(state.suggestTimer);state.suggestTimer=setTimeout(updateSuggestions,160);});$('diagnose').onclick=diagnose;$('healthStrip').onclick=()=>{setPanel(true);diagnose();};$('copyDiagnostic').onclick=async()=>{try{await navigator.clipboard.writeText($('diagnostic').textContent||diagnosticText());$('copyDiagnostic').textContent='✓ הועתק';}catch{$('diagnostic').textContent=diagnosticText()+'\nהדפדפן חסם העתקה אוטומטית';}};$('trafficApply').onclick=applyTraffic;$('trafficToggle').onclick=toggleTraffic;updateTrafficStatus();$('direction').onchange=()=>{const raw=$('direction').value;if(!/^\d+$/.test(raw))return;const k=Number(raw);if(Number.isInteger(k)&&state.allRoutes[k]){state.request++;state.vehicles.clear();state.arrivals=[];state.arrivalAt=0;state.arrivalsError=null;state.gpsError=null;state.vehicleLayer?.clearLayers();activeMarkers.clear();chooseRoute(k,true);drawArrivals();refreshAll();}};$('relayApply').onclick=()=>{const v=$('relayUrl').value.trim();if(v&&!isTrustedRelay(v)){setBanner('כתובת המתווך חייבת להיות HTTPS תקינה',true);return;}state.relayUrl=v;savePrefs();setBanner(v?'חיבור דרך המתווך הוגדר; בודק נתונים…':'המתווך האישי הוסר; בודק את חיבור ברירת המחדל.');refreshAll();};$('siriRef').onchange=()=>{state.siriRef=$('siriRef').value.trim();savePrefs();};$('showOld').onchange=()=>{savePrefs();drawVehicles();};
   const rev=++state.request;D.init().then(()=>{updateSuggestions();return loadLocalRoute(rev,true);}).then(refreshAll).catch(e=>setBanner('לא ניתן לפתוח את מאגר המסלולים: '+e.message,true));setInterval(()=>{drawArrivals();drawVehicles();if(state.arrivalAt&&Date.now()-state.arrivalAt>110000)showWarn('⚠ התחזיות ישנות; אל תסתמך על הדקות שמוצגות.');},15000);setInterval(()=>{if(!document.hidden)refreshAll();},45000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAll();});}
- root.SafeBusApp={state,getArrivals,getPositions,serviceDay,unwrap,esc,refreshAll,applySelection,init,healthSnapshot,diagnosticText,applyTrafficSnapshot,updateTrafficStatus,version:'DEV-9.1.1'};
+ root.SafeBusApp={state,getArrivals,getPositions,serviceDay,unwrap,esc,refreshAll,applySelection,init,healthSnapshot,diagnosticText,applyTrafficSnapshot,updateTrafficStatus,builtInLive,getLiveArrivals,version:'DEV-9.1.2'};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })(window);
