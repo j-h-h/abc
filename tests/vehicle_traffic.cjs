@@ -24,7 +24,7 @@ assert.equal(r.recurrent,true,'Two different trips with long independent stops s
 assert.equal(r.stationaryTrips,2);
 assert.equal(r.stationaryEvents,2,'Repeated polls must not create duplicate events');
 assert.equal(r.observations,8);
-assert.ok(H.trail('900888','ride-two',now).length>=2);
+assert.ok(H.trail('900888','ride-two',start+21*60000).length>=2);
 H.ingest({...item(now-9000,'ride-three'),clockType:'source-report'}, {line:'72',now});
 assert.equal(H.summary('900888',now).observations,8,'SIRI reports cannot masquerade as independent GPS fixes');
 H.ingest(item(now-30000,'x',31.7,35.22,'200003'),{line:'531',now});
