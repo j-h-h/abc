@@ -1,3 +1,4 @@
+require('./logic_regressions.cjs');
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const base=process.env.SITE_URL||'https://j-h-h.github.io/abc/';
@@ -12,7 +13,7 @@ const base=process.env.SITE_URL||'https://j-h-h.github.io/abc/';
  await page.goto(base,{waitUntil:'domcontentloaded',timeout:45000});
  await page.waitForFunction(()=>window.SafeBusDataset?.catalog()?.schema===2,{timeout:55000});
  await page.waitForFunction(()=>window.SafeBusApp?.state?.route?.properties?.line==='72',{timeout:45000});
- await page.waitForFunction(()=>window.SafeBusApp?.version==='9.0.3',{timeout:12000});
+ await page.waitForFunction(()=>window.SafeBusApp?.version==='9.0.4',{timeout:12000});
  const layout=await page.evaluate(()=>({
    runtimeVersion:window.SafeBusApp.version,
    map:document.querySelector('#map').getBoundingClientRect().height,
@@ -20,7 +21,7 @@ const base=process.env.SITE_URL||'https://j-h-h.github.io/abc/';
    health:document.querySelector('#healthStrip').textContent
  }));
  console.log('MAP LAYOUT',JSON.stringify(layout));
- assert.equal(layout.runtimeVersion,'9.0.3','Deployed JavaScript does not match the website version');
+ assert.equal(layout.runtimeVersion,'9.0.4','Deployed JavaScript does not match the website version');
  assert.ok(layout.wrap>=200,'Map wrapper too small');
  assert.ok(layout.map>=layout.wrap*.9,'REGRESSION: Leaflet map is nearly zero-height on phones');
  assert.ok(layout.health.includes('✓ מסלול'),'Diagnostics did not report a confirmed GTFS route');

@@ -9,3 +9,9 @@
 ## 9.0.1
 - Detect repeated OpenStreetMap tile failures and show a visible warning distinct from official GTFS route availability.
 - Upgrade shell cache version so map failure messaging reaches existing installations.
+## 9.0.4 · 2026-10-09
+- תיקון מזהה קו SIRI: GTFS route_id משמש כמזהה, במקום ניחוש מתיאור המסלול.
+- ניסיון בכל המקורות לפני הכרזה שאין דיווח הגעה, גם כשבקשה קודמת השיבה רשימה ריקה.
+- אין החזקת תחזית ישנה בממשק לאחר כשל רשת.
+- תיקון תווית הכיוון בפרטי הרכב והבחנה בין חוסר דיווח לשגיאת מקור.
+- נוספו מבחני רגרסיה ייעודיים ותבנית מתווך ענן עם רשימת מקורות מצומצמת.
