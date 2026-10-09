@@ -19,7 +19,7 @@
  function vehicles(state){return markerIds.map(id=>state.vehicles.get(id)).filter(Boolean);}
  function focusVehicle(v){
   if(!lastState?.map)return;
-  lastState.map.setView([v.lat,v.lon],16);
+  lastState.map.setView([v.lat,v.lon],16,{animate:false});
   for(const layer of lastState.vehicleLayer?.getLayers?.()||[]){const p=layer.getLatLng?.();if(p&&Math.abs(p.lat-v.lat)<.000001&&Math.abs(p.lng-v.lon)<.000001){layer.openPopup();break;}}
   $('map').scrollIntoView({block:'nearest'});
  }
@@ -27,7 +27,7 @@
   const list=lastState?vehicles(lastState):[];if(!list.length)return;
   const bounds=root.L.latLngBounds(list.map(v=>[v.lat,v.lon]));
   if(lastState.stopMarker)bounds.extend(lastState.stopMarker.getLatLng());
-  lastState.map.fitBounds(bounds.pad(.2),{maxZoom:16});$('map').scrollIntoView({block:'nearest'});
+  lastState.map.fitBounds(bounds.pad(.2),{maxZoom:16,animate:false});$('map').scrollIntoView({block:'nearest'});
  }
  function update(state,ids){
   if(!$('fleetStatus'))return;lastState=state;if(ids)markerIds=[...ids];

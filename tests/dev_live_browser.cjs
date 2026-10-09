@@ -84,7 +84,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   await page.waitForFunction(()=>document.querySelectorAll('.bus-face svg').length===2&&!SafeBusApp.state.polling);
   assert.equal(await page.locator('.fleet-card').count(),2);assert.equal(await page.locator('#focusBuses').isEnabled(),true);
   await page.locator('#focusBuses').click();
-  assert.equal(await page.evaluate(()=>[...SafeBusApp.state.vehicles.values()].every(v=>SafeBusApp.state.map.getBounds().contains([v.lat,v.lon]))),true);
+  await page.waitForFunction(()=>[...SafeBusApp.state.vehicles.values()].every(v=>SafeBusApp.state.map.getBounds().contains([v.lat,v.lon])));
   await page.locator('.fleet-card').first().click();assert.equal(await page.locator('.leaflet-popup').isVisible(),true);
   await page.waitForTimeout(2000);
   await page.screenshot({path:'dev-live-synthetic-buses.png'});
