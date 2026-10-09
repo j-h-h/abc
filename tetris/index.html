@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tetris</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Tetris</h1>
+        <div class="info">
+          <div>Score: <span id="score">0</span></div>
+          <div>Lines: <span id="lines">0</span></div>
+          <div>Level: <span id="level">1</span></div>
+        </div>
+      </header>
+      <main>
+        <canvas id="board" width="240" height="480" aria-label="Tetris board" role="img"></canvas>
+        <div class="sidebar">
+          <h2>Next</h2>
+          <canvas id="next" width="120" height="120" aria-label="Next tetromino" role="img"></canvas>
+          <div class="controls">
+            <h2>Controls</h2>
+            <ul>
+              <li><span>←</span> Move left</li>
+              <li><span>→</span> Move right</li>
+              <li><span>↑</span> Rotate</li>
+              <li><span>↓</span> Soft drop</li>
+              <li><span>Space</span> Hard drop</li>
+              <li><span>P</span> Pause</li>
+            </ul>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <button id="start">Start Game</button>
+        <p>
+          Built for the Code Challenge – Enjoy a quick round of the classic
+          puzzle!
+        </p>
+      </footer>
+    </div>
+    <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div class="overlay-content">
+        <h2 id="overlay-title">Paused</h2>
+        <p id="overlay-message"></p>
+        <button id="resume">Resume</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
