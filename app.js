@@ -1,4 +1,4 @@
-/* Eifo Batuach 9.0.1 — no local computer/server required. */
+/* Eifo Batuach 9.0.2 — no local computer/server required. */
 (function(root){'use strict';
  const C=root.SafeBusCore,D=root.SafeBusDataset,$=id=>document.getElementById(id);
  const SOURCES={mot:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/',stride:'https://open-bus-stride-api.hasadna.org.il',curlbus:'https://curlbus.app/',busnearby:'https://api.busnearby.co.il/directions/index/stops/'};
@@ -11,31 +11,44 @@
  function setupMap(){if(!root.L){$('mapError').hidden=false;setBanner('מפת הרקע לא נטענה. נסה שוב בחיבור לאינטרנט.',true);return;}
   state.map=L.map('map',{zoomControl:false,maxZoom:19}).setView([31.733251,35.187968],14);
   // If a tile server is blocked, never display a blank map without explanation.
+  // Try multiple genuine basemaps. Slow/hanging tiles must not strand the user on grey.
   const tileStatus=$('tileNotice');
-  let activeTile=null,sourceIndex=0,loadCount=0,errorCount=0;
+  let tileAttempt=0,settledLayer=null;
+  const pendingLayers=[];
   const basemaps=[
-    ['https://tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap contributors'],
-    ['https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png','© OpenStreetMap contributors · © CARTO']
+    {name:'OpenStreetMap',url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',attribution:'© OpenStreetMap contributors'},
+    {name:'CARTO',url:'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',attribution:'© OpenStreetMap contributors · © CARTO'},
+    {name:'Esri',url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',attribution:'Tiles © Esri · OpenStreetMap contributors'},
+    {name:'OSM France',url:'https://a.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',attribution:'© OpenStreetMap contributors · OSM France'}
   ];
-  function startTiles(){
-    if(activeTile)state.map.removeLayer(activeTile);
-    const [url,attribution]=basemaps[sourceIndex];
-    loadCount=0;errorCount=0;
-    const layer=L.tileLayer(url,{maxZoom:19,attribution});
-    activeTile=layer;
-    layer.on('tileload',()=>{if(activeTile!==layer)return;loadCount++;tileStatus.hidden=true;});
+  function tryBasemap(){
+    if(settledLayer||tileAttempt>=basemaps.length){
+      if(!settledLayer)tileStatus.hidden=false;
+      return;
+    }
+    const i=tileAttempt++,spec=basemaps[i];
+    const layer=L.tileLayer(spec.url,{maxZoom:19,attribution:spec.attribution});
+    pendingLayers.push(layer);
+    let failures=0;
+    layer.on('tileload',()=>{
+      if(settledLayer)return;
+      settledLayer=layer;
+      state.tileSource=spec.name;
+      state.tileProblem=false;
+      tileStatus.hidden=true;
+      for(const old of pendingLayers)if(old!==layer)state.map.removeLayer(old);
+    });
     layer.on('tileerror',()=>{
-      if(activeTile!==layer)return;
-      errorCount++;
-      if(loadCount===0&&errorCount>=4){
-        if(sourceIndex+1<basemaps.length){sourceIndex++;startTiles();}
-        else tileStatus.hidden=false;
-      }
+      failures++;
+      if(!settledLayer&&failures>=4&&i===tileAttempt-1)tryBasemap();
     });
     layer.addTo(state.map);
+    setTimeout(()=>{
+      if(!settledLayer&&i===tileAttempt-1)tryBasemap();
+    },4800);
   }
-  startTiles();
-  setTimeout(()=>{if(loadCount===0&&sourceIndex===basemaps.length-1)tileStatus.hidden=false;},10000);
+  state.tileSource=null;state.tileProblem=true;
+  tryBasemap();
   state.routeLayer=L.layerGroup().addTo(state.map);state.vehicleLayer=L.layerGroup().addTo(state.map);
   L.control.zoom({position:'bottomleft'}).addTo(state.map);
   $('goStop').onclick=()=>{if(state.stopMarker)state.map.setView(state.stopMarker.getLatLng(),15);else setBanner('למיקום תחנה מדויק צריך לטעון קודם את המסלול הרשמי.',true)};
