@@ -35,6 +35,15 @@ jobs:
           unzip -t /tmp/israel-gtfs.zip | tail -1
       - name: Build separate route files
         run: python build_catalog.py /tmp/israel-gtfs.zip data
+      - name: Bundle pinned Leaflet locally
+        run: |
+          npm pack leaflet@1.9.4 --silent >/tmp/leaflet-package-name.txt
+          tar -xzf "$(cat /tmp/leaflet-package-name.txt)" package/dist/leaflet.js package/dist/leaflet.css package/dist/images
+          mkdir -p vendor
+          cp package/dist/leaflet.js vendor/leaflet.js
+          cp package/dist/leaflet.css vendor/leaflet.css
+          cp -R package/dist/images vendor/images
+          rm -rf package leaflet-1.9.4.tgz
       - name: Prepare Pages artifact
         run: |
           rm -f data/all-israel-lines.zip
