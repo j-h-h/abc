@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? 9.0.0</title>
+<title>איפה בטוח? 9.0.1</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
 <link rel="stylesheet" href="./styles.css"/>
@@ -15,7 +15,7 @@
 </head><body>
 <div class="app">
 <header class="topbar">
- <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>9.0.0</small></div>
+ <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>9.0.1</small></div>
  <button id="settingsOpen" class="icon-button" title="הגדרות ומקורות" aria-label="הגדרות ומקורות">⚙</button>
 </header>
 <section class="chooser" aria-label="קו ותחנה">
@@ -27,7 +27,7 @@
 <div id="banner" class="banner" role="status" aria-live="polite">טוען מקורות…</div>
 <div class="map-wrap">
   <div id="map" role="application" aria-label="מפת תחבורה גאוגרפית"></div>
-  <div id="mapError" class="map-fallback" hidden>לא ניתן לטעון את מפת הרקע. בדוק חיבור לאינטרנט.</div>
+  <div id="mapError" class="map-fallback" hidden>ספריית המפה לא נטענה. ודא שהאפליקציה נפתחה מהאתר ולא מקובץ הורדה.</div><div id="tileNotice" class="tile-notice" role="status" hidden>⚠ מפת הכבישים לא נטענה. תוואי הקו עשוי להופיע, אך בלי מפת רקע אי אפשר להתמצא בביטחון.</div>
   <div class="map-actions"><button id="goStop" title="מרכז בתחנה" aria-label="מרכז בתחנה">⌖</button><button id="fitRoute" title="הצג מסלול" aria-label="הצג מסלול">▣</button></div>
   <div class="map-caption" id="mapCaption">מפת כבישים אמיתית · מסלול GTFS רשמי</div>
 </div>
