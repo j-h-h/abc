@@ -12,7 +12,7 @@ function createApp(behavior){
    if(r instanceof Error)throw r;
    return new Response(JSON.stringify(r),{status:200,headers:{'content-type':'application/json'}});
   },window:{SafeBusDataset:{}}};
- ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(core,ctx);ctx.window.SafeBusCore=ctx.SafeBusCore;vm.runInContext(source,ctx);
+ ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(core,ctx);vm.runInContext(source,ctx);
  const app=ctx.window.SafeBusApp;
  app.state.line='72';app.state.stop='2360';
  app.state.route={properties:{routeId:'34119',routeDesc:'המסלול ללא מספר בטקסט',directionId:'0',headsign:'גילה',destination:'גילה'},geometry:{coordinates:[[35.18,31.73],[35.19,31.74]]}};
