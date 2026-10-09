@@ -28,7 +28,22 @@ async function test(){
  const c=createApp(u=>u.includes('curlbus.app')?{visits:{'2360':[]}}:u.includes('RefreshStopTimesAtStop')?{success:true,data:{routesInStop:[]}}:u.includes('busnearby.co.il')?[]:new Error('unexpected '+u));
  result=await c.getArrivals();assert.equal(result.arrivals.length,0);assert.match(c.state.sourceUsed,/אין דיווח/);
  const d=createApp(()=>new TypeError('network blocked'));await assert.rejects(()=>d.getArrivals(),/נכשלה גישה למקור/);
+ const worker=(await import(require('node:url').pathToFileURL(path.join(root,'backend/cloudflare-worker.mjs')).href)).default;
+ const trusted='https://j-h-h.github.io';
+ const deny=await worker.fetch(new Request('https://relay.example/curlbus/2360',{headers:{origin:'https://evil.example'}}));
+ assert.equal(deny.status,403);
+ const unknown=await worker.fetch(new Request('https://relay.example/https://evil.example',{headers:{origin:trusted}}));
+ assert.equal(unknown.status,404);
+ const oldFetch=global.fetch;const calls=[];
+ try{
+  global.fetch=async(url,opts)=>{calls.push(String(url));return new Response(JSON.stringify({visits:{'2360':[]}}),{status:200,headers:{'content-type':'application/json'}});};
+  const ok=await worker.fetch(new Request('https://relay.example/curlbus/2360',{headers:{origin:trusted}}));
+  assert.equal(ok.status,200);assert.equal(ok.headers.get('access-control-allow-origin'),trusted);
+  assert.equal(calls.length,1);assert.equal(calls[0],'https://curlbus.app/2360');
+  const bad=await worker.fetch(new Request('https://relay.example/mot/UnknownMethod',{headers:{origin:trusted}}));
+  assert.equal(bad.status,404);assert.equal(calls.length,1);
+ }finally{global.fetch=oldFetch;}
  const e=createApp(u=>u.includes('curlbus.app')?{visits:{'2360':[{line_name:'72',line_id:'99999',direction_id:'0',timestamp:stamp,eta}]}}:u.includes('RefreshStopTimesAtStop')?{success:true,data:{routesInStop:[]}}:[]);result=await e.getArrivals();assert.equal(result.arrivals.length,0);
- console.log('LOGIC REGRESSIONS PASSED: exact SIRI route, empty-source fallback, no-data, CORS, wrong-route filtering');
+ console.log('LOGIC REGRESSIONS PASSED: exact SIRI route, empty-source fallback, no-data, CORS, wrong-route filtering, trusted relay whitelist');
 }
 module.exports=test();
