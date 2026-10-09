@@ -1,8 +1,8 @@
-require('./logic_regressions.cjs');
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const base=process.env.SITE_URL||'https://j-h-h.github.io/abc/';
 (async()=>{
+ await require('./logic_regressions.cjs');
  const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  try{
  const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
