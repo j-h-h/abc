@@ -3,22 +3,23 @@
  const KEY='eifo-observed-vehicles-v1',DAY=86400000,RETENTION=30*DAY,MAX_VEHICLES=180,MAX_POINTS=100,MAX_EVENTS=40;
  const C=root.SafeBusCore||{};
  let registry=Object.create(null),storage=null;
- try{storage=root.localStorage||null;const value=storage&&JSON.parse(storage.getItem(KEY)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))registry=value;}catch{}
+ try{storage=root.localStorage||null;const value=storage&&JSON.parse(storage.getItem(KEY)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))registry=Object.assign(Object.create(null),value);}catch{}
  const validRef=ref=>typeof ref==='string'&&/^[\p{L}\p{N}_:.-]{3,64}$/u.test(ref);
- const number=x=>Number(x),dt=x=>Date.parse(x);
+ const number=x=>(typeof x==='number'||typeof x==='string'&&x.trim()!=='')?Number(x):NaN,dt=x=>Date.parse(x);
  const distance=(a,b)=>C.hav?C.hav([a.lat,a.lon],[b.lat,b.lon]):Infinity;
  function cutoff(now){return now-RETENTION}
  function compact(now=Date.now()){
   for(const [key,r] of Object.entries(registry)){
    if(!r||typeof r!=='object'||!Array.isArray(r.samples)||!Array.isArray(r.events)){delete registry[key];continue;}
-   r.samples=r.samples.filter(x=>Number.isFinite(x.t)&&x.t>=cutoff(now)).slice(-MAX_POINTS);
-   r.events=r.events.filter(x=>Number.isFinite(x.t)&&x.t>=cutoff(now)).slice(-MAX_EVENTS);
+   r.samples=r.samples.filter(x=>x&&Number.isFinite(x.t)&&x.t>=cutoff(now)&&x.t<=now+30000&&C.validCoord?.(x.lat,x.lon)).slice(-MAX_POINTS);
+   r.events=r.events.filter(x=>x&&Number.isFinite(x.t)&&x.t>=cutoff(now)&&x.t<=now+30000&&['stationary','gps_jump'].includes(x.kind)&&typeof x.trip==='string').slice(-MAX_EVENTS);
    if(!r.samples.length&&!r.events.length)delete registry[key];
   }
   const keys=Object.keys(registry).sort((a,b)=>(registry[b].last||0)-(registry[a].last||0));
   for(const key of keys.slice(MAX_VEHICLES))delete registry[key];
  }
  function save(){try{compact();storage?.setItem(KEY,JSON.stringify(registry));}catch{/* quota or storage disabled: retain in-memory */}}
+ compact();
  function stableRide(v){const r=v.ride_id??v.tripId??v.trip_id;return r===null||r===undefined||!String(r).trim()?null:String(r).slice(0,90)}
  function addEvent(r,kind,sample){
   // No repeated alerts every polling cycle for the same ride and issue.
@@ -56,12 +57,13 @@
  }
  function summary(ref,now=Date.now()){
   if(!validRef(String(ref||'')))return {supported:false,recurrent:false};
-  const r=registry[ref];if(!r)return {supported:false,recurrent:false};
+  compact(now);const r=registry[ref];if(!r)return {supported:false,recurrent:false};
   const events=r.events.filter(e=>e.t>=cutoff(now)),stalls=events.filter(e=>e.kind==='stationary');
   const uniqueTrips=new Set(stalls.map(e=>e.trip).filter(Boolean));
+  const stationaryLines=[...new Set(stalls.map(e=>e.line).filter(Boolean))];
   const jumps=events.filter(e=>e.kind==='gps_jump').length;
   const recurrent=uniqueTrips.size>=2;
-  return {supported:true,recurrent,stationaryTrips:uniqueTrips.size,stationaryEvents:stalls.length,gpsJumps:jumps,
+  return {supported:true,recurrent,stationaryLines,stationaryTrips:uniqueTrips.size,stationaryEvents:stalls.length,gpsJumps:jumps,
    last:r.last,observations:r.samples.length,
    text:recurrent?'עצירות ממושכות נצפו באותו רכב בנסיעות שונות. ייתכנו פקקים, המתנות או גורמים אחרים; אין הוכחה לתקלה מכנית.':
       stalls.length?'נרשמה עצירה ממושכת אחת לפחות; הסיבה אינה ידועה.':
@@ -69,8 +71,8 @@
  }
  function trail(ref,trip,now=Date.now()){
   const r=registry[ref];if(!r||!trip)return[];
-  return r.samples.filter(p=>p.trip===trip&&p.t>=now-12*60000).slice(-7).map(p=>({...p}));
+  return r.samples.filter(p=>p.trip===trip&&p.t>=now-12*60000&&p.t<=now).slice(-7).map(p=>({...p}));
  }
  function reset(){registry=Object.create(null);try{storage?.removeItem(KEY);}catch{}}
- root.SafeBusHistory={ingest,summary,trail,reset,version:'1',scope:'local-device',_inspect:()=>JSON.parse(JSON.stringify(registry))};
+ root.SafeBusHistory={ingest,summary,trail,reset,version:'DEV-9.1.0',scope:'local-device',_inspect:()=>JSON.parse(JSON.stringify(registry))};
 })(typeof window!=='undefined'?window:globalThis);

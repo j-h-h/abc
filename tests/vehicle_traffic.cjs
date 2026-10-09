@@ -49,3 +49,13 @@ assert.equal(wrongRoute.available,false);
 const missingGeometry=T.normalize({...snapshot,segments:[{...snapshot.segments[0],geometry:{type:'LineString',coordinates:[[0,0],[0,0]]}}]},{routeId:'34119',stopCode:'2360',now});
 assert.equal(missingGeometry.available,false);
 console.log('PASS: local cross-trip history, duplicate evidence, timestamp integrity, GPS jumps and 6 traffic safeguards');
+
+assert.equal(T.weightedEta({minutes:5,realtime:false},good,now+6*60000),null,'Traffic expires before ETA use');
+assert.equal(T.weightedEta({minutes:null,realtime:false},good,now),null,'Missing arrival is not zero');
+assert.equal(T.normalize({...snapshot,segments:[{...snapshot.segments[0],currentSpeedKmh:null}]},{routeId:'34119',stopCode:'2360',now}).available,false,'Missing speed is not a stopped road');
+assert.equal(T.normalize({...snapshot,delaySeconds:null},{routeId:'34119',stopCode:'2360',now}).etaAdjustment,null);
+assert.equal(H.ingest(item(now-1000,'prototype',31.75,35.2,'__proto__'),{now}).supported,true);
+assert.equal(H.trail('900888','ride-two',start).length,0,'Trail excludes future observations');
+tripAt(start+24*60000,'ride-other-line');
+assert.ok(Array.isArray(H.summary('900888',now).stationaryLines));
+console.log('PASS: expiry, absent numeric fields, prototype-safe registry and future trail safeguards');
