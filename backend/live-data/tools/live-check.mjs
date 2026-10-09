@@ -6,7 +6,7 @@ const evidence=[];
 async function request(path,{method='GET',origin='https://j-h-h.github.io',status=200}={}){
  const start=Date.now(),r=await fetch(base+path,{method,headers:{Accept:'application/json',Origin:origin},redirect:'error',signal:AbortSignal.timeout(30000)}),text=await r.text();
  let data;try{data=JSON.parse(text)}catch{throw Error('NON_JSON_RESPONSE '+path+' '+r.status+' '+text.slice(0,80))}
- assert.equal(r.status,status,path+': '+JSON.stringify(data));
+ assert.ok((Array.isArray(status)?status:[status]).includes(r.status),path+': HTTP '+r.status+' '+JSON.stringify(data));
  if(path.startsWith('/v1/')||path.startsWith('/curlbus/'))assert.equal(r.headers.get('access-control-allow-origin'),'https://j-h-h.github.io');
  console.log('LIVE_CHECK_PROGRESS '+JSON.stringify({path,httpStatus:r.status}));
  evidence.push({path,method,httpStatus:r.status,fetchedAt:new Date().toISOString(),elapsedMs:Date.now()-start,data});
@@ -39,11 +39,12 @@ await request('/proxy?url=https://example.com',{status:404});
 await request('/v1/health?url=https://example.com',{status:400});
 await request('/v1/traffic/flow?bbox=34,29,36,34',{status:400});
 if(!health.trafficEnabled)await request('/v1/traffic/flow?bbox=35.18,31.73,35.20,31.75&routeId=34120&stopCode=2360',{status:503});
-const archive=await request('/v1/vehicles/70138502/history?operatorRef=16&days=14&limit=6');
-assert.ok(Array.isArray(archive.observations));for(const o of archive.observations){assert.equal(o.vehicleRef,'70138502');assert.equal(o.operatorRef,'16');assert.ok(Date.parse(o.sourceObservedAt)<=Date.now()+30000);assert.equal(o.gpsMeasuredAt,null)}
+const archive=await request('/v1/vehicles/70138502/history?operatorRef=16&days=14&limit=6',{status:[200,502]});
+if(archive.error){assert.ok(['UPSTREAM_TIMEOUT','UPSTREAM_UNAVAILABLE','UPSTREAM_HTTP_500','UPSTREAM_HTTP_503'].includes(archive.error))}
+else {assert.ok(Array.isArray(archive.observations));for(const o of archive.observations){assert.equal(o.vehicleRef,'70138502');assert.equal(o.operatorRef,'16');assert.ok(Date.parse(o.sourceObservedAt)<=Date.now()+30000);assert.equal(o.gpsMeasuredAt,null)}}
 const older=await request('/v1/vehicles/89094003/history?operatorRef=15&from=2026-03-18T00%3A00%3A00Z&to=2026-03-21T00%3A00%3A00Z&limit=12');
-assert.ok(Array.isArray(older.observations));
+assert.ok(Array.isArray(older.observations));assert.ok(older.rides.length>=2);assert.ok(new Set(older.rides.map(r=>r.routeId)).size>=2);assert.ok(older.rides.every(r=>r.vehicleKey==='il-mot-siri:15:89094003'&&r.gpsMeasuredAt===null&&r.sourceObservedAt===null));
 for(const o of older.observations){assert.equal(o.vehicleRef,'89094003');assert.equal(o.operatorRef,'15');assert.ok(Date.parse(o.sourceObservedAt)>=Date.parse(older.from)&&Date.parse(o.sourceObservedAt)<=Date.parse(older.to));assert.equal(o.gpsMeasuredAt,null)}
-const report={service:base,checkedAt:new Date().toISOString(),result:'passed',checks:evidence.length,evidence};
+const report={archiveOperationalStatus:archive.error?'unavailable':archive.observationStatus,olderPositionStatus:older.observationStatus,service:base,checkedAt:new Date().toISOString(),result:'passed',checks:evidence.length,evidence};
 await fs.mkdir('test-results',{recursive:true});await fs.writeFile('test-results/live-data-report.json',JSON.stringify(report,null,2));
 for(const e of evidence)console.log('LIVE_CHECK_RESULT '+JSON.stringify(e));console.log('LIVE_CHECK_PASSED '+JSON.stringify({checks:report.checks,checkedAt:report.checkedAt,service:base}));

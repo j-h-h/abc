@@ -1,5 +1,5 @@
 import {decodePolyline,coordOK} from './geometry.mjs';
-import {normalizeCurlbus,normalizeStride,iso} from './transit.mjs';
+import {normalizeCurlbus,normalizeStride,normalizeStrideRides,iso} from './transit.mjs';
 import {normalizeHereFlow,normalizeHereIncidents} from './traffic.mjs';
 export class ServiceError extends Error{constructor(code,status=502,details={}){super(code);this.code=code;this.status=status;this.details=details}}
 const ROOT={curlbus:'https://curlbus.app/',mot:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/',stride:'https://open-bus-stride-api.hasadna.org.il/',catalog:'https://j-h-h.github.io/abc/data/',here:'https://data.traffic.hereapi.com/v7/'};
@@ -53,11 +53,25 @@ export function createProviders({fetchImpl=fetch,now=Date.now,config={}}={}){
  }
  async function history(vehicleRef,operatorRef,{days=7,limit=200,offset=0,from,to}={}){
   const end=to||new Date(now()).toISOString(),start=from||new Date(Date.parse(end)-days*86400000).toISOString();
-  const q=new URLSearchParams({siri_ride__vehicle_ref:vehicleRef,siri_routes__operator_ref:operatorRef,recorded_at_time_from:start,recorded_at_time_to:end,limit:String(limit),offset:String(offset),order_by:'recorded_at_time desc,id desc'});
-  const ret=await json(ROOT.stride+'siri_vehicle_locations/list?'+q,{ttl:60000});
-  const normalized=normalizeStride(ret.data,{vehicleRef,operatorRef,from:start,to:end,retrievedAt:ret.retrievedAt,now:now()});
-  const rides=new Map();for(const p of normalized.observations){if(!rides.has(p.tripId))rides.set(p.tripId,{tripId:p.tripId,rideId:p.rideId,routeId:p.routeId})}
-  return {schemaVersion:1,vehicleRef,operatorRef,vehicleKey:'il-mot-siri:'+operatorRef+':'+vehicleRef,source:'open-bus-stride-siri-archive',retrievedAt:ret.retrievedAt,from:start,to:end,...normalized,rides:[...rides.values()],truncated:ret.data.length===limit,nextOffset:ret.data.length===limit?offset+limit:null,paginationWindowMustStayFixed:true,storage:'upstream-archive-on-demand',mechanicalFaultConclusion:null,limitations:['VehicleRef is provider-assigned; not guaranteed to be a licence plate or permanent for vehicle life','No independent GPS measurement clock in this source','Empty archive response does not prove no journeys','Duplicate source observations are deduplicated by trip/time/location']};
+  // Discover bounded vehicle-scoped ride IDs before joining the much larger location table.
+  // Include preceding starts for journeys whose reports enter the requested observation window.
+  const rideStart=new Date(Date.parse(start)-86400000).toISOString();
+  const rideQuery=new URLSearchParams({vehicle_refs:vehicleRef,siri_route__operator_refs:operatorRef,scheduled_start_time_from:rideStart,scheduled_start_time_to:end,limit:'100',order_by:'id desc'});
+  const rideRet=await json(ROOT.stride+'siri_rides/list?'+rideQuery,{ttl:60000});
+  const selected=normalizeStrideRides(rideRet.data,{vehicleRef,operatorRef,from:rideStart,to:end,retrievedAt:rideRet.retrievedAt,now:now()});
+  const base={schemaVersion:1,vehicleRef,operatorRef,vehicleKey:'il-mot-siri:'+operatorRef+':'+vehicleRef,source:'open-bus-stride-siri-archive',retrievedAt:rideRet.retrievedAt,from:start,to:end,rides:selected.rides,rideSelectionFrom:rideStart,rideSelectionTruncated:rideRet.data.length===100,rejectedRideRecords:selected.rejected,paginationWindowMustStayFixed:true,storage:'upstream-archive-on-demand',mechanicalFaultConclusion:null,limitations:['VehicleRef is provider-assigned; not guaranteed to be a licence plate or permanent for vehicle life','No independent GPS measurement clock in this source','Empty archive response does not prove no journeys','Ride association is not evidence of completed movement','At most 100 vehicle ride IDs per request; selection truncation is explicit','Duplicate source observations are deduplicated by trip/time/location']};
+  if(!selected.rides.length)return {...base,observations:[],rejected:0,truncated:false,nextOffset:null,observationStatus:'no-usable-rides-in-archive',partial:base.rideSelectionTruncated};
+  const q=new URLSearchParams({siri_rides__ids:selected.rides.map(r=>r.rideId).join(','),recorded_at_time_from:start,recorded_at_time_to:end,limit:String(limit),offset:String(offset),order_by:'recorded_at_time desc,id desc'});
+  try{
+   const ret=await json(ROOT.stride+'siri_vehicle_locations/list?'+q,{ttl:60000});
+   const normalized=normalizeStride(ret.data,{vehicleRef,operatorRef,from:start,to:end,retrievedAt:ret.retrievedAt,now:now()});
+   const truncated=ret.data.length===limit;
+   return {...base,retrievedAt:ret.retrievedAt,...normalized,truncated,nextOffset:truncated?offset+limit:null,observationStatus:normalized.observations.length?'available':'no-usable-position-reports',partial:base.rideSelectionTruncated||normalized.rejected>0};
+  }catch(error){
+   if(!(error instanceof ServiceError))throw error;
+   // Preserve verified ride identities; never manufacture positions from the journey start.
+   return {...base,observations:[],rejected:0,truncated:false,nextOffset:null,observationStatus:'unavailable',observationError:{code:error.code,status:error.status},partial:true};
+  }
  }
  const hereEnabled=()=>config.HERE_TRAFFIC_ENABLED==='true'&&config.HERE_LICENSE_CONFIRMED==='true'&&config.HERE_PROVIDER_ENFORCED_NONBILLING==='true'&&!!config.HERE_API_KEY;
  async function here(type,bbox){

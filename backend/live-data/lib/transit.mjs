@@ -33,3 +33,15 @@ export function normalizeStride(rows,{vehicleRef,operatorRef,from,to,retrievedAt
  }
  return {observations:[...unique.values()].sort((a,b)=>Date.parse(a.sourceObservedAt)-Date.parse(b.sourceObservedAt)),rejected};
 }
+
+export function normalizeStrideRides(rows,{vehicleRef,operatorRef,from,to,retrievedAt,now=Date.now()}){
+ if(!Array.isArray(rows))throw Error('INVALID_STRIDE_RIDES_SCHEMA');
+ const rides=[],seen=new Set();let rejected=0;
+ for(const r of rows){
+  const at=iso(r.scheduled_start_time),id=Number(r.id),op=String(r.siri_route__operator_ref??'');
+  if(String(r.vehicle_ref??'')!==String(vehicleRef)||op!==String(operatorRef)||!Number.isSafeInteger(id)||id<=0||!at||Date.parse(at)<Date.parse(from)||Date.parse(at)>Date.parse(to)||Date.parse(at)>now+30000){rejected++;continue}
+  if(seen.has(id))continue;seen.add(id);
+  rides.push({rideId:String(id),tripId:r.journey_ref||null,vehicleRef:String(vehicleRef),operatorRef:op,vehicleKey:vehicleKey(op,vehicleRef),routeId:String(r.siri_route__line_ref??''),scheduledStartAt:at,sourceObservedAt:null,gpsMeasuredAt:null,evidenceKind:'archive-vehicle-trip-association',clockType:'scheduled-trip-start',retrievedAt,source:'open-bus-stride-siri-archive'});
+ }
+ return {rides:rides.sort((a,b)=>Date.parse(b.scheduledStartAt)-Date.parse(a.scheduledStartAt)),rejected};
+}

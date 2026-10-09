@@ -64,3 +64,27 @@ test('Vercel rewrite captures are removed while genuine public parameters surviv
  assert.equal(new URL(arrivals.url).searchParams.get('line'),'72');
  assert.equal(new URL(arrivals.url).searchParams.get('routeId'),'34120');
 });
+
+test('actual archive records connect one stable vehicle reference to multiple route IDs',async()=>{
+ const {normalizeStrideRides}=await import('../lib/transit.mjs');
+ const real=JSON.parse(await fs.readFile(new URL('./fixtures/stride-rides-20261009.json',import.meta.url),'utf8'));
+ const args={vehicleRef:'89094003',operatorRef:'15',from:'2026-03-18T00:00:00Z',to:'2026-03-21T00:00:00Z',retrievedAt:real.retrievedAt,now:Date.parse(real.retrievedAt)};
+ const out=normalizeStrideRides(real.data,args);assert.equal(out.rides.length,6);
+ assert.deepEqual([...new Set(out.rides.map(r=>r.routeId))].sort(),['23397','23398']);
+ assert.ok(out.rides.every(r=>r.vehicleKey==='il-mot-siri:15:89094003'&&r.sourceObservedAt===null&&r.gpsMeasuredAt===null&&r.evidenceKind==='archive-vehicle-trip-association'));
+ assert.equal(normalizeStrideRides(real.data,{...args,operatorRef:'16'}).rides.length,0);
+ assert.equal(normalizeStrideRides(real.data,{...args,from:'2026-10-01T00:00:00Z'}).rides.length,0);
+});
+test('ride-first history keeps real associations when the position upstream fails',async()=>{
+ const real=JSON.parse(await fs.readFile(new URL('./fixtures/stride-rides-20261009.json',import.meta.url),'utf8')),urls=[];
+ const providers=createProviders({now:()=>Date.parse(real.retrievedAt),fetchImpl:async url=>{
+  urls.push(url);return urls.length===1?new Response(JSON.stringify(real.data),{headers:{'Content-Type':'application/json'}}):new Response('temporarily unavailable',{status:503});
+ }});
+ const out=await providers.history('89094003','15',{from:'2026-03-18T00:00:00Z',to:'2026-03-21T00:00:00Z',limit:12});
+ assert.equal(out.rides.length,6);assert.equal(out.partial,true);assert.equal(out.observationStatus,'unavailable');assert.deepEqual(out.observations,[]);
+ assert.equal(out.observationError.code,'UPSTREAM_HTTP_503');
+ const first=new URL(urls[0]),second=new URL(urls[1]);
+ assert.equal(first.searchParams.get('vehicle_refs'),'89094003');assert.equal(first.searchParams.get('siri_route__operator_refs'),'15');
+ assert.equal(second.searchParams.get('siri_rides__ids').split(',').length,6);
+ assert.equal(second.searchParams.get('recorded_at_time_from'),out.from);assert.equal(second.searchParams.get('recorded_at_time_to'),out.to);
+});

@@ -18,6 +18,7 @@ const results=await Promise.all(Object.entries(queries).map(async([source,url])=
  try{const r=await fetch(url,{headers:{Accept:'application/json'},redirect:'error',signal:AbortSignal.timeout(25000)});
  const body=await r.text();let data;try{data=JSON.parse(body)}catch{data={text:body.slice(0,500)}}
  if(source==='tlvWazeMetadata')data={name:data.name,fields:data.fields?.map(f=>({name:f.name,type:f.type})),extent:data.extent,editingInfo:data.editingInfo,copyrightText:data.copyrightText};
+ if(source==='motTimesWithDay')data={success:data.success,routeIds:data.data?.routesInStop?.map(r=>r.routeId),stopTimesCount:data.data?.stopTimes?.length,example:data.data?.stopTimes?.filter(r=>['72','531','92'].includes(r.routeName)).slice(-4)};
  if(source==='tlvWazeTerms')data={text:body.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').slice(0,20000)};
  return {source,url,httpStatus:r.status,retrievedAt:new Date().toISOString(),elapsedMs:Date.now()-begin,data};
  }catch(e){return {source,url,retrievedAt:new Date().toISOString(),error:e.name,message:e.message}}
