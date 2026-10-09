@@ -50,3 +50,17 @@ test('warm-instance heavy request budget limits repeated history requests',async
 test('upstream oversized body and HTML are rejected',async()=>{for(const response of [new Response('html',{headers:{'Content-Type':'text/html'}}),new Response(JSON.stringify({a:'x'.repeat(100)}),{headers:{'Content-Type':'application/json'}})]){const p=createProviders({fetchImpl:async()=>response});await assert.rejects(p.json('https://fixed.example',{maxBytes:20}))}});
 test('upstream 429 is retained as retriable error',async()=>{const p=createProviders({fetchImpl:async()=>new Response('',{status:429})});await assert.rejects(p.json('https://fixed.example'),e=>e.status===429)});
 test('cache retains original retrieval time and fails closed after expiry',async()=>{let t=now,calls=0;const p=createProviders({now:()=>t,fetchImpl:async()=>{calls++;if(calls>1)throw Error('failed');return Response.json({timestamp:at})}});const a=await p.json('https://fixed.example',{ttl:1000});t+=500;const b=await p.json('https://fixed.example',{ttl:1000});assert.equal(a.retrievedAt,b.retrievedAt);assert.equal(calls,1);t+=1000;await assert.rejects(p.json('https://fixed.example',{ttl:1000}))});
+
+test('Vercel rewrite captures are removed while genuine public parameters survive',async()=>{
+ const {requestFromVercel}=await import('../api/index.js');
+ const rewritten=requestFromVercel({url:'/api/index?relayPath=%2Fv1%2Fhealth&__relayTail=health',method:'GET',headers:{}});
+ assert.equal(new URL(rewritten.url).pathname,'/v1/health');
+ assert.equal(new URL(rewritten.url).search,'');
+ const service=createService();
+ assert.equal((await service.fetch(rewritten)).status,200);
+ const unsafe=requestFromVercel({url:'/api/index?relayPath=%2Fv1%2Fhealth&__relayTail=health&url=https%3A%2F%2Fevil.example',method:'GET',headers:{}});
+ assert.equal((await service.fetch(unsafe)).status,400);
+ const arrivals=requestFromVercel({url:'/api/index?relayPath=%2Fv1%2Fstops%2F2360%2Farrivals&__relayTail=stops%2F2360%2Farrivals&line=72&routeId=34120',method:'GET',headers:{}});
+ assert.equal(new URL(arrivals.url).searchParams.get('line'),'72');
+ assert.equal(new URL(arrivals.url).searchParams.get('routeId'),'34120');
+});

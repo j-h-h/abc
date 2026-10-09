@@ -12,16 +12,16 @@
   },
   "rewrites": [
     {
-      "source": "/v1/:path*",
-      "destination": "/api/index?relayPath=/v1/:path*"
+      "source": "/v1/:__relayTail*",
+      "destination": "/api/index?relayPath=/v1/:__relayTail*"
     },
     {
-      "source": "/curlbus/:stopCode",
-      "destination": "/api/index?relayPath=/curlbus/:stopCode"
+      "source": "/curlbus/:__relayStop",
+      "destination": "/api/index?relayPath=/curlbus/:__relayStop"
     },
     {
-      "source": "/mot/:path*",
-      "destination": "/api/index?relayPath=/mot/:path*"
+      "source": "/mot/:__relayTail*",
+      "destination": "/api/index?relayPath=/mot/:__relayTail*"
     }
   ]
 }

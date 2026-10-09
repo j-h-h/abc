@@ -6,7 +6,7 @@ const NUM=/^\d{1,12}$/,LINE=/^\d{1,5}[A-Za-z]?$/,VEH=/^[A-Za-z0-9_-]{1,64}$/;
 const ZONE_DATE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/;
 function requireValue(value,re,code){if(typeof value!=='string'||!re.test(value))throw new ServiceError(code,400);return value}
 function integer(value,def,min,max){const n=value===null?def:Number(value);if(!Number.isInteger(n)||n<min||n>max)throw new ServiceError('INVALID_INTEGER',400);return n}
-function paramsOK(q,names){for(const name of q.keys())if(!names.includes(name)||q.getAll(name).length!==1)throw new ServiceError('UNKNOWN_OR_DUPLICATE_PARAMETER',400)}
+function paramsOK(q,names){for(const name of q.keys())if(!names.includes(name)||q.getAll(name).length!==1)throw new ServiceError('UNKNOWN_OR_DUPLICATE_PARAMETER',400,{parameters:[...q.keys()]})}
 function bboxValue(s){const values=(s||'').split(',').map(Number);if(values.length!==4||values.some(x=>!Number.isFinite(x))||values[0]<34||values[2]>36||values[1]<29||values[3]>34||values[2]<=values[0]||values[3]<=values[1]||values[2]-values[0]>.1||values[3]-values[1]>.1)throw new ServiceError('INVALID_OR_TOO_LARGE_ISRAEL_BBOX',400);return values}
 export function createService({fetchImpl=fetch,now=Date.now,config={}}={}){
  const providers=createProviders({fetchImpl,now,config}),rates=new Map();

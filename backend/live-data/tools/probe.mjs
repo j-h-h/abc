@@ -5,8 +5,8 @@ const sources = {
  motStop:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/Stops/GetStopByCode?stopCode=2360',
  motTimes:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/Stops/RefreshStopTimesAtStop?stopCode=2360',
  busnearby:'https://api.busnearby.co.il/directions/index/stops/1:2360/stoptimes',
- relay:'https://eifo-batuach-live-relay.vercel.app/api/probe?source=curlbus',
- relayStride:'https://eifo-batuach-live-relay.vercel.app/api/probe?source=stride',
+ relay:'https://eifo-batuach-live-relay.vercel.app/curlbus/2360',
+ relayHistory:'https://eifo-batuach-live-relay.vercel.app/v1/vehicles/70138502/history?operatorRef=16&days=14&limit=6',
  strideCurrent:'https://open-bus-stride-api.hasadna.org.il/siri_vehicle_locations/list?limit=5&siri_routes__line_ref=34120&recorded_at_time_from='+encodeURIComponent(new Date(Date.now()-600000).toISOString())+'&recorded_at_time_to='+encodeURIComponent(new Date(Date.now()+30000).toISOString())+'&order_by=recorded_at_time%20desc',
  here:'https://data.traffic.hereapi.com/v7/flow?in=bbox:35.17,31.71,35.23,31.75&locationReferencing=shape',
  ...Object.fromEntries(['72','531','92'].map(line=>['line'+line,'https://j-h-h.github.io/abc/data/line/'+line+'.json']))
