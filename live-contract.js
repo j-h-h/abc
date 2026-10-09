@@ -21,5 +21,5 @@
   }
   return {arrivals:arrivals.sort((a,b)=>a.minutes-b.minutes).slice(0,12),vehicles,sourceResponseAt:raw.sourceResponseAt,unverifiedCount:Array.isArray(raw.unverified)?raw.unverified.length:0,status:arrivals.length?'live':responseFresh?'no-verified-departures':'stale-source'};
  }
- root.SafeBusLive={normalize,version:'DEV-9.1.3'};
+ root.SafeBusLive={normalize,version:'DEV-9.1.4'};
 })(typeof window!=='undefined'?window:globalThis);

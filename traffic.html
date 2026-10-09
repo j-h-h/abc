@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f9fc"><title>איפה בטוח? — מפת פקקים</title>
+<link rel="stylesheet" href="./traffic-view.css?v=DEV-9.1.4">
+<script defer src="./traffic-view.js?v=DEV-9.1.4"></script>
+</head><body>
+<div class="traffic-app">
+ <header><strong>🚦 מפת פקקים</strong><a href="./" class="back">חזרה לאוטובוסים</a></header>
+ <p class="traffic-note">מפת התנועה של Waze מוצגת בנפרד. הפקקים אינם מתווספים לזמני ההגעה המדווחים של האוטובוס.</p>
+ <div class="traffic-tools"><span id="trafficLoadStatus" role="status">טוען את מפת התנועה…</span><a id="openTrafficSource" href="https://www.waze.com/he/live-map/" target="_blank" rel="noopener noreferrer">פתיחה ב־Waze ↗</a><button id="reloadTraffic" type="button">רענן מפה</button></div>
+ <main><iframe id="trafficFrame" title="מפת תנועה ופקקים של Waze" referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen" allowfullscreen></iframe></main>
+ <footer>המידע מוצג כפי שמסופק ב־Waze; אינו מבטיח שכל עומס או חסימה מדווחים. DEV-9.1.4</footer>
+</div>
+</body></html>
