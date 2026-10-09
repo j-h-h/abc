@@ -10,7 +10,15 @@
  function initPrefs(){try{const p=JSON.parse(localStorage.getItem('eifo-batuach-v8-prefs')||'{}');if(typeof p.line==='string'&&p.line.length<=8)state.line=p.line;if(/^\d{3,7}$/.test(p.stop))state.stop=p.stop;if(/^\d{4,12}$/.test(p.siriRef||''))state.siriRef=p.siriRef;$('showOld').checked=!!p.showOld;if(typeof p.relayUrl==='string')state.relayUrl=isTrustedRelay(p.relayUrl)?p.relayUrl:'';}catch{}$('line').value=state.line;$('stop').value=state.stop;$('siriRef').value=state.siriRef;$('relayUrl').value=state.relayUrl;}
  function setupMap(){if(!root.L){$('mapError').hidden=false;setBanner('מפת הרקע לא נטענה. נסה שוב בחיבור לאינטרנט.',true);return;}
   state.map=L.map('map',{zoomControl:false,maxZoom:19}).setView([31.733251,35.187968],14);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors',crossOrigin:true}).addTo(state.map);
+  const base=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors',crossOrigin:true}).addTo(state.map);
+  // An HTML file opened as content:// can load route JSON while every background-map tile fails.
+  // Do not mistake a successful GTFS load for a usable street map.
+  let tileOk=false,failed=0;
+  if(typeof base.on==='function'){
+    base.on('tileload',()=>{tileOk=true;failed=0;$('tileNotice').hidden=true;});
+    base.on('tileerror',()=>{failed++;if(!tileOk&&failed>=3){$('tileNotice').hidden=false;}});
+  }
+  setTimeout(()=>{if(!tileOk&&failed>0){$('tileNotice').hidden=false;}},9000);
   state.routeLayer=L.layerGroup().addTo(state.map);state.vehicleLayer=L.layerGroup().addTo(state.map);
   L.control.zoom({position:'bottomleft'}).addTo(state.map);
   $('goStop').onclick=()=>{if(state.stopMarker)state.map.setView(state.stopMarker.getLatLng(),15);else setBanner('למיקום תחנה מדויק צריך לטעון קודם את המסלול הרשמי.',true)};
