@@ -5,3 +5,7 @@
 - תהליך עיבוד ופרסום יומי באמצעות GitHub Actions.
 - שירות מקומי אינו נדרש לצריכת האתר.
 - בדיקות דפדפן בשני גדלים (נתוני רשת מדומים); חיבור חי עוד לא אומת.
+
+## 9.0.1
+- Detect repeated OpenStreetMap tile failures and show a visible warning distinct from official GTFS route availability.
+- Upgrade shell cache version so map failure messaging reaches existing installations.
