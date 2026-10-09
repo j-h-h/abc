@@ -1,0 +1,18 @@
+name: Vehicle history and traffic regressions
+on:
+  push:
+    branches:
+      - dev/vehicle-history-map-20261009
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          for file in app.js core.js vehicle-history.js traffic-analysis.js sw.js; do node --check "$file"; done
+      - name: Exercise observed vehicle history and traffic logic
+        run: node tests/vehicle_traffic.cjs
