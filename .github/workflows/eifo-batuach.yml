@@ -1,59 +1,22 @@
-name: Update GTFS and deploy bus app
+name: Notify bus site changes
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '30 2 * * *'
   push:
     branches: [eifo-batuach-site]
+  workflow_dispatch:
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: github-pages
-  cancel-in-progress: false
+  contents: write
 jobs:
-  publish:
+  notify:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout dedicated site branch
-        uses: actions/checkout@v4
-        with:
-          ref: eifo-batuach-site
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Download official GTFS
+      - name: Trigger deployment from default branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
         run: |
-          curl -fL --retry 4 --retry-delay 12 --connect-timeout 20 --max-time 600 -o /tmp/israel-gtfs.zip https://gtfs.mot.gov.il/gtfsfiles/israel-public-transportation.zip
-          unzip -t /tmp/israel-gtfs.zip | tail -1
-      - name: Build separate route files
-        run: python build_catalog.py /tmp/israel-gtfs.zip data
-      - name: Bundle pinned Leaflet locally
-        run: |
-          npm pack leaflet@1.9.4 --silent >/tmp/leaflet-package-name.txt
-          tar -xzf "$(cat /tmp/leaflet-package-name.txt)" package/dist/leaflet.js package/dist/leaflet.css package/dist/images
-          mkdir -p vendor
-          cp package/dist/leaflet.js vendor/leaflet.js
-          cp package/dist/leaflet.css vendor/leaflet.css
-          cp -R package/dist/images vendor/images
-          rm -rf package leaflet-1.9.4.tgz
-      - name: Prepare Pages artifact
-        run: |
-          rm -f data/all-israel-lines.zip
-          touch .nojekyll
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - name: Upload website
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: .
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          curl -fsS --retry 2 --request POST \
+            --url "https://api.github.com/repos/$GH_REPOSITORY/dispatches" \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            --data '{"event_type":"eifo-batuach-update"}'
