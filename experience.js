@@ -50,7 +50,7 @@
   if(!state.trafficReport?.available)$('trafficStatus').textContent='פקקים זמינים במפת התנועה הנפרדת';
  }
  function panel(open){
-  if(open){focusBeforePanel=document.activeElement;$('settingsClose').focus();}else focusBeforePanel?.focus?.();
+  if(open){focusBeforePanel=document.activeElement;$('settingsClose').focus();root.SafeBusNational?.services();}else focusBeforePanel?.focus?.();
  }
  function init(){
   $('focusBuses').onclick=focusBuses;
@@ -64,6 +64,6 @@
   if(root.ResizeObserver){new ResizeObserver(()=>root.SafeBusApp?.state.map?.invalidateSize()).observe($('map'));}
   if('serviceWorker' in navigator&&root.location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
  }
- root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.8'};
+ root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.9'};
  document.addEventListener('DOMContentLoaded',init);
 })(window);

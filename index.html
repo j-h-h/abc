@@ -3,28 +3,28 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? DEV-9.1.8</title>
+<title>איפה בטוח? DEV-9.1.9</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css?v=DEV-9.1.8"/>
-<script src="./gtfs-store.js?v=9.1.8"></script>
+<link rel="stylesheet" href="./styles.css?v=DEV-9.1.9"/>
+<script src="./gtfs-store.js?v=9.1.9"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
-<script defer src="./vehicle-history.js?v=DEV-9.1.8"></script>
-<script defer src="./traffic-analysis.js?v=DEV-9.1.8"></script>
+<script defer src="./vehicle-history.js?v=DEV-9.1.9"></script>
+<script defer src="./traffic-analysis.js?v=DEV-9.1.9"></script>
 
-<script defer src="./archive-contract.js?v=DEV-9.1.8"></script>
-<script defer src="./live-contract.js?v=DEV-9.1.8"></script>
-<link rel="stylesheet" href="./national.css?v=DEV-9.1.8"/>
-<script defer src="./national-contract.js?v=DEV-9.1.8"></script>
-<script defer src="./national.js?v=DEV-9.1.8"></script>
-<script defer src="./experience.js?v=DEV-9.1.8"></script>
-<script defer src="./app.js?v=DEV-9.1.8"></script>
+<script defer src="./archive-contract.js?v=DEV-9.1.9"></script>
+<script defer src="./live-contract.js?v=DEV-9.1.9"></script>
+<link rel="stylesheet" href="./national.css?v=DEV-9.1.9"/>
+<script defer src="./national-contract.js?v=DEV-9.1.9"></script>
+<script defer src="./national.js?v=DEV-9.1.9"></script>
+<script defer src="./experience.js?v=DEV-9.1.9"></script>
+<script defer src="./app.js?v=DEV-9.1.9"></script>
 </head><body>
 <div class="national-app">
  <main class="national-map" aria-label="מפת תחנות, אוטובוסים ותנועה בכל הארץ"><div id="map" aria-label="מפת התחבורה"></div><div id="mapError" class="map-fallback" hidden>לא ניתן לטעון את המפה. נסה לרענן.</div><div id="tileNotice" class="tile-notice" hidden>מפת הרקע אינה זמינה כרגע.</div></main>
- <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.1.8</span><button id="settingsOpen" type="button" aria-label="מידע והיסטוריית רכב" aria-expanded="false">ⓘ</button></header>
+ <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.1.9</span><button id="settingsOpen" type="button" aria-label="הגדרות ומקורות" aria-controls="panel" aria-expanded="false">⚙ הגדרות</button></header>
  <section class="map-search" aria-label="חיפוש בכל הארץ"><form id="searchForm"><input id="placeSearch" type="search" autocomplete="off" maxlength="120" placeholder="כתובת, מקום או תחנה בכל הארץ" aria-label="כתובת, מקום או תחנה" aria-expanded="false" aria-controls="searchResults"/><button id="searchSubmit" type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form><ul id="searchResults" aria-label="תוצאות חיפוש" hidden></ul></section>
  <div class="map-layers" role="group" aria-label="שכבות המפה"><button id="busesToggle" aria-pressed="true">אוטובוסים</button><button id="stationsToggle" aria-pressed="true">תחנות</button><button id="trafficLayerToggle" aria-pressed="false">פקקים</button></div>
  <div class="map-utilities"><button id="myLocation" aria-label="המיקום שלי" title="המיקום שלי">⌖</button><button id="nationalFocus" disabled aria-label="מרכז על האוטובוסים המדווחים" title="מרכז על האוטובוסים">🚌</button></div>
@@ -37,6 +37,7 @@
 <div class="shade" id="shade" hidden></div>
 <aside id="panel" class="panel" aria-label="הגדרות ומקורות" aria-modal="true" role="dialog" hidden>
  <div class="panel-header"><strong>הגדרות ומקורות</strong><button id="settingsClose" class="icon-button" aria-label="סגור">×</button></div>
+ <section class="service-connections"><h2>חיבורים ושירותים</h2><p>האוטובוסים, התחנות וחיפוש הכתובות פועלים ללא חשבון אישי או הזנת מפתח.</p><ul><li><strong>אוטובוסים ותחזיות</strong><span>חיבור מובנה למקורות משרד התחבורה והסדנה.</span><a href="https://eifo-batuach-live-relay.vercel.app/v1/health" target="_blank" rel="noopener noreferrer">בדיקת שירות האוטובוסים ↗</a></li><li><strong>כתובות ומפה</strong><span>חיפוש כתובות דרך Photon ומפת OpenStreetMap.</span><a href="https://photon.komoot.io/" target="_blank" rel="noopener noreferrer">מידע על שירות הכתובות ↗</a></li><li><strong>פקקים על מפת האוטובוסים</strong><span id="trafficConnectionStatus" role="status">ממתין לבדיקת חיבור</span><a id="trafficAccountLink" href="https://my.tomtom.com/" target="_blank" rel="noopener noreferrer">כניסה או יצירת חשבון TomTom ↗</a><small>ההגדרה מיועדת לבעל האתר בלבד, במסלול חינמי ללא אשראי. הרשאת התנועה נשמרת בשרת; המשתמשים אינם צריכים חשבון.</small></li></ul></section>
  <section><h2>מפה לכל הארץ</h2><p id="catalogStatus"></p><p>מאגר המסלולים נשלף לפי הצורך ונשמר בטלפון. העדכון מתבצע בנפרד מהאפליקציה; אין צורך להוריד קובץ גדול בכל שדרוג.</p><div id="importStatus" class="muted">טוען מאגר מסלולים…</div></section>
  <details id="archiveAdvanced"><summary>היסטוריית רכב חוצת נסיעות</summary><section id="vehicleArchiveSection"><h2>היסטוריית רכב חוצת נסיעות</h2><p>הארכיון מקבץ לפי מזהה רכב ומפעיל, גם במסלולים אחרים. שיוך לנסיעה מתוכננת מוצג בנפרד מדיווח מיקום; אף אחד מהם אינו הוכחה לתקלה מכנית. זיהוי עצירות מקומי דורש חותמת GPS עצמאית, שאינה זמינה במקורות המחוברים.</p>
  <div class="archive-fields"><label>מזהה רכב במקור <input id="archiveVehicleRef" maxlength="64" autocomplete="off" dir="ltr"/></label><label>מזהה מפעיל <input id="archiveOperatorRef" inputmode="numeric" maxlength="12" autocomplete="off" dir="ltr"/></label></div>

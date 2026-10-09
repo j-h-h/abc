@@ -7,7 +7,8 @@
   if(r.source==='mot-siri-via-curlbus'&&(!fresh(r.sourceResponseAt,now)||r.directionVerified!==true||r.directionEvidence!=='exact-line-ref+operator+stop-sequence+destination'))continue;
   if(r.source==='open-bus-stride-siri'&&(!fresh(r.snapshotAt,now)||Math.abs(Date.parse(r.snapshotAt)-Date.parse(r.sourceObservedAt))>180000))continue;
   if(!['mot-siri-via-curlbus','open-bus-stride-siri'].includes(r.source))continue;
-  const key=String(r.operatorRef)+':'+String(r.vehicleRef),old=found.get(key);if(!old||Date.parse(old.sourceObservedAt)<Date.parse(r.sourceObservedAt))found.set(key,{...r,id:key,vehicle_ref:String(r.vehicleRef),observed_at:r.sourceObservedAt,associationStopCode:stopCode,velocity:null});
+  const speed=r.source==='open-bus-stride-siri'&&r.speedUnit==='km/h'&&r.speedEvidence==='mot-siri-profile-3.4.56'&&r.speedObservedAt===r.sourceObservedAt&&typeof r.reportedSpeedKmh==='number'&&Number.isFinite(r.reportedSpeedKmh)&&r.reportedSpeedKmh>=0&&r.reportedSpeedKmh<=160?r.reportedSpeedKmh:null;
+  const key=String(r.operatorRef)+':'+String(r.vehicleRef),old=found.get(key);if(!old||Date.parse(old.sourceObservedAt)<Date.parse(r.sourceObservedAt))found.set(key,{...r,id:key,vehicle_ref:String(r.vehicleRef),observed_at:r.sourceObservedAt,associationStopCode:stopCode,velocity:null,reportedSpeedKmh:speed,speedUnit:speed===null?null:'km/h',speedEvidence:speed===null?null:r.speedEvidence,speedObservedAt:speed===null?null:r.speedObservedAt});
  }return [...found.values()];}
  function station(raw,stopCode,{now=Date.now()}={}){if(raw?.schemaVersion!==1||String(raw.stopCode)!==String(stopCode)||!Array.isArray(raw.arrivals)||!Array.isArray(raw.vehicles)||!Array.isArray(raw.routes))throw Error('תשובת התחנה אינה תואמת לבחירה');
   const routeMatches=r=>raw.routes.some(x=>String(x.routeId)===String(r.routeId)&&String(x.line)===String(r.line)&&String(x.operatorRef)===String(r.operatorRef));
@@ -17,5 +18,6 @@
  function area(raw,bbox,{now=Date.now()}={}){if(raw?.schemaVersion!==1||!Array.isArray(raw.vehicles)||!Array.isArray(raw.bbox)||raw.bbox.length!==4||raw.bbox.some((n,i)=>n!==bbox[i]))throw Error('תשובת האזור אינה תואמת למפה');return {...raw,vehicles:vehicles(raw.vehicles,{now,bbox})};}
  const fold=value=>String(value||'').normalize('NFKD').replace(/[\u0591-\u05c7]/g,'').toLowerCase().replace(/["'׳״/.,-]/g,' ').replace(/\s+/g,' ').trim();
  function stopSearch(stops,query,center=null,limit=8){const q=fold(query),tokens=q.split(' ');if(!q)return[];return stops.filter(s=>s.code===q||tokens.every(t=>s.search.includes(t))).map(s=>({...s,rank:s.code===q?-1:0,distance:center?Math.hypot((s.lon-center.lon)*Math.cos(center.lat*Math.PI/180),s.lat-center.lat):0})).sort((a,b)=>a.rank-b.rank||a.distance-b.distance||a.code.localeCompare(b.code)).slice(0,limit);}
- root.SafeBusNationalContract={fresh,vehicles,station,area,fold,stopSearch};
+ function routeMeta(vehicle,routes=[],index={}){return routes.find(r=>String(r.routeId)===String(vehicle.routeId)&&String(r.operatorRef)===String(vehicle.operatorRef)&&(!vehicle.line||String(r.line)===String(vehicle.line)))||index[String(vehicle.operatorRef)+':'+String(vehicle.routeId)]||null;}
+ root.SafeBusNationalContract={fresh,vehicles,station,area,fold,stopSearch,routeMeta};
 })(typeof window!=='undefined'?window:globalThis);
