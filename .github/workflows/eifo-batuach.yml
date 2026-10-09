@@ -1,0 +1,48 @@
+name: Update GTFS and deploy bus app
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 2 * * *'
+  push:
+    branches: [eifo-batuach-site]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout dedicated site branch
+        uses: actions/checkout@v4
+        with:
+          ref: eifo-batuach-site
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download official GTFS
+        run: |
+          curl -fL --retry 4 --retry-delay 12 --connect-timeout 20 --max-time 600 -o /tmp/israel-gtfs.zip https://gtfs.mot.gov.il/gtfsfiles/israel-public-transportation.zip
+          unzip -t /tmp/israel-gtfs.zip | tail -1
+      - name: Build separate route files
+        run: python build_catalog.py /tmp/israel-gtfs.zip data
+      - name: Prepare Pages artifact
+        run: |
+          rm -f data/all-israel-lines.zip
+          touch .nojekyll
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
