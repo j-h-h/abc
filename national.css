@@ -25,3 +25,20 @@ button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:de
 .bus-marker-label small{display:none}.stop-popup-list{max-height:240px;overflow:auto;min-width:180px}.stop-popup-list button{display:block;width:100%;text-align:right;background:white;border:0;border-bottom:1px solid #d8e2e9;padding:10px;color:#122b40}.stop-popup-list small{display:block;color:#576b7b;font-size:11px;margin-top:4px}
 
 .bus-report{min-width:210px;max-width:270px;text-align:right;direction:rtl}.bus-report>strong{font-size:18px}.bus-report dl{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;margin:12px 0}.bus-report dt{color:var(--muted)}.bus-report dd{margin:0;font-weight:700}.bus-report p,.bus-report>small{font-size:11px;color:var(--muted);line-height:1.5}.service-connections ul{list-style:none;padding:0;margin:0}.service-connections li{display:flex;flex-direction:column;gap:6px;padding:13px 0;border-bottom:1px solid var(--border)}.service-connections li:last-child{border-bottom:0}.service-connections strong{font-size:15px}.service-connections a{color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}.service-connections span,.service-connections small{line-height:1.5}
+
+/* DEV-9.2: source details, direct route viewing and comfortable touch targets. */
+.bus-report{max-height:55dvh;overflow:auto;overscroll-behavior:contain;min-width:220px}
+.bus-report dd{overflow-wrap:anywhere}.bus-source summary{cursor:pointer;color:var(--blue);font-weight:600;padding:9px 0}
+.bus-source dl{font-size:11px;grid-template-columns:auto minmax(0,1fr);gap:6px 9px}
+.bus-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.bus-actions button{flex:1;min-height:40px;border:1px solid var(--border);border-radius:9px;background:#edf4fe;color:#0752b8;padding:8px;font-size:12px}
+.route-preview{position:absolute;z-index:700;right:20px;top:135px;width:380px;max-width:calc(100% - 40px);display:flex;align-items:center;gap:10px;box-sizing:border-box;padding:12px 14px;background:white;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
+.route-preview div{flex:1;min-width:0}.route-preview strong,.route-preview small{display:block;line-height:1.5}.route-preview strong{font-size:14px}.route-preview small{color:var(--muted);font-size:11px;margin-top:4px}.route-preview button{flex:none;width:40px;height:40px;border:0;border-radius:8px;background:#edf4fe;color:var(--ink);font-size:25px}
+.national-traffic-legend small{display:block;margin-top:5px;color:var(--muted);font-size:10px}
+@media(max-width:700px){
+ .map-layers button{min-height:40px}.national-brand button{min-height:36px}.map-utilities button{width:44px;height:44px}
+ .route-preview{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:8px;left:8px;width:auto;max-width:none}
+ .station-dock-head{min-height:50px}#closeStation{width:40px;height:40px}.station-arrivals-head button{width:40px;height:40px}
+ .station-filter select{min-height:40px}.line-choice{min-height:40px}
+ .bus-report{max-height:42dvh;min-width:205px;max-width:255px}
+}
+@media(max-width:360px){.national-brand{gap:5px}.national-brand strong{font-size:15px}.national-brand span{font-size:9px}.national-brand button{font-size:11px}}

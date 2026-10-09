@@ -16,9 +16,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check JavaScript syntax
         run: |
-          for file in app.js experience.js national.js national-contract.js traffic-view.js core.js vehicle-history.js traffic-analysis.js sw.js live-contract.js archive-contract.js api/live.mjs api/national.mjs api/search.mjs api/dataset.mjs api/traffic.mjs backend/national/providers.mjs backend/national/transit.mjs backend/national/geometry.mjs scripts/build-vercel.mjs; do node --check "$file"; done
+          for file in app.js experience.js national.js traffic-tiles.js national-contract.js traffic-view.js core.js vehicle-history.js traffic-analysis.js sw.js live-contract.js archive-contract.js api/live.mjs api/national.mjs api/search.mjs api/dataset.mjs api/traffic.mjs backend/national/providers.mjs backend/national/transit.mjs backend/national/geometry.mjs scripts/build-vercel.mjs; do node --check "$file"; done
       - name: Exercise observed vehicle history and traffic logic
-        run: node tests/vehicle_traffic.cjs
+        run: |
+          node tests/vehicle_traffic.cjs
+          node tests/traffic_gateway.cjs
 
       - name: Verify existing route and source regressions
         run: node tests/logic_regressions.cjs
@@ -30,13 +32,15 @@ jobs:
           node tests/archive_contract.cjs
           node tests/national_contract.cjs
       - name: Install browser runner
-        run: npm install --no-save --no-audit --no-fund playwright@1.56.1
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
       - name: Verify nationwide browser, address search and combined map
         run: node tests/dev_national_browser.cjs
       - name: Save DEV browser screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dev-live-browser
+          name: dev-live-browser-${{ github.sha }}
           path: dev-national-*.png
           if-no-files-found: ignore

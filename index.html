@@ -3,33 +3,35 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? DEV-9.1.9</title>
+<title>איפה בטוח? DEV-9.2.0</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css?v=DEV-9.1.9"/>
-<script src="./gtfs-store.js?v=9.1.9"></script>
+<link rel="stylesheet" href="./styles.css?v=DEV-9.2.0"/>
+<script src="./gtfs-store.js?v=9.2.0"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
-<script defer src="./vehicle-history.js?v=DEV-9.1.9"></script>
-<script defer src="./traffic-analysis.js?v=DEV-9.1.9"></script>
+<script defer src="./vehicle-history.js?v=DEV-9.2.0"></script>
+<script defer src="./traffic-analysis.js?v=DEV-9.2.0"></script>
 
-<script defer src="./archive-contract.js?v=DEV-9.1.9"></script>
-<script defer src="./live-contract.js?v=DEV-9.1.9"></script>
-<link rel="stylesheet" href="./national.css?v=DEV-9.1.9"/>
-<script defer src="./national-contract.js?v=DEV-9.1.9"></script>
-<script defer src="./national.js?v=DEV-9.1.9"></script>
-<script defer src="./experience.js?v=DEV-9.1.9"></script>
-<script defer src="./app.js?v=DEV-9.1.9"></script>
+<script defer src="./archive-contract.js?v=DEV-9.2.0"></script>
+<script defer src="./live-contract.js?v=DEV-9.2.0"></script>
+<link rel="stylesheet" href="./national.css?v=DEV-9.2.0"/>
+<script defer src="./national-contract.js?v=DEV-9.2.0"></script>
+<script defer src="./traffic-tiles.js?v=DEV-9.2.0"></script>
+<script defer src="./national.js?v=DEV-9.2.0"></script>
+<script defer src="./experience.js?v=DEV-9.2.0"></script>
+<script defer src="./app.js?v=DEV-9.2.0"></script>
 </head><body>
 <div class="national-app">
  <main class="national-map" aria-label="מפת תחנות, אוטובוסים ותנועה בכל הארץ"><div id="map" aria-label="מפת התחבורה"></div><div id="mapError" class="map-fallback" hidden>לא ניתן לטעון את המפה. נסה לרענן.</div><div id="tileNotice" class="tile-notice" hidden>מפת הרקע אינה זמינה כרגע.</div></main>
- <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.1.9</span><button id="settingsOpen" type="button" aria-label="הגדרות ומקורות" aria-controls="panel" aria-expanded="false">⚙ הגדרות</button></header>
+ <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.2.0</span><button id="settingsOpen" type="button" aria-label="הגדרות ומקורות" aria-controls="panel" aria-expanded="false">⚙ הגדרות</button></header>
  <section class="map-search" aria-label="חיפוש בכל הארץ"><form id="searchForm"><input id="placeSearch" type="search" autocomplete="off" maxlength="120" placeholder="כתובת, מקום או תחנה בכל הארץ" aria-label="כתובת, מקום או תחנה" aria-expanded="false" aria-controls="searchResults"/><button id="searchSubmit" type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form><ul id="searchResults" aria-label="תוצאות חיפוש" hidden></ul></section>
  <div class="map-layers" role="group" aria-label="שכבות המפה"><button id="busesToggle" aria-pressed="true">אוטובוסים</button><button id="stationsToggle" aria-pressed="true">תחנות</button><button id="trafficLayerToggle" aria-pressed="false">פקקים</button></div>
- <div class="map-utilities"><button id="myLocation" aria-label="המיקום שלי" title="המיקום שלי">⌖</button><button id="nationalFocus" disabled aria-label="מרכז על האוטובוסים המדווחים" title="מרכז על האוטובוסים">🚌</button></div>
+ <div class="map-utilities"><button id="countryView" aria-label="הצג את כל הארץ" title="כל הארץ">⌂</button><button id="myLocation" aria-label="המיקום שלי" title="המיקום שלי">⌖</button><button id="nationalFocus" disabled aria-label="מרכז על האוטובוסים המדווחים" title="מרכז על האוטובוסים">🚌</button></div>
  <div class="national-status" role="status" aria-live="polite"><strong id="nationalBusCount">טוען את המפה…</strong><span id="stopCount"></span><small id="areaCoverage">חפש מקום או הגדל את המפה להצגת אוטובוסים</small></div>
- <div id="trafficLegend" class="national-traffic-legend" hidden>תנועה: <i class="green"></i>מהירה <i class="amber"></i>איטית <i class="red"></i>עמוסה · TomTom</div>
+ <div id="trafficLegend" class="national-traffic-legend" hidden>תנועה: <i class="green"></i>זורמת <i class="amber"></i>איטית <i class="red"></i>עמוסה · <bdi>TomTom</bdi><small id="trafficClock"></small></div>
+ <section id="routePreview" class="route-preview" aria-label="מסלול הרכב" hidden><div><strong id="routePreviewTitle"></strong><small id="routePreviewNote"></small></div><button id="closeRoutePreview" aria-label="סגור תצוגת מסלול">×</button></section>
  <div id="notice" class="national-notice" role="status" hidden></div>
  <section id="stationDock" class="station-dock" aria-label="פרטי התחנה" hidden><div class="station-dock-head"><button id="dockToggle" aria-label="פתיחה או צמצום פרטי התחנה" aria-expanded="true"><strong id="stationTitle"></strong><small id="stationCode"></small></button><button id="closeStation" aria-label="סגור תחנה">×</button></div><div id="stationBody"><div class="station-filter"><label for="stationLineSelect">הצג</label><select id="stationLineSelect" aria-label="סינון קו בתחנה"><option value="">כל הקווים</option></select><div id="stationLines" class="station-lines" aria-label="קווים נפוצים בתחנה"></div></div><div id="directionWrap" class="direction-strip" hidden><label>כיוון <select id="direction" aria-label="בחירת כיוון נסיעה"></select></label></div><div class="station-arrivals-head"><strong>הגעה לתחנה</strong><small id="stationUpdated"></small><button id="stationRefresh" aria-label="רענן תחנה">⟳</button></div><div id="stationArrivals" aria-live="polite"></div><small id="stationCoverage" class="station-coverage"></small></div></section>
 </div>
