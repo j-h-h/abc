@@ -1,4 +1,4 @@
-/* Eifo Batuach 9.0.0 — no local computer/server required. */
+/* Eifo Batuach 9.0.1 — no local computer/server required. */
 (function(root){'use strict';
  const C=root.SafeBusCore,D=root.SafeBusDataset,$=id=>document.getElementById(id);
  const SOURCES={mot:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/',stride:'https://open-bus-stride-api.hasadna.org.il',curlbus:'https://curlbus.app/',busnearby:'https://api.busnearby.co.il/directions/index/stops/'};
@@ -10,15 +10,32 @@
  function initPrefs(){try{const p=JSON.parse(localStorage.getItem('eifo-batuach-v8-prefs')||'{}');if(typeof p.line==='string'&&p.line.length<=8)state.line=p.line;if(/^\d{3,7}$/.test(p.stop))state.stop=p.stop;if(/^\d{4,12}$/.test(p.siriRef||''))state.siriRef=p.siriRef;$('showOld').checked=!!p.showOld;if(typeof p.relayUrl==='string')state.relayUrl=isTrustedRelay(p.relayUrl)?p.relayUrl:'';}catch{}$('line').value=state.line;$('stop').value=state.stop;$('siriRef').value=state.siriRef;$('relayUrl').value=state.relayUrl;}
  function setupMap(){if(!root.L){$('mapError').hidden=false;setBanner('מפת הרקע לא נטענה. נסה שוב בחיבור לאינטרנט.',true);return;}
   state.map=L.map('map',{zoomControl:false,maxZoom:19}).setView([31.733251,35.187968],14);
-  const base=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors',crossOrigin:true}).addTo(state.map);
-  // An HTML file opened as content:// can load route JSON while every background-map tile fails.
-  // Do not mistake a successful GTFS load for a usable street map.
-  let tileOk=false,failed=0;
-  if(typeof base.on==='function'){
-    base.on('tileload',()=>{tileOk=true;failed=0;$('tileNotice').hidden=true;});
-    base.on('tileerror',()=>{failed++;if(!tileOk&&failed>=3){$('tileNotice').hidden=false;}});
+  // If a tile server is blocked, never display a blank map without explanation.
+  const tileStatus=$('tileNotice');
+  let activeTile=null,sourceIndex=0,loadCount=0,errorCount=0;
+  const basemaps=[
+    ['https://tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap contributors'],
+    ['https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png','© OpenStreetMap contributors · © CARTO']
+  ];
+  function startTiles(){
+    if(activeTile)state.map.removeLayer(activeTile);
+    const [url,attribution]=basemaps[sourceIndex];
+    loadCount=0;errorCount=0;
+    const layer=L.tileLayer(url,{maxZoom:19,attribution});
+    activeTile=layer;
+    layer.on('tileload',()=>{if(activeTile!==layer)return;loadCount++;tileStatus.hidden=true;});
+    layer.on('tileerror',()=>{
+      if(activeTile!==layer)return;
+      errorCount++;
+      if(loadCount===0&&errorCount>=4){
+        if(sourceIndex+1<basemaps.length){sourceIndex++;startTiles();}
+        else tileStatus.hidden=false;
+      }
+    });
+    layer.addTo(state.map);
   }
-  setTimeout(()=>{if(!tileOk&&failed>0){$('tileNotice').hidden=false;}},9000);
+  startTiles();
+  setTimeout(()=>{if(loadCount===0&&sourceIndex===basemaps.length-1)tileStatus.hidden=false;},10000);
   state.routeLayer=L.layerGroup().addTo(state.map);state.vehicleLayer=L.layerGroup().addTo(state.map);
   L.control.zoom({position:'bottomleft'}).addTo(state.map);
   $('goStop').onclick=()=>{if(state.stopMarker)state.map.setView(state.stopMarker.getLatLng(),15);else setBanner('למיקום תחנה מדויק צריך לטעון קודם את המסלול הרשמי.',true)};
