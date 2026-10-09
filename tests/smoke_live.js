@@ -12,6 +12,15 @@ const base=process.env.SITE_URL||'https://j-h-h.github.io/abc/';
  await page.goto(base,{waitUntil:'domcontentloaded',timeout:45000});
  await page.waitForFunction(()=>window.SafeBusDataset?.catalog()?.schema===2,{timeout:55000});
  await page.waitForFunction(()=>window.SafeBusApp?.state?.route?.properties?.line==='72',{timeout:45000});
+ const layout=await page.evaluate(()=>({
+   map:document.querySelector('#map').getBoundingClientRect().height,
+   wrap:document.querySelector('.map-wrap').getBoundingClientRect().height,
+   health:document.querySelector('#healthStrip').textContent
+ }));
+ console.log('MAP LAYOUT',JSON.stringify(layout));
+ assert.ok(layout.wrap>=200,'Map wrapper too small');
+ assert.ok(layout.map>=layout.wrap*.9,'REGRESSION: Leaflet map is nearly zero-height on phones');
+ assert.ok(layout.health.includes('מסלול'),'Diagnostics not initialized');
  const one=await page.evaluate(()=>({
     line:window.SafeBusApp.state.line,
     stop:window.SafeBusApp.state.stop,
@@ -30,6 +39,10 @@ const base=process.env.SITE_URL||'https://j-h-h.github.io/abc/';
  console.log('MAP TILE DIAGNOSTICS',JSON.stringify({tiles,failed:mapFailures.slice(0,12),httpErrors:mapHttpErrors.slice(0,12)}));
  assert.equal(one.line,'72');assert.equal(one.stop,'2360');
  assert.ok(one.routePoints>100 && one.routeStops>5 && one.map && one.svgPaths>0);
+ await page.locator('#healthStrip').click();
+ await page.waitForFunction(()=>document.querySelector('#panel')&&!document.querySelector('#panel').hidden);
+ await page.waitForFunction(()=>document.querySelector('#diagnostic').textContent.includes('מצב המערכת'),{timeout:12000});
+ await page.locator('#settingsClose').click();
  await page.screenshot({path:'browser-72.png',fullPage:true});
  await page.locator('#line').fill('531');
  await page.locator('#apply').click();
