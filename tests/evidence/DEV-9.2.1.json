@@ -1,0 +1,167 @@
+{
+  "version": "DEV-9.2.1",
+  "canonicalUrl": "https://eifo-batuach-dev.vercel.app/",
+  "branch": "dev/vehicle-history-map-20261009",
+  "codeCommit": "01e0e1cd7193a03d999678a827a72605f167222a",
+  "deploymentId": "dpl_FzGRRsBB6wv1cpZKm6qr6wNqcyqR",
+  "deploymentState": "READY",
+  "preDeploymentCI": {
+    "id": 37963434215,
+    "conclusion": "success"
+  },
+  "publicCI": {
+    "id": 37963924646,
+    "conclusion": "success",
+    "headSha": "578678e77cfff2ccc7c0095f2bf711821b6a12a3"
+  },
+  "gtfs": {
+    "version": "560a61f2a20156ec",
+    "lines": 911,
+    "routes": 6680,
+    "builtFrom": "verified-existing-published-snapshot"
+  },
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "real": {
+    "addresses": [
+      "רוטשילד תל אביב",
+      "מרכז חורב חיפה",
+      "אילת"
+    ],
+    "station": {
+      "code": "23014",
+      "arrivals": 0,
+      "vehicles": 0
+    },
+    "gtfsRoute": {
+      "line": "10א",
+      "points": 693
+    },
+    "area": {
+      "place": "נצרת",
+      "error": null,
+      "rawCount": 12,
+      "shown": 12,
+      "source": "source-reports-in-viewport",
+      "vehicles": [
+        {
+          "id": "7:32983304",
+          "vehicleRef": "32983304",
+          "operatorRef": "7",
+          "vehicleKey": "il-mot-siri:7:32983304",
+          "tripId": "150348750",
+          "routeId": "1436",
+          "line": null,
+          "lat": 32.70766,
+          "lon": 35.307113,
+          "bearing": 114,
+          "sourceObservedAt": "2026-10-09T17:06:26.000Z",
+          "snapshotAt": "2026-10-09T17:06:00.000Z",
+          "sourceResponseAt": null,
+          "source": "open-bus-stride-siri",
+          "clockType": "source-report",
+          "gpsMeasuredAt": null,
+          "directionVerified": false,
+          "reportedArrivalAt": null,
+          "reportedSpeedKmh": 25,
+          "speedUnit": "km/h",
+          "speedEvidence": "mot-siri-profile-3.4.56",
+          "speedObservedAt": "2026-10-09T17:06:26.000Z",
+          "vehicle_ref": "32983304",
+          "observed_at": "2026-10-09T17:06:26.000Z",
+          "associationStopCode": null,
+          "velocity": null
+        },
+        {
+          "id": "7:3824355",
+          "vehicleRef": "3824355",
+          "operatorRef": "7",
+          "vehicleKey": "il-mot-siri:7:3824355",
+          "tripId": "150348730",
+          "routeId": "1415",
+          "line": null,
+          "lat": 32.705078,
+          "lon": 35.305755,
+          "bearing": 246,
+          "sourceObservedAt": "2026-10-09T17:06:21.000Z",
+          "snapshotAt": "2026-10-09T17:06:00.000Z",
+          "sourceResponseAt": null,
+          "source": "open-bus-stride-siri",
+          "clockType": "source-report",
+          "gpsMeasuredAt": null,
+          "directionVerified": false,
+          "reportedArrivalAt": null,
+          "reportedSpeedKmh": 18,
+          "speedUnit": "km/h",
+          "speedEvidence": "mot-siri-profile-3.4.56",
+          "speedObservedAt": "2026-10-09T17:06:21.000Z",
+          "vehicle_ref": "3824355",
+          "observed_at": "2026-10-09T17:06:21.000Z",
+          "associationStopCode": null,
+          "velocity": null
+        },
+        {
+          "id": "7:32982304",
+          "vehicleRef": "32982304",
+          "operatorRef": "7",
+          "vehicleKey": "il-mot-siri:7:32982304",
+          "tripId": "150348769",
+          "routeId": "1575",
+          "line": null,
+          "lat": 32.69823,
+          "lon": 35.310878,
+          "bearing": 250,
+          "sourceObservedAt": "2026-10-09T17:06:18.000Z",
+          "snapshotAt": "2026-10-09T17:06:00.000Z",
+          "sourceResponseAt": null,
+          "source": "open-bus-stride-siri",
+          "clockType": "source-report",
+          "gpsMeasuredAt": null,
+          "directionVerified": false,
+          "reportedArrivalAt": null,
+          "reportedSpeedKmh": 11,
+          "speedUnit": "km/h",
+          "speedEvidence": "mot-siri-profile-3.4.56",
+          "speedObservedAt": "2026-10-09T17:06:18.000Z",
+          "vehicle_ref": "32982304",
+          "observed_at": "2026-10-09T17:06:18.000Z",
+          "associationStopCode": null,
+          "velocity": null
+        }
+      ]
+    },
+    "traffic": {
+      "available": false,
+      "provider": null,
+      "state": "not-connected"
+    }
+  },
+  "synthetic": [
+    "combined traffic and vehicle map",
+    "expired source reports",
+    "provider 503",
+    "traffic quota 429",
+    "traffic tile age",
+    "operator route-id collision",
+    "fixed source speed units"
+  ],
+  "constraints": {
+    "independentGPS": false,
+    "trafficAppliedToETA": false,
+    "paidServiceEnabled": false,
+    "otherBranchesWritten": false
+  },
+  "artifactIds": {
+    "public": 11631624217,
+    "local": 11632113301
+  },
+  "manualScreenshotReview": false
+}
