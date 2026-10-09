@@ -61,3 +61,37 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke test public site and bus route 72
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import json,os,time,urllib.request,urllib.error
+          base=os.environ['SITE_URL'].rstrip('/')+'/'
+          def get(path):
+              u=base+path
+              last=None
+              for attempt in range(9):
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'EifoBatuach-smoke/1.0'}),timeout=18) as r:
+                          data=r.read()
+                          print('GET',path,'HTTP',r.status,'bytes',len(data))
+                          return data
+                  except Exception as e:
+                      last=e; print('retry',path,attempt,str(e));time.sleep(5)
+              raise RuntimeError(f'URL FAILED: {u} {last}')
+          page=get('index.html').decode('utf-8')
+          assert 'איפה בטוח' in page and 'gtfs-store.js' in page
+          js=get('vendor/leaflet.js')
+          assert b'L.Control' in js or b'Leaflet' in js
+          css=get('vendor/leaflet.css')
+          assert b'.leaflet' in css
+          manifest=json.loads(get('data/version.json'))
+          catalog=json.loads(get('data/catalog.json'))
+          routes=json.loads(get('data/line/72.json'))
+          assert catalog.get('schema')==2 and '72' in catalog.get('lines',[])
+          matched=[x for x in routes if '2360' in x.get('c',[])]
+          assert matched, 'Missing stop 2360 on 72 route'
+          assert all(len(x.get('x',''))>20 for x in matched)
+          print('PUBLIC SITE OK',base,'feed',manifest.get('version'),'line 72 matched routes',len(matched))
+          PY
