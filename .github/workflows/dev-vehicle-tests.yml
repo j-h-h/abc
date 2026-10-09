@@ -44,3 +44,31 @@ jobs:
           name: dev-live-browser-${{ github.sha }}
           path: dev-national-*.png
           if-no-files-found: ignore
+
+  public-dev:
+    if: contains(github.event.head_commit.message, '[verify-public]')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/checkout@v4
+      - name: Build verified GTFS for browser runner
+        run: node scripts/build-vercel.mjs
+      - name: Install matching browser
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Verify canonical public DEV in desktop and mobile
+        env:
+          DEV_BASE_URL: https://eifo-batuach-dev.vercel.app
+        run: node tests/dev_national_browser.cjs
+      - name: Save public DEV evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-public-browser-${{ github.sha }}
+          path: dev-public-*.png
+          if-no-files-found: ignore
