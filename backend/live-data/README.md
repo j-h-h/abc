@@ -37,7 +37,10 @@ Direction matching uses LineRef, operator, ordered stop sequence and destination
 SIRI DirectionRef is preserved but is not compared to GTFS direction_id as if they shared a namespace.
 
 History uses the external Open Bus archive on demand, with operator-scoped VehicleRef and source IDs.
-No local persistent database or paid store is configured. Coverage, availability and permanence of
+History selects at most 100 exact vehicle/operator ride IDs before requesting positions.
+Ride associations have scheduled-trip-start clocks, separate from source-report observations.
+A successful ride list survives a position timeout with partial=true and observationStatus=unavailable.
+Recent archive requests can return 502 UPSTREAM_TIMEOUT. No local persistent database or paid store is configured. Coverage, availability and permanence of
 provider vehicle references are not guaranteed. History from report clocks must not be passed to
 GPS-only anomaly analysis. No mechanical fault classification is made.
 
@@ -91,4 +94,7 @@ No plan upgrade, paid static IP, paid database or paid traffic subscription was 
 Synthetic geometries occur only in clearly marked algorithm tests, not in API production responses.
 `LIVE_BASE_URL=https://eifo-batuach-live-relay.vercel.app npm run check:live` runs real HTTPS tests.
 GitHub workflow is restricted to the work branch; it does not deploy or alter GitHub Pages.
-See `INTEGRATION.md` and `VALIDATION.md` for the handoff and recorded results.
+Recorded verification: 38 regression tests and 17 real HTTPS checks passed on 2026-10-09.
+This includes explicit unavailable/partial history and disabled-traffic responses, not a claim
+that every provider is healthy. See `INTEGRATION.md`, `VALIDATION.md`, `SOURCE_ASSESSMENT.md`
+and `LIVE_ENDPOINT_SAMPLES.json` for the handoff and actual timestamped results.

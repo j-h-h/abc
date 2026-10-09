@@ -74,6 +74,12 @@ For older dates pass explicit ISO timestamps with timezones as `from` and `to`
 (maximum 14-day window, up to 366 days back). For pagination keep returned from/to fixed
 and use nextOffset; stop when null, capped at offset 2000. The response exposes truncation
 and rejected observations. Empty results are absence of usable records, not absence of journeys.
+History first selects up to 100 exact vehicle/operator ride associations (including starts up to
+24 hours before the observation window). rides[].scheduledStartAt is a planned-trip clock;
+rides[].sourceObservedAt and gpsMeasuredAt are null. These are traceable source associations,
+not proof of completed movement. Check rideSelectionTruncated, observationStatus, partial and
+observationError. A 200 response can contain valid associations while its position request failed;
+a 502 UPSTREAM_TIMEOUT means the upstream ride query itself failed, not an empty history.
 No local or paid database was enabled. Stable identity enables later history collection,
 but this release does not promise a complete lifetime archive.
 
