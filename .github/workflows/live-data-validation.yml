@@ -27,3 +27,6 @@ jobs:
         env:
           LIVE_BASE_URL: https://eifo-batuach-live-relay.vercel.app
         run: npm run check:live
+      - name: Inspect additional official traffic data sources (one-off)
+        working-directory: backend/live-data
+        run: node tools/traffic-probe.mjs

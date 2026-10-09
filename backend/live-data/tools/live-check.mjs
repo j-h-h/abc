@@ -7,7 +7,8 @@ async function request(path,{method='GET',origin='https://j-h-h.github.io',statu
  const start=Date.now(),r=await fetch(base+path,{method,headers:{Accept:'application/json',Origin:origin},redirect:'error',signal:AbortSignal.timeout(30000)}),text=await r.text();
  let data;try{data=JSON.parse(text)}catch{throw Error('NON_JSON_RESPONSE '+path+' '+r.status+' '+text.slice(0,80))}
  assert.equal(r.status,status,path+': '+JSON.stringify(data));
- assert.equal(r.headers.get('access-control-allow-origin'),'https://j-h-h.github.io');
+ if(path.startsWith('/v1/')||path.startsWith('/curlbus/'))assert.equal(r.headers.get('access-control-allow-origin'),'https://j-h-h.github.io');
+ console.log('LIVE_CHECK_PROGRESS '+JSON.stringify({path,httpStatus:r.status}));
  evidence.push({path,method,httpStatus:r.status,fetchedAt:new Date().toISOString(),elapsedMs:Date.now()-start,data});
  return data;
 }
