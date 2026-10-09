@@ -1,0 +1,17 @@
+name: Live data backend validation
+on:
+  push:
+    branches: [work/live-data-20261009]
+    paths: ['backend/live-data/**', '.github/workflows/live-data-validation.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Probe real upstream servers and isolated relay
+        run: node backend/live-data/tools/probe.mjs
