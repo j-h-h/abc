@@ -2,14 +2,15 @@
 <html lang="he" dir="rtl"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f7f9fc"><title>איפה בטוח? — מפת פקקים</title>
-<link rel="stylesheet" href="./traffic-view.css?v=DEV-9.1.4">
-<script defer src="./traffic-view.js?v=DEV-9.1.4"></script>
+<link rel="stylesheet" href="./traffic-view.css?v=DEV-9.1.5">
+<script defer src="./traffic-view.js?v=DEV-9.1.5"></script>
 </head><body>
 <div class="traffic-app">
  <header><strong>🚦 מפת פקקים</strong><a href="./" class="back">חזרה לאוטובוסים</a></header>
  <p class="traffic-note">מפת התנועה של Waze מוצגת בנפרד. הפקקים אינם מתווספים לזמני ההגעה המדווחים של האוטובוס.</p>
- <div class="traffic-tools"><span id="trafficLoadStatus" role="status">טוען את מפת התנועה…</span><a id="openTrafficSource" href="https://www.waze.com/he/live-map/" target="_blank" rel="noopener noreferrer">פתיחה ב־Waze ↗</a><button id="reloadTraffic" type="button">רענן מפה</button></div>
+ <div class="traffic-tools"><a class="traffic-primary" id="openGoogleTraffic" href="https://www.google.com/maps/@?api=1&amp;map_action=map&amp;center=31.733251%2C35.187968&amp;zoom=14&amp;layer=traffic" target="_blank" rel="noopener noreferrer">פקקים ב־Google Maps ↗</a><a id="openTrafficSource" href="https://www.waze.com/he/live-map/" target="_blank" rel="noopener noreferrer">פתיחה ב־Waze ↗</a><button id="reloadTraffic" type="button">רענן מפה</button><span id="trafficLoadStatus" role="status">טוען את מפת התנועה…</span></div>
+ <p class="traffic-help">אם לא מופיעים צבעי עומס במפה, פתח את מפת הפקקים המלאה באחד הכפתורים. המידע תלוי בספק התנועה.</p>
  <main><iframe id="trafficFrame" title="מפת תנועה ופקקים של Waze" referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen" allowfullscreen></iframe></main>
- <footer>המידע מוצג כפי שמסופק ב־Waze; אינו מבטיח שכל עומס או חסימה מדווחים. DEV-9.1.4</footer>
+ <footer>המידע מוצג כפי שמסופק ב־Waze; אינו מבטיח שכל עומס או חסימה מדווחים. DEV-9.1.5</footer>
 </div>
 </body></html>

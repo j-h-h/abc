@@ -74,5 +74,5 @@
   return r.samples.filter(p=>p.trip===trip&&p.t>=now-12*60000&&p.t<=now).slice(-7).map(p=>({...p}));
  }
  function reset(){registry=Object.create(null);try{storage?.removeItem(KEY);}catch{}}
- root.SafeBusHistory={ingest,summary,trail,reset,version:'DEV-9.1.4',scope:'local-device',_inspect:()=>JSON.parse(JSON.stringify(registry))};
+ root.SafeBusHistory={ingest,summary,trail,reset,version:'DEV-9.1.5',scope:'local-device',_inspect:()=>JSON.parse(JSON.stringify(registry))};
 })(typeof window!=='undefined'?window:globalThis);

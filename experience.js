@@ -64,6 +64,6 @@
   if(root.ResizeObserver){new ResizeObserver(()=>root.SafeBusApp?.state.map?.invalidateSize()).observe($('map'));}
   if('serviceWorker' in navigator&&root.location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
  }
- root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.4'};
+ root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.5'};
  document.addEventListener('DOMContentLoaded',init);
 })(window);

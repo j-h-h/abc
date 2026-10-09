@@ -37,5 +37,5 @@
   return {minutes:Math.ceil((at-now)/60000),extraMinutes:delay/60,computedArrivalAt:decision.computedArrivalAt,caution:'חישוב ניסיוני מהשרת לבסיס זרימה חופשית שאומת'};
  }
  function weightedEta(){return null;}
- root.SafeBusTraffic={normalize,layerStyle,expired,serverEta,weightedEta,version:'DEV-9.1.4'};
+ root.SafeBusTraffic={normalize,layerStyle,expired,serverEta,weightedEta,version:'DEV-9.1.5'};
 })(typeof window!=='undefined'?window:globalThis);

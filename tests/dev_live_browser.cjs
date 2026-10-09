@@ -28,7 +28,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
    if(line==='531'){await page.locator('#line').fill(line);await page.locator('#apply').click();}
    await page.waitForFunction(expected=>window.SafeBusApp?.state.route?.properties.line===expected&&!window.SafeBusApp.state.polling&&(window.SafeBusApp.state.arrivalAt>0||window.SafeBusApp.state.arrivalsError!==null),line,{timeout:45000});
    const state=await page.evaluate(()=>({version:SafeBusApp.version,line:SafeBusApp.state.line,source:SafeBusApp.state.sourceUsed,error:SafeBusApp.state.arrivalsError,arrivalCount:SafeBusApp.state.arrivals.length,vehicles:SafeBusApp.state.vehicles.size,mapHeight:document.querySelector('#map').getBoundingClientRect().height,routePaths:document.querySelectorAll('.leaflet-overlay-pane path').length}));
-   assert.equal(state.version,'DEV-9.1.4');assert.equal(state.error,null);assert.match(state.source,/LIVE-WORK/);assert.ok(state.mapHeight>=200&&state.routePaths>0);
+   assert.equal(state.version,'DEV-9.1.5');assert.equal(state.error,null);assert.match(state.source,/LIVE-WORK/);assert.ok(state.mapHeight>=200&&state.routePaths>0);
    console.log('REAL BROWSER + WORK SERVICE',JSON.stringify(state));
    await page.screenshot({path:'dev-live-'+line+'.png',fullPage:true});
   }
@@ -97,6 +97,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   await page.waitForFunction(()=>document.querySelector('#trafficFrame')?.src.startsWith('https://embed.waze.com/he/iframe?'));
   assert.equal(await page.locator('#trafficFrame').getAttribute('title'),'מפת תנועה ופקקים של Waze');
   assert.match(await page.locator('.traffic-note').innerText(),/אינם מתווספים/);
+  const google=new URL(await page.locator('#openGoogleTraffic').getAttribute('href'));assert.equal(google.origin,'https://www.google.com');assert.equal(google.searchParams.get('layer'),'traffic');assert.equal(google.searchParams.get('api'),'1');assert.ok(google.searchParams.get('center').startsWith('31.'));
   assert.equal(await page.locator('#trafficFrame').evaluate(e=>e.getBoundingClientRect().width),1440);
   await page.frameLocator('#trafficFrame').getByPlaceholder('חיפוש כתובת').waitFor({state:'visible',timeout:30000});
   await page.frameLocator('#trafficFrame').locator('.olControlZoomIn').waitFor({state:'visible',timeout:30000});
