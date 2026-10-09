@@ -3,22 +3,23 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? DEV-9.1.2</title>
+<title>איפה בטוח? DEV-9.1.3</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css?v=DEV-9.1.2"/>
+<link rel="stylesheet" href="./styles.css?v=DEV-9.1.3"/>
 <script src="./gtfs-store.js"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
-<script defer src="./vehicle-history.js?v=DEV-9.1.2"></script>
-<script defer src="./traffic-analysis.js?v=DEV-9.1.2"></script>
+<script defer src="./vehicle-history.js?v=DEV-9.1.3"></script>
+<script defer src="./traffic-analysis.js?v=DEV-9.1.3"></script>
 
-<script defer src="./live-contract.js?v=DEV-9.1.2"></script>
-<script defer src="./app.js?v=DEV-9.1.2"></script>
+<script defer src="./archive-contract.js?v=DEV-9.1.3"></script>
+<script defer src="./live-contract.js?v=DEV-9.1.3"></script>
+<script defer src="./app.js?v=DEV-9.1.3"></script>
 </head><body>
 <div class="app">
 <header class="topbar">
- <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>DEV-9.1.2</small></div>
+ <div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>DEV-9.1.3</small></div>
  <button id="settingsOpen" class="icon-button" title="הגדרות ומקורות" aria-label="הגדרות ומקורות">⚙</button>
 </header>
 <section class="chooser" aria-label="קו ותחנה">
@@ -47,15 +48,19 @@
 <aside id="panel" class="panel" aria-label="הגדרות ומקורות" aria-modal="true" role="dialog" hidden>
  <div class="panel-header"><strong>הגדרות ומקורות</strong><button id="settingsClose" class="icon-button" aria-label="סגור">×</button></div>
  <section><h2>כל קווי האוטובוס בארץ</h2><p>מאגר המסלולים נשלף לפי הצורך ונשמר בטלפון. העדכון מתבצע בנפרד מהאפליקציה; אין צורך להוריד קובץ גדול בכל שדרוג.</p><div id="importStatus" class="muted">טוען מאגר מסלולים…</div></section>
- <section><h2>היסטוריית רכב וסימני אזהרה</h2><p>חריגות תנועה חוזרות מזוהות לפי מזהה רכב יציב, גם בנסיעות אחרות ובקווים אחרים, מתוך תצפיות שנאספו במכשיר זה. סימון ⚠ מצביע על עצירות ממושכות במספר נסיעות, לא על הוכחה לתקלה מכנית. חריגות GPS עשויות להיות בעיית קליטה.</p></section>
- <section><h2>עדכונים ומיקום</h2><p>התווית שעל האוטובוס מציגה את גיל מדידת ה־GPS, לא את מועד רענון המסך. תחזית הגעה אינה משויכת לרכב ללא ראיות.</p>
+ <section id="vehicleArchiveSection"><h2>היסטוריית רכב חוצת נסיעות</h2><p>הארכיון מקבץ לפי מזהה רכב ומפעיל, גם במסלולים אחרים. שיוך לנסיעה מתוכננת מוצג בנפרד מדיווח מיקום; אף אחד מהם אינו הוכחה לתקלה מכנית. זיהוי עצירות מקומי דורש חותמת GPS עצמאית, שאינה זמינה במקורות המחוברים.</p>
+ <div class="archive-fields"><label>מזהה רכב במקור <input id="archiveVehicleRef" maxlength="64" autocomplete="off" dir="ltr"/></label><label>מזהה מפעיל <input id="archiveOperatorRef" inputmode="numeric" maxlength="12" autocomplete="off" dir="ltr"/></label></div>
+ <div class="archive-fields"><label>תחילת חלון (רשות) <input id="archiveFrom" type="date"/></label><label>סיום חלון (רשות) <input id="archiveTo" type="date"/></label></div><small>בלי תאריכים: 14 הימים האחרונים. תאריכים לפי שעון המכשיר, מתחילת היום הראשון עד תחילת יום הסיום.</small>
+ <button type="button" id="archiveLoad" class="secondary">טען ארכיון לרכב</button><button type="button" id="archiveMore" class="secondary" hidden>טען עוד באותו חלון</button>
+ <div id="archiveStatus" role="status" aria-live="polite">בחר רכב מהתחזית או מהמפה, או הזן מזהי רכב ומפעיל.</div><div id="archiveResults"></div></section>
+ <section><h2>עדכונים ומיקום</h2><p>התווית שעל האוטובוס מציגה את גיל דיווח המקור. חותמת GPS עצמאית אינה זמינה במקורות המחוברים. תחזית הגעה אינה משויכת לרכב ללא ראיות.</p>
  <label>מזהה SIRI של הקו (למתקדמים) <input id="siriRef" inputmode="numeric" placeholder="מזוהה מהמסלול, אם קיים"/></label>
  <label class="checkline"><input id="showOld" type="checkbox"/> הצג גם מיקומים ישנים מאוד</label>
  </section>
  <section><h2>חיבור נתונים חי</h2><p>בגרסת DEV מחובר כבר מתווך שרת ל־LIVE-WORK, כדי להימנע מחסימת מקורות בדפדפן. התחזיות נבדקות לפי קו, מפעיל, כיוון וחותמות זמן. אפשר להגדיר מתווך אישי אחר; השארת השדה ריק מפעילה את החיבור המובנה.</p><label>כתובת מתווך (רשות) <input id="relayUrl" type="url" inputmode="url" dir="ltr" placeholder="https://example.workers.dev"/></label><button class="secondary" id="relayApply">עדכן חיבור</button></section>
-<section><h2>פקקים (רשות)</h2><p>צביעת הכבישים לפי עומס מחייבת נתונים אמיתיים ממקור מורשה. חישוב עיכוב בזמני ההגעה מחייב בנוסף מהירויות וקטעי דרך תואמים; אין להסיק אותו מצבעי המפה בלבד. תחזית חיה של SIRI לא תוגדל שוב כדי לא לספור פקק פעמיים.</p><label>מפתח TomTom <input id="trafficKey" type="password" autocomplete="off" placeholder="מפתח אופציונלי"/></label><button class="secondary" id="trafficApply">הפעל שכבת פקקים</button></section>
+<section><h2>עומסי תנועה</h2><p>אין מקור עומסים מורשה פעיל. מפתחות ורישיונות תנועה מוגדרים בשרת בלבד. אין צביעת כבישים ממידע ישן ואין תוספת עומס לתחזית SIRI. חישוב עיכוב יישאר בלתי מאומת כל עוד אין חותמת GPS עצמאית.</p><button type="button" id="trafficApply" class="secondary">הצג מצב מקור התנועה</button></section>
  <section><h2>מה עובד ומה לא?</h2><p>מסלול, מפת רקע ומידע חי נבדקים בנפרד. אם מקור תחזיות חסום בדפדפן, נדרש מתווך שרת; זו אינה תקלה של מספר הקו.</p><button class="secondary" id="diagnose">בדוק שוב</button> <button class="secondary" id="copyDiagnostic">העתק דוח תקלה</button><pre id="diagnostic" class="diagnostic">פתח אבחון כדי לראות מצב.</pre></section>
- <section><h2>מידע</h2><p>הנתונים נשמרים במכשיר בלבד. אם מקור מסוים חסום בגלל CORS או אינו זמין, האפליקציה תדווח על כך. אין להשתמש באפליקציה כאמצעי בלעדי לתפיסת אוטובוס לפני אימות בשטח.</p></section>
+ <section><h2>מידע</h2><p>העדפות ותצפיות מקומיות נשמרות במכשיר. קריאת הארכיון שולחת את מזהי הרכב והמפעיל לשירות הנתונים. אם מקור מסוים חסום בגלל CORS או אינו זמין, האפליקציה תדווח על כך. אין להשתמש באפליקציה כאמצעי בלעדי לתפיסת אוטובוס לפני אימות בשטח.</p></section>
 </aside>
 <script>if('serviceWorker' in navigator && location.protocol==='https:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
 </body></html>

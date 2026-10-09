@@ -1,18 +1,18 @@
 /* Observed vehicle history. Local and conservative; no inferred mechanical faults. */
 (function(root){'use strict';
- const KEY='eifo-observed-vehicles-v1',DAY=86400000,RETENTION=30*DAY,MAX_VEHICLES=180,MAX_POINTS=100,MAX_EVENTS=40;
+ const KEY='eifo-observed-vehicles-v2',DAY=86400000,RETENTION=30*DAY,MAX_VEHICLES=180,MAX_POINTS=100,MAX_EVENTS=40;
  const C=root.SafeBusCore||{};
  let registry=Object.create(null),storage=null;
  try{storage=root.localStorage||null;const value=storage&&JSON.parse(storage.getItem(KEY)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))registry=Object.assign(Object.create(null),value);}catch{}
- const validRef=ref=>typeof ref==='string'&&/^[\p{L}\p{N}_:.-]{3,64}$/u.test(ref);
+ const validRef=ref=>typeof ref==='string'&&/^[\p{L}\p{N}_:.-]{3,96}$/u.test(ref);
  const number=x=>(typeof x==='number'||typeof x==='string'&&x.trim()!=='')?Number(x):NaN,dt=x=>Date.parse(x);
  const distance=(a,b)=>C.hav?C.hav([a.lat,a.lon],[b.lat,b.lon]):Infinity;
  function cutoff(now){return now-RETENTION}
  function compact(now=Date.now()){
   for(const [key,r] of Object.entries(registry)){
    if(!r||typeof r!=='object'||!Array.isArray(r.samples)||!Array.isArray(r.events)){delete registry[key];continue;}
-   r.samples=r.samples.filter(x=>x&&Number.isFinite(x.t)&&x.t>=cutoff(now)&&x.t<=now+30000&&C.validCoord?.(x.lat,x.lon)).slice(-MAX_POINTS);
-   r.events=r.events.filter(x=>x&&Number.isFinite(x.t)&&x.t>=cutoff(now)&&x.t<=now+30000&&['stationary','gps_jump'].includes(x.kind)&&typeof x.trip==='string').slice(-MAX_EVENTS);
+   r.samples=r.samples.filter(x=>x&&Number.isFinite(x.t)&&x.t>=cutoff(now)&&x.t<=now+30000&&C.validCoord?.(x.lat,x.lon)&&x.independentClockVerified===true).slice(-MAX_POINTS);
+   r.events=r.events.filter(x=>x&&Number.isFinite(x.t)&&x.t>=cutoff(now)&&x.t<=now+30000&&x.independentClockVerified===true&&['stationary','gps_jump'].includes(x.kind)&&typeof x.trip==='string').slice(-MAX_EVENTS);
    if(!r.samples.length&&!r.events.length)delete registry[key];
   }
   const keys=Object.keys(registry).sort((a,b)=>(registry[b].last||0)-(registry[a].last||0));
@@ -24,16 +24,16 @@
  function addEvent(r,kind,sample){
   // No repeated alerts every polling cycle for the same ride and issue.
   if(r.events.some(e=>e.kind===kind&&e.trip===sample.trip&&sample.t-e.t<20*60000))return;
-  r.events.push({kind,trip:sample.trip,t:sample.t,line:sample.line});
+  r.events.push({kind,trip:sample.trip,t:sample.t,line:sample.line,independentClockVerified:true});
  }
  function ingest(v,context={}){
   const ref=v?.vehicle_ref==null?'':String(v.vehicle_ref).trim();
   if(!validRef(ref))return {supported:false,reason:'אין מזהה רכב יציב'};
   const t=dt(v.observed_at),lat=number(v.lat),lon=number(v.lon),now=Number.isFinite(context.now)?context.now:Date.now();
   if(!Number.isFinite(t)||t>now+30000||t<cutoff(now)||!C.validCoord?.(lat,lon))return {supported:false,reason:'תצפית לא תקינה'};
-  if(v.clockType!=='gps-measurement')return {supported:false,reason:'אין חותמת זמן GPS עצמאית'};
+  if(v.clockType!=='gps-measurement'||v.gpsFreshnessVerified!==true||Date.parse(v.gpsMeasuredAt)!==t)return {supported:false,reason:'אין חותמת זמן GPS עצמאית'};
   let r=registry[ref];if(!r)r=registry[ref]={samples:[],events:[],last:0};
-  const trip=stableRide(v),sample={t,lat,lon,trip,line:String(context.line||''),source:String(v.source||'')};
+  const trip=stableRide(v),sample={t,lat,lon,trip,line:String(context.line||''),source:String(v.source||''),independentClockVerified:true};
   const last=r.samples.at(-1);
   if(last&&t<=last.t){return summary(ref,now)}
   const route=context.route;
@@ -74,5 +74,5 @@
   return r.samples.filter(p=>p.trip===trip&&p.t>=now-12*60000&&p.t<=now).slice(-7).map(p=>({...p}));
  }
  function reset(){registry=Object.create(null);try{storage?.removeItem(KEY);}catch{}}
- root.SafeBusHistory={ingest,summary,trail,reset,version:'DEV-9.1.0',scope:'local-device',_inspect:()=>JSON.parse(JSON.stringify(registry))};
+ root.SafeBusHistory={ingest,summary,trail,reset,version:'DEV-9.1.3',scope:'local-device',_inspect:()=>JSON.parse(JSON.stringify(registry))};
 })(typeof window!=='undefined'?window:globalThis);

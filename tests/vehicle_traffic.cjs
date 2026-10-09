@@ -11,7 +11,7 @@ for(const name of ['core.js','vehicle-history.js','traffic-analysis.js']){
 const H=window.SafeBusHistory,T=window.SafeBusTraffic;
 const now=Date.now(),start=now-45*60000;
 function item(t,trip,lat=31.75,lon=35.20,vehicle='900888'){
- return {vehicle_ref:vehicle,ride_id:trip,lat,lon,observed_at:new Date(t).toISOString(),clockType:'gps-measurement',source:'Open Bus'};
+ return {vehicle_ref:vehicle,ride_id:trip,lat,lon,observed_at:new Date(t).toISOString(),clockType:'gps-measurement',gpsFreshnessVerified:true,gpsMeasuredAt:new Date(t).toISOString(),source:'synthetic-independent-gps'};
 }
 function tripAt(t,ride){for(const offset of [0,180000,360000,540000])H.ingest(item(t+offset,ride),{line:'72',now});}
 tripAt(start,'ride-one');
@@ -33,12 +33,13 @@ const jump=H.summary('200003',now);
 assert.equal(jump.recurrent,false,'GPS teleportation is not proof of mechanical fault');
 assert.ok(jump.gpsJumps>=1,'GPS jump should be recorded as measurement anomaly');
 const snapshot={routeId:'34119',stopCode:'2360',observedAt:new Date(now).toISOString(),source:'TomTom flow',
- segments:[{geometry:{type:'LineString',coordinates:[[35.19,31.74],[35.20,31.75]]},currentSpeedKmh:15,freeFlowSpeedKmh:55,confidence:.9}],
- matchMethod:'directed-route-corridor',validated:true,coveredMeters:800,remainingRouteMeters:1000,delaySeconds:240,confidence:.9};
+ segments:[{geometry:{type:'LineString',coordinates:[[35.19,31.74],[35.20,31.75]]},currentSpeedKmh:15,freeFlowSpeedKmh:55,confidence:.9,live:true,observedAt:new Date(now).toISOString()}],
+ matchMethod:'directed-route-corridor',validated:true,coveredMeters:990,remainingRouteMeters:1000,delaySeconds:240,confidence:.9};
 const good=T.normalize(snapshot,{routeId:'34119',stopCode:'2360',now});
 assert.equal(good.available,true);
-assert.equal(good.etaAdjustment,4);
-assert.equal(T.weightedEta({minutes:5,realtime:false},good).minutes,9);
+assert.equal(good.etaAdjustment,null);
+assert.equal(good.coveredRoadDelaySeconds,240);
+assert.equal(T.weightedEta({minutes:5,realtime:false},good),null,'A timetable is not a proven traffic-free baseline');
 assert.equal(T.weightedEta({minutes:5,realtime:true},good),null,'Must not double count congestion in live ETA');
 const bad=T.normalize({...snapshot,validated:false},{routeId:'34119',stopCode:'2360',now});
 assert.equal(bad.etaAdjustment,null,'Unvalidated traffic cannot be included in ETA');
@@ -59,3 +60,18 @@ assert.equal(H.trail('900888','ride-two',start).length,0,'Trail excludes future 
 tripAt(start+24*60000,'ride-other-line');
 assert.ok(Array.isArray(H.summary('900888',now).stationaryLines));
 console.log('PASS: expiry, absent numeric fields, prototype-safe registry and future trail safeguards');
+
+assert.equal(T.normalize({...snapshot,segments:[{...snapshot.segments[0],live:false}]},{routeId:'34119',stopCode:'2360',now}).available,false);
+assert.equal(T.normalize({...snapshot,segments:[{...snapshot.segments[0],confidence:.70}]},{routeId:'34119',stopCode:'2360',now}).available,false);
+assert.equal(T.normalize({...snapshot,segments:[{...snapshot.segments[0],observedAt:new Date(now-181000).toISOString()}]},{routeId:'34119',stopCode:'2360',now}).available,false);
+assert.equal(T.expired(good,now+181000),true);
+assert.equal(T.serverEta({minutes:5,realtime:false},good,now),null);
+assert.equal(T.layerStyle({}).opacity,0,'Missing speed ratio never colors a road green');
+assert.equal(H.ingest({...item(now-1000,'x'),gpsFreshnessVerified:false},{now}).supported,false,'No independent GPS clock means no stationary fault inference');
+const archiveRows=window.SafeBusCore.uniqueVehicle([{lat:31.74,lon:35.18,recorded_at_time:new Date(now-1000).toISOString(),siri_ride__id:123,siri_ride__vehicle_ref:'999888',velocity:12}],now);
+assert.equal(archiveRows[0].clockType,'source-report');
+assert.equal(archiveRows[0].gpsMeasuredAt,null);
+assert.equal(archiveRows[0].velocity,null);
+console.log('PASS: historical traffic rejected, layers expire, no timetable delay and no archive-to-GPS promotion');
+
+assert.equal(T.normalize({...snapshot,segments:[{...snapshot.segments[0],confidence:null}]},{routeId:'34119',stopCode:'2360',now}).available,false,'Missing confidence must reject live road coloring');

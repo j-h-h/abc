@@ -27,3 +27,6 @@
 .bus-tag.recurrent{border-color:#bc563a;background:#fff5ea}
 .vehicle-history-detail{margin-top:8px;border-top:1px solid #e1e7ee;padding-top:6px;color:#795117}
 @media(max-width:350px){.traffic-status{font-size:9px;max-width:calc(100% - 141px)}.map-actions #trafficToggle{font-size:10px}}
+
+/* DEV-9.1.3: archive evidence remains distinct from movement and faults. */
+.archive-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.archive-fields label{min-width:0}.archive-fields input{width:100%;min-width:0}.archive-link{border:1px solid #d2e1f2;background:#f5f9ff;color:#225a90;border-radius:7px;padding:5px 9px;margin-top:7px;font-size:12px;text-align:right}.archive-table-wrap{overflow:auto;margin-top:12px}.archive-table{width:100%;border-collapse:collapse;font-size:12px;text-align:right}.archive-table caption{padding:6px;text-align:right;font-weight:700}.archive-table th,.archive-table td{border-bottom:1px solid #dce5ef;padding:7px;vertical-align:top;overflow-wrap:anywhere}.archive-table th{background:#f3f7fc}#archiveStatus{margin:10px 0;font-size:12px;line-height:1.6}#archiveResults small{display:block;line-height:1.6}#archiveMore[hidden]{display:none}
