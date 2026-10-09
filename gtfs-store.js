@@ -2,7 +2,7 @@
 (function(root){'use strict';
 const state={index:null,version:null,initPromise:null,cache:new Map()};
 const BASE='./api/dataset?file=';
-const dataURL=path=>BASE+encodeURIComponent(path.split('?')[0])+(path.includes('?')?'&'+path.split('?')[1]:'');
+const dataURL=path=>BASE+encodeURIComponent(decodeURIComponent(path.split('?')[0]))+(path.includes('?')?'&'+path.split('?')[1]:'');
 async function getJson(path,{force=false}={}){
   const url=dataURL(path);
   const r=await fetch(url,{cache:force?'no-store':'default'});
