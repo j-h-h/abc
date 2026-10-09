@@ -27,7 +27,7 @@
     if(m.isPopupOpen()&&snapshotFresh){const small=m.getPopup().getElement()?.querySelector('[data-report-age]');if(small)small.textContent='דיווח לפני '+C.ageText(C.gpsAge(m._reportAt))+' · רכב '+v.vehicleRef;}
     else {if(m.isPopupOpen())m.closePopup();m._reportAt=v.sourceObservedAt;m.setLatLng([v.lat,v.lon]).setIcon(icon).setPopupContent(popup);}
    }else {
-    const m=L.marker([v.lat,v.lon],{icon,title:label+' · דיווח לפני '+C.ageText(age),zIndexOffset:300}).addTo(busesLayer).bindPopup(popup,{autoPanPaddingTopLeft:[15,170],autoPanPaddingBottomRight:[15,120]});
+    const m=L.marker([v.lat,v.lon],{icon,title:label+' · דיווח לפני '+C.ageText(age),zIndexOffset:300}).addTo(busesLayer).bindPopup(popup);
     m._reportAt=v.sourceObservedAt;m.on('popupclose',()=>{queueMicrotask(renderBuses)});state.markers.set(v.id,m);
    }
   }for(const [id,m]of state.markers)if(!visible.has(id)){busesLayer.removeLayer(m);state.markers.delete(id)}
