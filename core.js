@@ -1,0 +1,27 @@
+/* Eifo Batuach 8.0.0 — pure, testable functions. */
+(function(root){'use strict';
+ const EARTH=6371008.8;
+ function hav(a,b){const toRad=Math.PI/180,dLat=(b[0]-a[0])*toRad,dLon=(b[1]-a[1])*toRad;const x=Math.sin(dLat/2)**2+Math.cos(a[0]*toRad)*Math.cos(b[0]*toRad)*Math.sin(dLon/2)**2;return EARTH*2*Math.asin(Math.min(1,Math.sqrt(x)));}
+ function segmentProjection(p,a,b){const scale=111195*Math.cos(p[0]*Math.PI/180),ax=(a[1]-p[1])*scale,ay=(a[0]-p[0])*111195,dx=(b[1]-a[1])*scale,dy=(b[0]-a[0])*111195,den=dx*dx+dy*dy,t=den?Math.max(0,Math.min(1,-(ax*dx+ay*dy)/den)):0;return {distance:Math.hypot(ax+t*dx,ay+t*dy),t};}
+ function nearRoute(point, coordinates){if(!Array.isArray(coordinates)||coordinates.length<2)return {distance:Infinity,progress:null};let covered=0,best={distance:Infinity,progress:null};for(let i=1;i<coordinates.length;i++){const a=[coordinates[i-1][1],coordinates[i-1][0]],b=[coordinates[i][1],coordinates[i][0]];const leg=hav(a,b);const p=segmentProjection(point,a,b);if(p.distance<best.distance)best={distance:p.distance,progress:covered+p.t*leg};covered+=leg;}return best;}
+ function gpsAge(iso,now=Date.now()){const t=Date.parse(iso);return Number.isFinite(t)?Math.round((now-t)/1000):Infinity;}
+ function gpsStatus(iso,now=Date.now()){const age=gpsAge(iso,now);return age< -30||!Number.isFinite(age)?'invalid':age<=90?'fresh':age<=360?'old':age<=5400?'archive':'expired';}
+ function ageText(seconds){if(!Number.isFinite(seconds)||seconds< -30)return 'לא ידוע';if(seconds<60)return `${Math.max(0,Math.floor(seconds))} שנ׳`;return `${Math.floor(seconds/60)}:${String(Math.floor(seconds)%60).padStart(2,'0')} דק׳`;}
+ function validCoord(lat,lon){return Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=29&&lat<=34&&lon>=34&&lon<=36;}
+ function uniqueVehicle(rows,now=Date.now(),maxAge=5400){const found=new Map();for(const r of rows||[]){try{const lat=Number(r.lat),lon=Number(r.lon),ts=r.recorded_at_time,age=gpsAge(ts,now);if(!validCoord(lat,lon)||age< -30||age>maxAge)continue;const rideId=r.siri_ride__id ?? r.ride_id,vehicle=r.siri_ride__vehicle_ref ?? r.vehicle_ref;const day=new Date(ts).toISOString().slice(0,10);const key=rideId!=null?`ride:${rideId}`:vehicle?`vehicle:${vehicle}:${day}`:null;if(!key)continue;const row={id:key,lat,lon,observed_at:ts,age,vehicle_ref:vehicle||null,velocity:r.velocity,bearing:r.bearing,ride_id:rideId||null,clockType:'gps-measurement',source:'Open Bus (ארכיון מתעדכן)',directionVerified:false};if(!found.has(key)||age<found.get(key).age)found.set(key,row);}catch{}}return [...found.values()].sort((a,b)=>a.age-b.age);}
+ function normalizeArrivals(raw,routeDesc){const arr=[];const stops=raw&&typeof raw==='object'?raw:{};for(const [k,v] of Object.entries(stops)){if(!v||!Array.isArray(v.stopTimes))continue;for(const s of v.stopTimes){const n=Number(s.minutesToArrival);if(Number.isFinite(n)&&n>=0&&n<=180)arr.push({minutes:n,realtime:s.isRealTime===true,routeDesc,stopCode:k});}}return arr.sort((a,b)=>a.minutes-b.minutes);}
+ function arrivalLabel(v,elapsedS){if(elapsedS>110)return 'תחזית ישנה';let remaining=Number(v.minutes)-elapsedS/60;if(!Number.isFinite(remaining))return 'אין מידע';if(remaining<0)return 'חלף מועד';return `${Math.max(1,Math.ceil(remaining))} דק׳`;}
+ function forecastJump(prev,next,elapsedSeconds){if(!prev.length||!next.length||!Number.isFinite(elapsedSeconds)||elapsedSeconds>120)return null;const first=prev[0],n=next.find(x=>x.routeDesc===first.routeDesc);if(!n)return null;const delta=n.minutes-(first.minutes-elapsedSeconds/60);return Math.abs(delta)>=3?Math.round(delta):null;}
+ function parseCsvLine(line){const out=[];let s='',q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){s+='"';i++;}else q=!q;}else if(c===','&&!q){out.push(s);s='';}else s+=c;}out.push(s);return out;}
+ function shapeValidation(coords,stops){if(!Array.isArray(coords)||coords.length<3||!Array.isArray(stops)||stops.length<2)return 'אין די נקודות';const points=coords.map(x=>[x[1],x[0]]);if(hav(points[0],[stops[0].lat,stops[0].lon])>350||hav(points[points.length-1],[stops[stops.length-1].lat,stops[stops.length-1].lon])>350)return 'המוצא או היעד אינם תואמים';let total=0,prev=-1;for(let j=0;j<points.length-1;j++)if(hav(points[j],points[j+1])>2000)return 'קטיעה בתוואי';const lengths=[0];for(let j=1;j<points.length;j++)lengths[j]=lengths[j-1]+hav(points[j-1],points[j]);
+ // Constrain match to monotonic route progress, even when paths loop back near the same road.
+ let states=null;
+ for(const stop of stops){const point=[stop.lat,stop.lon],candidates=[];for(let j=1;j<points.length;j++){const projection=segmentProjection(point,points[j-1],points[j]);if(projection.distance<=270)candidates.push({progress:lengths[j-1]+projection.t*(lengths[j]-lengths[j-1]),error:projection.distance**2});}
+ if(!candidates.length)return 'תחנה מרוחקת מהתוואי';candidates.sort((a,b)=>a.progress-b.progress);
+ if(states===null){states=candidates.map(c=>({...c,total:c.error}));continue;}
+ const next=[];let best=Infinity,k=0;for(const c of candidates){while(k<states.length&&states[k].progress<=c.progress+2){best=Math.min(best,states[k].total);k++;}if(Number.isFinite(best))next.push({...c,total:best+c.error});}
+ if(!next.length)return 'סדר התחנות אינו תואם את התוואי';states=next;
+ }
+ return states?.length?'ok':'מסלול לא עקבי';}
+ root.SafeBusCore={hav,nearRoute,gpsAge,gpsStatus,ageText,validCoord,uniqueVehicle,normalizeArrivals,arrivalLabel,forecastJump,parseCsvLine,shapeValidation};
+})(typeof window!=='undefined'?window:globalThis);
