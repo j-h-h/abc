@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEST DRIVE</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <header class="hud">
+      <div class="brand">
+        <span class="logo">TEST DRIVE</span>
+        <span class="tagline">לילה אינסופי. מרוץ אחד נוסף.</span>
+      </div>
+      <div class="stats">
+        <div>
+          <span>מהירות</span>
+          <strong id="speed">0</strong>
+        </div>
+        <div>
+          <span>מרחק</span>
+          <strong id="distance">0</strong>
+        </div>
+        <div>
+          <span>שיא</span>
+          <strong id="best">0</strong>
+        </div>
+      </div>
+    </header>
+
+    <section class="stage">
+      <canvas id="game" width="980" height="600" aria-label="Test Drive Game"></canvas>
+      <div class="overlay" id="overlay">
+        <h2>לחץ כדי להתחיל</h2>
+        <p>השתמש בחצים כדי לנווט, החזק ⇧ לטורבו.</p>
+      </div>
+    </section>
+
+    <footer class="controls">
+      <div>
+        <span>תנועה</span>
+        <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>
+      </div>
+      <div>
+        <span>טורבו</span>
+        <kbd>Shift</kbd>
+      </div>
+      <div>
+        <span>אתחול</span>
+        <kbd>R</kbd>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
