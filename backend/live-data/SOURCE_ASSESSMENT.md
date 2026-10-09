@@ -56,8 +56,8 @@ https://j-h-h.github.io/abc/data/catalog.json
 ### HERE Traffic API v7: implemented, disabled
 
 HERE's official coverage material declares Israel flow/incident coverage:
-https://docs.here.com/platform-release-notes/docs/june-2025
-https://docs.here.com/vector-tile-api/docs/coverage-traffic-flow-and-incidents
+https://www.here.com/developer/blog/june-2025-platform-release-notes
+https://docs.here.com/traffic-api/docs/traffic-vector-tile-traffic
 
 The API supplies location geometries, speed, freeFlow, confidence, jam factor, traversability
 and sourceUpdated. Speed units are metres/second. Confidence above 0.70 is real-time probe
