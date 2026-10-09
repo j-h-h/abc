@@ -17,3 +17,13 @@
 .tile-notice{position:absolute;top:12px;right:12px;left:70px;z-index:460;background:#fff7e5ee;color:#774719;border:1px solid #f0c774;border-radius:10px;padding:9px 12px;font-size:12px;line-height:1.5;box-shadow:0 2px 9px #0002}.tile-notice[hidden]{display:none!important}
 /* 9.0.3: explicit map dimensions, concise accessible health status */
 .health-strip{margin:0 12px 8px;padding:7px 11px;text-align:right;display:block;border-radius:9px;border:1px solid #dfebf6;background:#f5f9fe;color:#385672;font-size:12px;line-height:1.5;white-space:normal;width:calc(100% - 24px)}.health-strip.bad{background:#fff6e9;border-color:#f3dab0;color:#79521b}.health-strip[hidden]{display:none!important}.health-strip strong{font-weight:800}.map-wrap .leaflet-container{width:100%;height:100%}.diagnostic{direction:rtl;text-align:right;white-space:pre-wrap;line-height:1.65}
+
+/* 9.0.5: real traffic overlays and conservative recurrent-vehicle warnings */
+.map-actions #trafficToggle{width:auto;height:35px;padding:0 9px;font-size:11px;font-weight:700;max-width:126px}
+.traffic-status{position:absolute;z-index:450;right:8px;top:10px;max-width:calc(100% - 157px);border:1px solid #e0e8ef;border-radius:9px;background:#ffffffed;padding:5px 8px;color:#344e65;font-size:10px;line-height:1.5;pointer-events:none}
+.traffic-legend{position:absolute;z-index:450;right:8px;bottom:40px;border-radius:8px;padding:5px 8px;background:#fffffff0;font-size:10px;color:#344e65}
+.traffic-legend[hidden]{display:none!important}
+.traffic-eta{margin-top:4px;padding-top:4px;border-top:1px solid #e4eaf2;color:#855920!important}
+.bus-tag.recurrent{border-color:#bc563a;background:#fff5ea}
+.vehicle-history-detail{margin-top:8px;border-top:1px solid #e1e7ee;padding-top:6px;color:#795117}
+@media(max-width:350px){.traffic-status{font-size:9px;max-width:calc(100% - 141px)}.map-actions #trafficToggle{font-size:10px}}

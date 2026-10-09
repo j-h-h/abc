@@ -1,8 +1,8 @@
-/* Eifo Batuach 9.0.4 — no local computer/server required. */
+/* Eifo Batuach 9.0.5 — no local computer/server required. */
 (function(root){'use strict';
- const C=root.SafeBusCore,D=root.SafeBusDataset,$=id=>document.getElementById(id);
+ const C=root.SafeBusCore,D=root.SafeBusDataset,H=root.SafeBusHistory,T=root.SafeBusTraffic,$=id=>document.getElementById(id);
  const SOURCES={mot:'https://api.bus.gov.il/prod/mot-scheduler-prod/api/he/',stride:'https://open-bus-stride-api.hasadna.org.il',curlbus:'https://curlbus.app/',busnearby:'https://api.busnearby.co.il/directions/index/stops/'};
- const state={line:'72',stop:'2360',siriRef:'',map:null,route:null,allRoutes:[],routeLayer:null,vehicleLayer:null,stopMarker:null,trafficLayer:null,vehicles:new Map(),arrivals:[],arrivalAt:0,arrivalsError:null,gpsError:null,routeError:null,request:0,polling:false,backoffUntil:0,sourceBackoff:{},lastJump:null,offline:false,relayUrl:'',sourceUsed:'',curlbusError:null,motError:null,sourceAge:null};
+ const state={line:'72',stop:'2360',siriRef:'',map:null,route:null,allRoutes:[],routeLayer:null,vehicleLayer:null,stopMarker:null,trafficLayer:null,trafficVector:null,trafficReport:null,trafficVisible:false,trafficStatusText:'לא נטענו נתוני עומסי תנועה',motionLayer:null,vehicles:new Map(),arrivals:[],arrivalAt:0,arrivalsError:null,gpsError:null,routeError:null,request:0,polling:false,backoffUntil:0,sourceBackoff:{},lastJump:null,offline:false,relayUrl:'',sourceUsed:'',curlbusError:null,motError:null,sourceAge:null};
  const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
  const setBanner=(msg,bad=false)=>{const e=$('banner');e.textContent=msg;e.classList.toggle('bad',!!bad);queueMicrotask(updateHealth);};
  const showWarn=(msg)=>{const e=$('warning');e.hidden=!msg;e.textContent=msg||'';};
@@ -50,14 +50,14 @@
   state.tileSource=null;state.tileProblem=true;
   tryBasemap();
   setTimeout(()=>{if(!settledLayer){tileStatus.hidden=false;updateHealth();}},9000);
-  state.routeLayer=L.layerGroup().addTo(state.map);state.vehicleLayer=L.layerGroup().addTo(state.map);
+  state.routeLayer=L.layerGroup().addTo(state.map);state.motionLayer=L.layerGroup().addTo(state.map);state.vehicleLayer=L.layerGroup().addTo(state.map);
   L.control.zoom({position:'bottomleft'}).addTo(state.map);
   $('goStop').onclick=()=>{if(state.stopMarker)state.map.setView(state.stopMarker.getLatLng(),15);else setBanner('למיקום תחנה מדויק צריך לטעון קודם את המסלול הרשמי.',true)};
   $('fitRoute').onclick=()=>{if(state.route){const b=L.geoJSON(state.route).getBounds();if(b.isValid())state.map.fitBounds(b.pad(.08));}else setBanner('לא נטען תוואי מאומת לקו ולתחנה.',true)};
   setTimeout(()=>state.map.invalidateSize(),300);
  }
  function clearRoute(){if(state.routeLayer)state.routeLayer.clearLayers();if(state.stopMarker){state.map.removeLayer(state.stopMarker);state.stopMarker=null;}state.route=null;}
- function chooseRoute(i,focus=false){clearRoute();const f=state.allRoutes[i];if(!f)return;state.route=f;if(!state.map)return;
+ function chooseRoute(i,focus=false){clearRoute();if(state.trafficVector){state.map?.removeLayer(state.trafficVector);state.trafficVector=null;}state.trafficReport=null;updateTrafficStatus();const f=state.allRoutes[i];if(!f)return;state.route=f;if(!state.map)return;
   if(state.routeLayer)state.routeLayer.addLayer(L.geoJSON(f,{style:{color:f.properties.suspect?'#bd721b':'#1765d7',weight:5,opacity:.85,dashArray:f.properties.suspect?'8,6':undefined}}));
   const s=f.properties.stopSequence.find(x=>String(x.code)===state.stop);
   if(s){state.stopMarker=L.marker([s.lat,s.lon],{icon:L.divIcon({className:'stop-dot',iconSize:[15,15],iconAnchor:[8,8]})}).addTo(state.map).bindPopup('תחנה '+esc(state.stop)+' · '+esc(s.name));if(focus)state.map.setView([s.lat,s.lon],14);}
@@ -129,7 +129,7 @@
  }
  function diagnosticText(){
    const h=healthSnapshot();
-   return ['איפה בטוח? 9.0.4 — מצב המערכת',
+   return ['איפה בטוח? 9.0.5 — מצב המערכת',
      'קו '+state.line+' · תחנה '+state.stop,
      'מסלול: '+h.route+' · '+h.routePoints+' נקודות תוואי',
      'מפה: '+h.map+' · מקור: '+h.tileSource+' · גובה: '+Math.round(h.height)+' פיקסלים',
@@ -244,17 +244,56 @@
  }
  function drawArrivals(){const root=$('arrivals'),age=(Date.now()-state.arrivalAt)/1000;root.replaceChildren();$('arrivalAge').textContent=state.arrivalAt?'בקשה לפני '+C.ageText(age)+' · '+state.sourceUsed:'אין עדכון';
   if(!state.arrivals.length){const e=document.createElement('div');e.className='empty';e.textContent=state.arrivalsError?'תחזיות אינן זמינות: '+state.arrivalsError:'לא התקבל דיווח הגעה מאומת לכיוון הזה. אין להסיק שהאוטובוס לא יצא.';root.appendChild(e);return;}
-  for(const a of state.arrivals.slice(0,6)){const card=document.createElement('div');card.className='arrival';const n=document.createElement('strong');n.textContent=C.arrivalLabel(a,age);const dir=document.createElement('small');dir.textContent=a.direction;const tag=document.createElement('span');tag.className=a.realtime?'rt':'schedule';tag.textContent=age>110?'התחזית התיישנה':a.realtime?'דיווח בזמן אמת · יציאה לא בהכרח אומתה':'לוח זמנים בלבד · יציאה לא אומתה';card.append(n,dir,tag);root.appendChild(card);}
+  for(const a of state.arrivals.slice(0,6)){const card=document.createElement('div');card.className='arrival';const n=document.createElement('strong');n.textContent=C.arrivalLabel(a,age);const dir=document.createElement('small');dir.textContent=a.direction;const tag=document.createElement('span');tag.className=a.realtime?'rt':'schedule';tag.textContent=age>110?'התחזית התיישנה':a.realtime?'דיווח בזמן אמת · יציאה לא בהכרח אומתה':'לוח זמנים בלבד · יציאה לא אומתה';card.append(n,dir,tag);
+   const adjusted=T?.weightedEta(a,state.trafficReport);
+   if(adjusted){const extra=document.createElement('small');extra.className='traffic-eta';
+     extra.textContent='🚦 זמן ניסיוני כולל עומס: '+adjusted.minutes+' דק׳ (תוספת '+adjusted.extraMinutes+' דק׳)';
+     extra.title=adjusted.caution;card.append(extra);}
+   root.appendChild(card);}
  }
- async function loadArrivals(revision){try{const payload=await getArrivals();if(revision!==state.request)return;const fresh=payload.arrivals;for(const v of payload.vehicles){const old=state.vehicles.get(v.id);if(!old||Date.parse(v.observed_at)>=Date.parse(old.observed_at))state.vehicles.set(v.id,v);}if(payload.vehicles.length)drawVehicles();const jump=C.forecastJump(state.arrivals,fresh,(Date.now()-state.arrivalAt)/1000);state.arrivals=fresh;state.arrivalAt=Date.now();state.arrivalsError=null;state.lastJump=jump;drawArrivals();if(jump!==null)showWarn(`⚠ תחזית הקו קפצה ב־${Math.abs(jump)} דקות. לא הוכח שמדובר באותה נסיעה — כדאי לצאת מוקדם.`);else if(fresh.length&&fresh[0].minutes<=9)showWarn('ליד מוצא המסלול תחזיות יכולות להשתנות במהירות. אל תסתמך על מספר הדקות בלבד.');else showWarn('');}
+ async function loadArrivals(revision){try{const payload=await getArrivals();if(revision!==state.request)return;const fresh=payload.arrivals;for(const v of payload.vehicles){const old=state.vehicles.get(v.id);if(!old||Date.parse(v.observed_at)>=Date.parse(old.observed_at))state.vehicles.set(v.id,v);storeObservation(v);}if(payload.vehicles.length)drawVehicles();const jump=C.forecastJump(state.arrivals,fresh,(Date.now()-state.arrivalAt)/1000);state.arrivals=fresh;state.arrivalAt=Date.now();state.arrivalsError=null;state.lastJump=jump;drawArrivals();if(jump!==null)showWarn(`⚠ תחזית הקו קפצה ב־${Math.abs(jump)} דקות. לא הוכח שמדובר באותה נסיעה — כדאי לצאת מוקדם.`);else if(fresh.length&&fresh[0].minutes<=9)showWarn('ליד מוצא המסלול תחזיות יכולות להשתנות במהירות. אל תסתמך על מספר הדקות בלבד.');else showWarn('');}
   catch(e){if(revision!==state.request)return;state.arrivalsError=e.message;state.arrivals=[];state.arrivalAt=0;state.sourceUsed='אין מקור נגיש';drawArrivals();showWarn('⚠ מקור התחזיות אינו זמין. לא מוצגים זמני הגעה ישנים כאילו עודכנו.');}}
  function displayVehicle(v){const age=C.gpsAge(v.observed_at),status=C.gpsStatus(v.observed_at),showOld=$('showOld').checked;if(status==='invalid'||status==='expired'||(status==='archive'&&!showOld))return false;
   if(!state.route)return false;
   return C.nearRoute([v.lat,v.lon],state.route.geometry.coordinates).distance<=180;
  }
- function markerHtml(v){const age=C.gpsAge(v.observed_at),status=C.gpsStatus(v.observed_at),speed=v.velocity===null||v.velocity===undefined||v.velocity===''?NaN:Number(v.velocity);const s=Number.isFinite(speed)&&speed>=0&&speed<=120?Math.round(speed)+' קמ״ש':'מהירות —';const label=v.clockType==='source-report'?(status==='fresh'?'דיווח SIRI חדש':'דיווח SIRI ישן'):(status==='fresh'?'מדידת GPS טרייה':status==='old'?'מדידת GPS ישנה':'ארכיון');const remaining=v.eta?(Date.parse(v.eta)-Date.now())/60000:null;const eta=v.directionVerified&&Number.isFinite(remaining)&&remaining>=0&&remaining<=120&&age<=90?` · ${Math.ceil(remaining)} דק׳`:'';return `<div class="bus-tag ${status==='fresh'?'':status==='old'?'old':'archive'}"><strong>🚌 ${esc(state.line)}${v.directionVerified?'':'?'}</strong>${esc(eta)} · ${esc(C.ageText(age))}<small>${esc(v.directionVerified?'כיוון אומת':'כיוון לא אומת')} · ${esc(label)} · ${esc(s)}</small></div>`;}
+ function historySummary(v){return H?.summary(v.vehicle_ref)||{supported:false,recurrent:false};}
+ function markerHtml(v){
+  const age=C.gpsAge(v.observed_at),status=C.gpsStatus(v.observed_at),hist=historySummary(v),
+    speed=v.velocity===null||v.velocity===undefined||v.velocity===''?NaN:Number(v.velocity);
+  const speedText=Number.isFinite(speed)&&speed>=0&&speed<=120?Math.round(speed)+' קמ״ש':'מהירות —';
+  const label=v.clockType==='source-report'?(status==='fresh'?'דיווח SIRI חדש':'דיווח SIRI ישן'):(status==='fresh'?'מדידת GPS טרייה':status==='old'?'מדידת GPS ישנה':'ארכיון');
+  const remaining=v.eta?(Date.parse(v.eta)-Date.now())/60000:null;
+  const eta=v.directionVerified&&Number.isFinite(remaining)&&remaining>=0&&remaining<=120&&age<=90?` · ${Math.ceil(remaining)} דק׳`:'';
+  const warning=hist.recurrent?'⚠ ':''; 
+  return `<div class="bus-tag ${status==='fresh'?'':status==='old'?'old':'archive'} ${hist.recurrent?'recurrent':''}"><strong>${warning}🚌 ${esc(state.line)}${v.directionVerified?'':'?'}</strong>${esc(eta)} · ${esc(C.ageText(age))}<small>${esc(v.directionVerified?'כיוון אומת':'כיוון לא אומת')} · ${esc(label)} · ${esc(speedText)}</small></div>`;
+ }
+ function storeObservation(v){
+  if(v.vehicle_ref&&v.clockType==='gps-measurement')H?.ingest(v,{line:state.line,route:state.route?.geometry?.coordinates});
+ }
+ function drawMotionTrails(vehicles){
+  state.motionLayer?.clearLayers();
+  if(!state.motionLayer||!root.L?.circleMarker||!H)return;
+  for(const v of vehicles){
+    if(!displayVehicle(v)||!v.vehicle_ref)continue;
+    const trip=v.ride_id??v.tripId??v.trip_id;
+    const points=H.trail(String(v.vehicle_ref),trip);
+    for(const p of points.slice(0,-1)){
+      L.circleMarker([p.lat,p.lon],{radius:3,color:'#246ac7',weight:1,fillColor:'#5a94ed',fillOpacity:.55,opacity:.7})
+       .addTo(state.motionLayer).bindPopup('תצפית GPS מדווחת · '+esc(new Date(p.t).toLocaleTimeString('he-IL'))+' · החיבור בין נקודות לא מתאר בהכרח את הכביש שבו נסע הרכב');
+    }
+  }
+ }
+
  const activeMarkers=new Map();
- function drawVehicles(){if(!state.map||!state.vehicleLayer)return;const visible=new Set(),seenVehicleRefs=new Set();for(const v of [...state.vehicles.values()].sort((a,b)=>Date.parse(b.observed_at)-Date.parse(a.observed_at))){if(visible.size>=16)break;if(!displayVehicle(v))continue;if(v.vehicle_ref&&seenVehicleRefs.has(String(v.vehicle_ref)))continue;if(v.vehicle_ref)seenVehicleRefs.add(String(v.vehicle_ref));const id=String(v.id),age=C.gpsAge(v.observed_at);visible.add(id);const icon=L.divIcon({className:'bus-pin',html:markerHtml(v),iconSize:[0,0],iconAnchor:[0,0]});const details=`<b>קו ${esc(state.line)} — ${v.directionVerified?'כיוון אומת':'כיוון לא אומת'}</b><div>${v.clockType==='source-report'?'זמן דיווח SIRI':'זמן מדידת GPS'}: ${esc(new Date(v.observed_at).toLocaleString('he-IL'))}</div><div>גיל דיווח: ${esc(C.ageText(age))}</div>${v.clockType==='source-report'?'<div>זמן GPS עצמאי אינו מסופק; ייתכן שהמיקום ישן מהדיווח.</div>':''}<div>רכב: ${esc(v.vehicle_ref||'לא ידוע')}</div><div>זמן הגעה של הרכב: ${v.eta&&v.directionVerified&&age<=90?esc(new Date(v.eta).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}))+' (דיווח SIRI)':'לא ניתן לשייך בביטחון'}</div><div>מקור: ${esc(v.source||'Open Bus (ארכיון מתעדכן)')}</div>`;
+ function drawVehicles(){if(!state.map||!state.vehicleLayer)return;const visible=new Set(),seenVehicleRefs=new Set();
+  const vehicles=[...state.vehicles.values()].sort((a,b)=>Date.parse(b.observed_at)-Date.parse(a.observed_at));
+  drawMotionTrails(vehicles);
+  for(const v of vehicles){if(visible.size>=16)break;if(!displayVehicle(v))continue;if(v.vehicle_ref&&seenVehicleRefs.has(String(v.vehicle_ref)))continue;if(v.vehicle_ref)seenVehicleRefs.add(String(v.vehicle_ref));const id=String(v.id),age=C.gpsAge(v.observed_at);visible.add(id);const icon=L.divIcon({className:'bus-pin',html:markerHtml(v),iconSize:[0,0],iconAnchor:[0,0]});const hist=historySummary(v);
+  const historyText=hist.supported?
+  `<div class="vehicle-history-detail">${hist.recurrent?'⚠ דפוס חוזר: ':''}${esc(hist.text)}<br>במכשיר זה נאספו ${hist.observations} תצפיות; עצירות ממושכות ב-${hist.stationaryTrips} נסיעות; קפיצות GPS: ${hist.gpsJumps}. הסימון אינו אבחנה של תקלה.</div>`:
+  '<div>אין היסטוריה מזוהה של הרכב במכשיר זה.</div>';
+  const details=`<b>קו ${esc(state.line)} — ${v.directionVerified?'כיוון אומת':'כיוון לא אומת'}</b><div>${v.clockType==='source-report'?'זמן דיווח SIRI':'זמן מדידת GPS'}: ${esc(new Date(v.observed_at).toLocaleString('he-IL'))}</div><div>גיל דיווח: ${esc(C.ageText(age))}</div>${v.clockType==='source-report'?'<div>זמן GPS עצמאי אינו מסופק; ייתכן שהמיקום ישן מהדיווח.</div>':''}<div>רכב: ${esc(v.vehicle_ref||'לא ידוע')}</div><div>זמן הגעה של הרכב: ${v.eta&&v.directionVerified&&age<=90?esc(new Date(v.eta).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}))+' (דיווח SIRI)':'לא ניתן לשייך בביטחון'}</div><div>מקור: ${esc(v.source||'Open Bus (ארכיון מתעדכן)')}</div>${historyText}`;
   if(activeMarkers.has(id)){const m=activeMarkers.get(id);m.setLatLng([v.lat,v.lon]);m.setIcon(icon);m.setPopupContent(details);}else activeMarkers.set(id,L.marker([v.lat,v.lon],{icon}).addTo(state.vehicleLayer).bindPopup(details));}
   for(const [id,m] of activeMarkers)if(!visible.has(id)){state.vehicleLayer.removeLayer(m);activeMarkers.delete(id);}
  }
@@ -272,7 +311,7 @@
   const raw=await fetchJson(SOURCES.stride+'/siri_vehicle_locations/list?'+q,16000);const rows=Array.isArray(raw)?raw:Array.isArray(raw?.data)?raw.data:[];
   if(!Array.isArray(rows))throw Error('מבנה נתוני GPS לא מוכר');return C.uniqueVehicle(rows);
  }
- async function loadVehicles(revision){try{const fresh=await getPositions();if(revision!==state.request)return;for(const v of fresh){const old=state.vehicles.get(v.id);if(!old||Date.parse(v.observed_at)>=Date.parse(old.observed_at))state.vehicles.set(v.id,v);}state.gpsError=null;drawVehicles();}catch(e){if(revision!==state.request)return;state.gpsError=e.message;drawVehicles();}}
+ async function loadVehicles(revision){try{const fresh=await getPositions();if(revision!==state.request)return;for(const v of fresh){const old=state.vehicles.get(v.id);if(!old||Date.parse(v.observed_at)>=Date.parse(old.observed_at))state.vehicles.set(v.id,v);storeObservation(v);}state.gpsError=null;drawVehicles();}catch(e){if(revision!==state.request)return;state.gpsError=e.message;drawVehicles();}}
  async function refreshAll(){if(state.polling){state.refreshPending=true;return;}if(!state.route){updateHealth();return;}state.polling=true;$('refresh').disabled=true;const rev=state.request;try{await Promise.allSettled([loadArrivals(rev),loadVehicles(rev)]);if(rev!==state.request)return;
   if(state.routeError)setBanner(state.routeError,true);
   else if(state.arrivalsError&&state.gpsError)setBanner('שני מקורות הרשת אינם נגישים. בדוק אבחון בהגדרות.',true);
@@ -297,9 +336,55 @@
    out.textContent=diagnosticText()+'\n\nבדיקות רשת:\n'+results.join('\n')+
      '\n\nאם כל שירותי התחזיות חסומים בדפדפן, יש צורך במתווך שרת. GitHub Pages אינו מתווך ואינו פותר חסימת CORS.';
  }
- function applyTraffic(){if(!state.map)return;const key=$('trafficKey').value.trim();if(state.trafficLayer){state.map.removeLayer(state.trafficLayer);state.trafficLayer=null;}if(!key){setBanner('שכבת הפקקים הוסרה.');return;}if(!/^[A-Za-z0-9_-]{8,128}$/.test(key)){setBanner('מפתח TomTom אינו תקין',true);return;}state.trafficLayer=L.tileLayer('https://api.tomtom.com/traffic/map/4/tile/flow/relative0/{z}/{x}/{y}.png?key='+encodeURIComponent(key),{maxZoom:19,opacity:.62,attribution:'© TomTom'}).addTo(state.map);setBanner('שכבת עומסי תנועה הופעלה. היעדר צבע אינו מעיד שאין פקק.');}
- function init(){initPrefs();setupMap();$('settingsOpen').onclick=()=>setPanel(true);$('settingsClose').onclick=()=>setPanel(false);$('shade').onclick=()=>setPanel(false);$('apply').onclick=applySelection;$('refresh').onclick=refreshAll;$('stop').addEventListener('input',()=>{clearTimeout(state.suggestTimer);state.suggestTimer=setTimeout(updateSuggestions,160);});$('diagnose').onclick=diagnose;$('healthStrip').onclick=()=>{setPanel(true);diagnose();};$('copyDiagnostic').onclick=async()=>{try{await navigator.clipboard.writeText($('diagnostic').textContent||diagnosticText());$('copyDiagnostic').textContent='✓ הועתק';}catch{$('diagnostic').textContent=diagnosticText()+'\nהדפדפן חסם העתקה אוטומטית';}};$('trafficApply').onclick=applyTraffic;$('direction').onchange=()=>{const raw=$('direction').value;if(!/^\d+$/.test(raw))return;const k=Number(raw);if(Number.isInteger(k)&&state.allRoutes[k]){state.request++;state.vehicles.clear();state.arrivals=[];state.arrivalAt=0;state.arrivalsError=null;state.gpsError=null;state.vehicleLayer?.clearLayers();activeMarkers.clear();chooseRoute(k,true);drawArrivals();refreshAll();}};$('relayApply').onclick=()=>{const v=$('relayUrl').value.trim();if(v&&!isTrustedRelay(v)){setBanner('כתובת המתווך חייבת להיות HTTPS תקינה',true);return;}state.relayUrl=v;savePrefs();setBanner(v?'חיבור דרך המתווך הוגדר; בודק נתונים…':'המתווך הוסר; חיבור ישיר.');refreshAll();};$('siriRef').onchange=()=>{state.siriRef=$('siriRef').value.trim();savePrefs();};$('showOld').onchange=()=>{savePrefs();drawVehicles();};
+ function updateTrafficStatus(){
+  const e=$('trafficStatus'),legend=$('trafficLegend'),button=$('trafficToggle');
+  if(!e)return;
+  let text=state.trafficStatusText||'נתוני עומסים אינם מחוברים';
+  if(state.trafficReport?.available){
+    const r=state.trafficReport;
+    text='עומסים: '+r.source+' · '+(r.etaAdjustment!==null?'תוספת נסיעה מדודה משוערת '+r.etaAdjustment+' דק׳':'אין די נתונים לשקלול זמן מדויק');
+  }
+  e.textContent=text;
+  legend.hidden=!state.trafficVisible;
+  button?.setAttribute('aria-pressed',String(state.trafficVisible));
+  if(button)button.textContent=state.trafficVisible?'🚦 הסתר עומסים':'🚦 הצג עומסים';
+ }
+ function applyTrafficSnapshot(snapshot){
+  if(state.trafficVector){state.map?.removeLayer(state.trafficVector);state.trafficVector=null;}
+  state.trafficReport=T?.normalize(snapshot,{routeId:state.route?.properties?.routeId,stopCode:state.stop})||null;
+  if(state.trafficReport?.available&&state.map&&root.L?.geoJSON){
+    state.trafficVector=L.geoJSON({type:'FeatureCollection',features:state.trafficReport.features},{style:T.layerStyle});
+    if(state.trafficVisible)state.trafficVector.addTo(state.map);
+  }
+  if(!state.trafficReport?.available)state.trafficStatusText=state.trafficReport?.reason||'לא התקבלו נתוני עומסי תנועה מאומתים';
+  updateTrafficStatus();drawArrivals();
+  return state.trafficReport;
+ }
+ function applyTraffic(){
+  if(!state.map)return;
+  const key=$('trafficKey').value.trim();
+  if(state.trafficLayer){state.map.removeLayer(state.trafficLayer);state.trafficLayer=null;}
+  if(!key){state.trafficVisible=false;state.trafficStatusText='אין מקור עומסים פעיל · ניתן להזין מפתח TomTom בהגדרות';updateTrafficStatus();return;}
+  if(!/^[A-Za-z0-9_-]{8,128}$/.test(key)){state.trafficStatusText='מפתח TomTom אינו תקין';updateTrafficStatus();return;}
+  state.trafficVisible=true;let gotTile=false,failed=0;
+  const layer=L.tileLayer('https://api.tomtom.com/traffic/map/4/tile/flow/relative0/{z}/{x}/{y}.png?key='+encodeURIComponent(key),{maxZoom:19,opacity:.64,attribution:'© TomTom'});
+  state.trafficLayer=layer;
+  state.trafficStatusText='טוען נתוני עומס על הכבישים…';
+  layer.on('tileload',()=>{gotTile=true;state.trafficStatusText='מפת עומסי TomTom · עומס חזותי בלבד, עדיין ללא מהירויות מאומתות לשקלול';updateTrafficStatus();});
+  layer.on('tileerror',()=>{if(++failed>=3&&!gotTile){state.trafficStatusText='שכבת העומסים לא נטענה; בדוק מפתח והרשאות';updateTrafficStatus();}});
+  layer.addTo(state.map);updateTrafficStatus();
+ }
+ function toggleTraffic(){
+  if(!state.trafficLayer&&!state.trafficVector){state.trafficVisible=true;state.trafficStatusText='אין נתוני עומסים פעילים. להפעלה נדרש מקור תנועה מורשה בהגדרות.';updateTrafficStatus();return;}
+  state.trafficVisible=!state.trafficVisible;
+  for(const layer of [state.trafficLayer,state.trafficVector]){
+    if(!layer)continue;
+    if(state.trafficVisible)layer.addTo(state.map);else state.map.removeLayer(layer);
+  }
+  updateTrafficStatus();
+ }
+ function init(){initPrefs();setupMap();$('settingsOpen').onclick=()=>setPanel(true);$('settingsClose').onclick=()=>setPanel(false);$('shade').onclick=()=>setPanel(false);$('apply').onclick=applySelection;$('refresh').onclick=refreshAll;$('stop').addEventListener('input',()=>{clearTimeout(state.suggestTimer);state.suggestTimer=setTimeout(updateSuggestions,160);});$('diagnose').onclick=diagnose;$('healthStrip').onclick=()=>{setPanel(true);diagnose();};$('copyDiagnostic').onclick=async()=>{try{await navigator.clipboard.writeText($('diagnostic').textContent||diagnosticText());$('copyDiagnostic').textContent='✓ הועתק';}catch{$('diagnostic').textContent=diagnosticText()+'\nהדפדפן חסם העתקה אוטומטית';}};$('trafficApply').onclick=applyTraffic;$('trafficToggle').onclick=toggleTraffic;updateTrafficStatus();$('direction').onchange=()=>{const raw=$('direction').value;if(!/^\d+$/.test(raw))return;const k=Number(raw);if(Number.isInteger(k)&&state.allRoutes[k]){state.request++;state.vehicles.clear();state.arrivals=[];state.arrivalAt=0;state.arrivalsError=null;state.gpsError=null;state.vehicleLayer?.clearLayers();activeMarkers.clear();chooseRoute(k,true);drawArrivals();refreshAll();}};$('relayApply').onclick=()=>{const v=$('relayUrl').value.trim();if(v&&!isTrustedRelay(v)){setBanner('כתובת המתווך חייבת להיות HTTPS תקינה',true);return;}state.relayUrl=v;savePrefs();setBanner(v?'חיבור דרך המתווך הוגדר; בודק נתונים…':'המתווך הוסר; חיבור ישיר.');refreshAll();};$('siriRef').onchange=()=>{state.siriRef=$('siriRef').value.trim();savePrefs();};$('showOld').onchange=()=>{savePrefs();drawVehicles();};
   const rev=++state.request;D.init().then(()=>{updateSuggestions();return loadLocalRoute(rev,true);}).then(refreshAll).catch(e=>setBanner('לא ניתן לפתוח את מאגר המסלולים: '+e.message,true));setInterval(()=>{drawArrivals();drawVehicles();if(state.arrivalAt&&Date.now()-state.arrivalAt>110000)showWarn('⚠ התחזיות ישנות; אל תסתמך על הדקות שמוצגות.');},15000);setInterval(()=>{if(!document.hidden)refreshAll();},45000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAll();});}
- root.SafeBusApp={state,getArrivals,getPositions,serviceDay,unwrap,esc,refreshAll,applySelection,init,healthSnapshot,diagnosticText,version:'9.0.4'};
+ root.SafeBusApp={state,getArrivals,getPositions,serviceDay,unwrap,esc,refreshAll,applySelection,init,healthSnapshot,diagnosticText,applyTrafficSnapshot,updateTrafficStatus,version:'9.0.5'};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })(window);
