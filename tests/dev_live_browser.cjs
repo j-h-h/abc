@@ -98,7 +98,8 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   assert.equal(await page.locator('#trafficFrame').getAttribute('title'),'מפת תנועה ופקקים של Waze');
   assert.match(await page.locator('.traffic-note').innerText(),/אינם מתווספים/);
   assert.equal(await page.locator('#trafficFrame').evaluate(e=>e.getBoundingClientRect().width),1440);
-  await page.frameLocator('#trafficFrame').locator('canvas').first().waitFor({state:'visible',timeout:30000});
+  await page.frameLocator('#trafficFrame').getByPlaceholder('חיפוש כתובת').waitFor({state:'visible',timeout:30000});
+  await page.frameLocator('#trafficFrame').locator('.olControlZoomIn').waitFor({state:'visible',timeout:30000});
   await page.screenshot({path:'dev-live-traffic.png'});
   console.log('WAZE EMBED DIAGNOSTICS',JSON.stringify({sourceFailures,externalErrors:errors}));
   console.log('PRODUCT FLOW PASSED: phone and desktop, visible bus icons and focus, separate official traffic map, keyboard dialog and CSP');
