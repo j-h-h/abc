@@ -3,53 +3,53 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? DEV-9.1.5</title>
+<title>איפה בטוח? DEV-9.1.6</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css?v=DEV-9.1.5"/>
-<script src="./gtfs-store.js"></script>
+<link rel="stylesheet" href="./styles.css?v=DEV-9.1.6"/>
+<script src="./gtfs-store.js?v=9.1.6"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
-<script defer src="./vehicle-history.js?v=DEV-9.1.5"></script>
-<script defer src="./traffic-analysis.js?v=DEV-9.1.5"></script>
+<script defer src="./vehicle-history.js?v=DEV-9.1.6"></script>
+<script defer src="./traffic-analysis.js?v=DEV-9.1.6"></script>
 
-<script defer src="./archive-contract.js?v=DEV-9.1.5"></script>
-<script defer src="./live-contract.js?v=DEV-9.1.5"></script>
-<script defer src="./experience.js?v=DEV-9.1.5"></script>
-<script defer src="./app.js?v=DEV-9.1.5"></script>
+<script defer src="./archive-contract.js?v=DEV-9.1.6"></script>
+<script defer src="./live-contract.js?v=DEV-9.1.6"></script>
+<link rel="stylesheet" href="./national.css?v=DEV-9.1.6"/>
+<script defer src="./national-contract.js?v=DEV-9.1.6"></script>
+<script defer src="./national.js?v=DEV-9.1.6"></script>
+<script defer src="./experience.js?v=DEV-9.1.6"></script>
+<script defer src="./app.js?v=DEV-9.1.6"></script>
 </head><body>
-<div class="app">
-<header class="topbar"><div class="brand"><span class="busglyph" aria-hidden="true">🚌</span><strong>איפה בטוח?</strong><small>DEV-9.1.5</small></div><button id="settingsOpen" class="icon-button" title="מידע והיסטוריית רכב" aria-label="מידע והיסטוריית רכב" aria-expanded="false">⚙</button></header>
-<nav class="view-tabs" aria-label="בחירת מפה"><a class="active" href="./" aria-current="page">🚌 אוטובוסים</a><a id="trafficPageLink" href="./traffic.html">🚦 פקקים</a><span>בחר קו ותחנה, ולחץ על אוטובוס במפה</span></nav>
-<div class="workspace"><div class="sidebar">
-<section class="chooser" aria-label="קו ותחנה"><label>קו <input id="line" list="allLines" value="72" autocomplete="off" maxlength="8" aria-label="מספר קו"><datalist id="allLines"></datalist></label><label>תחנה <input id="stop" inputmode="numeric" pattern="[0-9]*" maxlength="7" value="2360" aria-label="מספר תחנה"></label><button class="primary" id="apply">הצג</button></section>
-<div id="nearbyLines" class="nearby-hint" aria-live="polite">טוען קווים לתחנה…</div>
-<div id="directionWrap" class="direction-strip" hidden><label>כיוון <select id="direction" aria-label="בחירת כיוון נסיעה"></select></label></div>
-<div id="banner" class="banner" role="status" aria-live="polite">טוען מקורות…</div>
-<button type="button" id="healthStrip" class="health-strip" aria-label="מצב הנתונים ופרטים">בודק את חיבור הנתונים…</button>
-<section class="results"><div class="results-head"><strong>מתי מגיע?</strong><span id="arrivalAge" class="muted">אין עדכון</span><button id="refresh" class="ghost" aria-label="רענון">⟳ רענן</button></div><div id="arrivals" class="arrivals" aria-live="polite"><div class="empty">ממתין למידע…</div></div><div id="warning" class="warning" hidden></div></section>
-<section class="fleet-section" aria-label="אוטובוסים מדווחים"><div class="fleet-head"><h2>אוטובוסים על המפה</h2><strong id="fleetCount">מחפש…</strong></div><p id="fleetStatus" role="status">מחפש דיווחי מיקום לקו שבחרת…</p><div id="fleetList"></div><p class="source-note">אלה מיקומים מדיווחי משרד התחבורה. הסמל מתעדכן כשמתקבל דיווח; אינו נע בין דיווחים. לחץ על רכב לפרטים ולהיסטוריה.</p></section>
-</div><main class="map-wrap" aria-label="מפת האוטובוסים"><div id="map" role="application" aria-label="מפת תחבורה גאוגרפית"></div><div id="mapError" class="map-fallback" hidden>המפה לא נטענה. נסה לרענן את האתר.</div><div id="tileNotice" class="tile-notice" role="status" hidden>מפת הרקע לא נטענה. נסה לרענן את האתר.</div>
-<div class="map-top-status" id="mapVehicleStatus" role="status">מחפש אוטובוסים…</div>
-<div id="trafficLegend" class="traffic-legend" hidden><span>עומס: 🟢 קל · 🟡 בינוני · 🟠 כבד · 🔴 חריג</span></div>
-<div class="map-actions"><button id="focusBuses" disabled>🚌 מרכז על אוטובוסים</button><button id="goStop" title="מרכז בתחנה" aria-label="מרכז בתחנה">⌖</button><button id="fitRoute" title="הצג מסלול" aria-label="הצג מסלול">▣</button><button id="trafficToggle" title="פתח מפת פקקים">🚦 מפת פקקים</button></div>
-<div id="trafficStatus" class="traffic-status" hidden></div><div class="map-caption" id="mapCaption">טוען את המסלול…</div></main></div></div>
+<div class="national-app">
+ <main class="national-map" aria-label="מפת תחנות, אוטובוסים ותנועה בכל הארץ"><div id="map" aria-label="מפת התחבורה"></div><div id="mapError" class="map-fallback" hidden>לא ניתן לטעון את המפה. נסה לרענן.</div><div id="tileNotice" class="tile-notice" hidden>מפת הרקע אינה זמינה כרגע.</div></main>
+ <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.1.6</span><button id="settingsOpen" type="button" aria-label="מידע והיסטוריית רכב" aria-expanded="false">ⓘ</button></header>
+ <section class="map-search" aria-label="חיפוש בכל הארץ"><form id="searchForm"><input id="placeSearch" type="search" autocomplete="off" maxlength="120" placeholder="כתובת, מקום או תחנה בכל הארץ" aria-label="כתובת, מקום או תחנה" aria-expanded="false" aria-controls="searchResults"/><button id="searchSubmit" type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form><ul id="searchResults" aria-label="תוצאות חיפוש" hidden></ul></section>
+ <div class="map-layers" role="group" aria-label="שכבות המפה"><button id="busesToggle" aria-pressed="true">אוטובוסים</button><button id="stationsToggle" aria-pressed="true">תחנות</button><button id="trafficLayerToggle" aria-pressed="false">פקקים</button></div>
+ <div class="map-utilities"><button id="myLocation" aria-label="המיקום שלי" title="המיקום שלי">⌖</button><button id="nationalFocus" disabled aria-label="מרכז על האוטובוסים המדווחים" title="מרכז על האוטובוסים">🚌</button></div>
+ <div class="national-status" role="status" aria-live="polite"><strong id="nationalBusCount">טוען את המפה…</strong><span id="stopCount"></span><small id="areaCoverage">חפש מקום או הגדל את המפה להצגת אוטובוסים</small></div>
+ <div id="trafficLegend" class="national-traffic-legend" hidden>תנועה: <i class="green"></i>מהירה <i class="amber"></i>איטית <i class="red"></i>עמוסה · TomTom</div>
+ <div id="notice" class="national-notice" role="status" hidden></div>
+ <section id="stationDock" class="station-dock" aria-label="פרטי התחנה" hidden><div class="station-dock-head"><button id="dockToggle" aria-label="פתיחה או צמצום פרטי התחנה" aria-expanded="true"><strong id="stationTitle"></strong><small id="stationCode"></small></button><button id="closeStation" aria-label="סגור תחנה">×</button></div><div id="stationBody"><div class="station-filter"><label for="stationLineSelect">הצג</label><select id="stationLineSelect" aria-label="סינון קו בתחנה"><option value="">כל הקווים</option></select><div id="stationLines" class="station-lines" aria-label="קווים נפוצים בתחנה"></div></div><div id="directionWrap" class="direction-strip" hidden><label>כיוון <select id="direction" aria-label="בחירת כיוון נסיעה"></select></label></div><div class="station-arrivals-head"><strong>הגעה לתחנה</strong><small id="stationUpdated"></small><button id="stationRefresh" aria-label="רענן תחנה">⟳</button></div><div id="stationArrivals" aria-live="polite"></div><small id="stationCoverage" class="station-coverage"></small></div></section>
+</div>
+<div id="legacyControls" hidden><input id="line" value="72" list="allLines"/><datalist id="allLines"></datalist><input id="stop" value="2360"/><button id="apply"></button><div id="nearbyLines"></div><div id="banner"></div><button id="healthStrip"></button><div id="arrivals"></div><span id="arrivalAge"></span><button id="refresh"></button><div id="warning" hidden></div><span id="fleetCount"></span><p id="fleetStatus"></p><div id="fleetList"></div><button id="focusBuses"></button><button id="goStop"></button><button id="fitRoute"></button><button id="trafficToggle"></button><a id="trafficPageLink" href="./traffic.html"></a><div id="trafficStatus" hidden></div><div id="mapCaption"></div><div id="mapVehicleStatus"></div></div>
 <div class="shade" id="shade" hidden></div>
 <aside id="panel" class="panel" aria-label="הגדרות ומקורות" aria-modal="true" role="dialog" hidden>
  <div class="panel-header"><strong>הגדרות ומקורות</strong><button id="settingsClose" class="icon-button" aria-label="סגור">×</button></div>
- <section><h2>כל קווי האוטובוס בארץ</h2><p>מאגר המסלולים נשלף לפי הצורך ונשמר בטלפון. העדכון מתבצע בנפרד מהאפליקציה; אין צורך להוריד קובץ גדול בכל שדרוג.</p><div id="importStatus" class="muted">טוען מאגר מסלולים…</div></section>
- <section id="vehicleArchiveSection"><h2>היסטוריית רכב חוצת נסיעות</h2><p>הארכיון מקבץ לפי מזהה רכב ומפעיל, גם במסלולים אחרים. שיוך לנסיעה מתוכננת מוצג בנפרד מדיווח מיקום; אף אחד מהם אינו הוכחה לתקלה מכנית. זיהוי עצירות מקומי דורש חותמת GPS עצמאית, שאינה זמינה במקורות המחוברים.</p>
+ <section><h2>מפה לכל הארץ</h2><p id="catalogStatus"></p><p>מאגר המסלולים נשלף לפי הצורך ונשמר בטלפון. העדכון מתבצע בנפרד מהאפליקציה; אין צורך להוריד קובץ גדול בכל שדרוג.</p><div id="importStatus" class="muted">טוען מאגר מסלולים…</div></section>
+ <details id="archiveAdvanced"><summary>היסטוריית רכב חוצת נסיעות</summary><section id="vehicleArchiveSection"><h2>היסטוריית רכב חוצת נסיעות</h2><p>הארכיון מקבץ לפי מזהה רכב ומפעיל, גם במסלולים אחרים. שיוך לנסיעה מתוכננת מוצג בנפרד מדיווח מיקום; אף אחד מהם אינו הוכחה לתקלה מכנית. זיהוי עצירות מקומי דורש חותמת GPS עצמאית, שאינה זמינה במקורות המחוברים.</p>
  <div class="archive-fields"><label>מזהה רכב במקור <input id="archiveVehicleRef" maxlength="64" autocomplete="off" dir="ltr"/></label><label>מזהה מפעיל <input id="archiveOperatorRef" inputmode="numeric" maxlength="12" autocomplete="off" dir="ltr"/></label></div>
  <div class="archive-fields"><label>תחילת חלון (רשות) <input id="archiveFrom" type="date"/></label><label>סיום חלון (רשות) <input id="archiveTo" type="date"/></label></div><small>בלי תאריכים: 14 הימים האחרונים. תאריכים לפי שעון המכשיר, מתחילת היום הראשון עד תחילת יום הסיום.</small>
  <button type="button" id="archiveLoad" class="secondary">טען ארכיון לרכב</button><button type="button" id="archiveMore" class="secondary" hidden>טען עוד באותו חלון</button>
- <div id="archiveStatus" role="status" aria-live="polite">בחר רכב מהתחזית או מהמפה, או הזן מזהי רכב ומפעיל.</div><div id="archiveResults"></div></section>
- <section><h2>עדכונים ומיקום</h2><p>התווית שעל האוטובוס מציגה את גיל דיווח המקור. חותמת GPS עצמאית אינה זמינה במקורות המחוברים. תחזית הגעה אינה משויכת לרכב ללא ראיות.</p>
+ <div id="archiveStatus" role="status" aria-live="polite">בחר רכב מהמפה, או הזן מזהי רכב ומפעיל.</div><div id="archiveResults"></div></section></details>
+ <details><summary>פרטי מקורות וחיבור</summary><section><h2>עדכונים ומיקום</h2><p>התווית שעל האוטובוס מציגה את גיל דיווח המקור. חותמת GPS עצמאית אינה זמינה במקורות המחוברים. תחזית הגעה אינה משויכת לרכב ללא ראיות.</p>
  <label>מזהה SIRI של הקו (למתקדמים) <input id="siriRef" inputmode="numeric" placeholder="מזוהה מהמסלול, אם קיים"/></label>
  <label class="checkline"><input id="showOld" type="checkbox"/> הצג גם מיקומים ישנים מאוד</label>
  </section>
  <section><h2>חיבור נתונים חי</h2><p>בגרסת DEV מחובר כבר מתווך שרת ל־LIVE-WORK, כדי להימנע מחסימת מקורות בדפדפן. התחזיות נבדקות לפי קו, מפעיל, כיוון וחותמות זמן. אפשר להגדיר מתווך אישי אחר; השארת השדה ריק מפעילה את החיבור המובנה.</p><label>כתובת מתווך (רשות) <input id="relayUrl" type="url" inputmode="url" dir="ltr" placeholder="https://example.workers.dev"/></label><button class="secondary" id="relayApply">עדכן חיבור</button></section>
-<section><h2>פקקים</h2><p>לחץ על מפת פקקים להצגת מפת התנועה הנפרדת. דיווחי התנועה אינם מתווספים לתחזית האוטובוס; לשקלול כזה עדיין חסרים מקור מורשה וחותמת GPS עצמאית.</p><button type="button" id="trafficApply" class="secondary">פתח מפת פקקים</button></section>
+<section><h2>פקקים</h2><p>כפתור פקקים מפעיל שכבת תנועה על אותה מפה, כאשר ספק התנועה מחובר. דיווחי התנועה אינם מתווספים לתחזית האוטובוס; לשקלול כזה עדיין חסרים מקור מורשה וחותמת GPS עצמאית.</p><button type="button" id="trafficApply" class="secondary">הפעל שכבת פקקים</button></section>
  <section><h2>מה עובד ומה לא?</h2><p>מסלול, מפת רקע ומידע חי נבדקים בנפרד. אם מקור תחזיות חסום בדפדפן, נדרש מתווך שרת; זו אינה תקלה של מספר הקו.</p><button class="secondary" id="diagnose">בדוק שוב</button> <button class="secondary" id="copyDiagnostic">העתק דוח תקלה</button><pre id="diagnostic" class="diagnostic">פתח אבחון כדי לראות מצב.</pre></section>
- <section><h2>מידע</h2><p>העדפות ותצפיות מקומיות נשמרות במכשיר. קריאת הארכיון שולחת את מזהי הרכב והמפעיל לשירות הנתונים. אם מקור מסוים חסום בגלל CORS או אינו זמין, האפליקציה תדווח על כך. אין להשתמש באפליקציה כאמצעי בלעדי לתפיסת אוטובוס לפני אימות בשטח.</p></section>
+ </details><section><h2>מידע</h2><p>העדפות ותצפיות מקומיות נשמרות במכשיר. קריאת הארכיון שולחת את מזהי הרכב והמפעיל לשירות הנתונים. אם מקור מסוים חסום בגלל CORS או אינו זמין, האפליקציה תדווח על כך. אין להשתמש באפליקציה כאמצעי בלעדי לתפיסת אוטובוס לפני אימות בשטח.</p></section>
 </aside>
 </body></html>

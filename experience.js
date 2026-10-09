@@ -8,7 +8,7 @@
   const age=C.gpsAge(v.observed_at,now),old=age>180;
   const bearing=typeof v.bearing==='number'&&Number.isFinite(v.bearing)&&v.bearing>=0&&v.bearing<360?v.bearing:null;
   const arrow=bearing===null?'':'<span class="bus-heading" style="transform:rotate('+bearing+'deg)" aria-hidden="true"></span>';
-  return '<div class="bus-marker '+(old?'reported-old':'')+' '+(history?.recurrent?'recurrent':'')+'">'+arrow+'<span class="bus-face">'+busSvg+'</span><span class="bus-marker-label">'+(history?.recurrent?'⚠ ':'')+'קו '+esc(line)+'<small>'+(old?'מיקום אחרון · ':'דיווח לפני ')+esc(C.ageText(age))+'</small></span></div>';
+  return '<div class="bus-marker '+(old?'reported-old':'')+' '+(history?.recurrent?'recurrent':'')+'">'+arrow+'<span class="bus-face">'+busSvg+'</span><span class="bus-marker-label">'+(history?.recurrent?'⚠ ':'')+(line==='?'?'אוטובוס':'קו '+esc(line))+'<small>'+(old?'מיקום אחרון · ':'דיווח לפני ')+esc(C.ageText(age))+'</small></span></div>';
  }
  function trafficUrl(state){
   const p=state?.stopMarker?.getLatLng?.()||state?.map?.getCenter?.()||{lat:31.733251,lng:35.187968};
@@ -64,6 +64,6 @@
   if(root.ResizeObserver){new ResizeObserver(()=>root.SafeBusApp?.state.map?.invalidateSize()).observe($('map'));}
   if('serviceWorker' in navigator&&root.location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
  }
- root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.5'};
+ root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.6'};
  document.addEventListener('DOMContentLoaded',init);
 })(window);

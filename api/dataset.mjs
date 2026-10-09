@@ -1,0 +1,6 @@
+/* Read-only live access to the existing national GTFS publication. */
+import {createNationalProviders} from '../backend/national/providers.mjs';
+const provider=createNationalProviders();
+export async function GET(request){const q=new URL(request.url).searchParams,file=q.get('file'),version=q.get('v');if(!/^(?:version\.json|catalog\.json|line\/\d{1,5}[A-Za-z]?\.json)$/.test(file||'')||version&&!/^[a-f0-9]{16}$/.test(version)||[...q.keys()].some(k=>!['file','v'].includes(k)||q.getAll(k).length!==1))return Response.json({error:'INVALID_DATASET_REQUEST'},{status:400});
+ try{if(version){const latest=await provider.json('https://j-h-h.github.io/abc/data/version.json',{ttl:60000});if(latest.version!==version)return Response.json({error:'DATASET_CHANGED'},{status:409,headers:{'Cache-Control':'no-store'}})}const data=await provider.json('https://j-h-h.github.io/abc/data/'+file+(version?'?v='+version:''),{ttl:file==='version.json'?60000:300000});return Response.json(data,{headers:{'Cache-Control':file==='version.json'?'no-store':'public, max-age=60','X-Content-Type-Options':'nosniff'}})}catch(e){return Response.json({error:e.message},{status:e.status||502,headers:{'Cache-Control':'no-store'}})}
+}

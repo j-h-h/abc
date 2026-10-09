@@ -54,6 +54,18 @@
   "functions": {
     "api/live.mjs": {
       "maxDuration": 40
+    },
+    "api/national.mjs": {
+      "maxDuration": 60
+    },
+    "api/search.mjs": {
+      "maxDuration": 15
+    },
+    "api/traffic.mjs": {
+      "maxDuration": 15
+    },
+    "api/dataset.mjs": {
+      "maxDuration": 15
     }
   }
 }

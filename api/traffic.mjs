@@ -1,0 +1,9 @@
+/* Same-map traffic tiles. Credentials stay on the server; no unrelated provider URLs. */
+const enabled=()=>process.env.TOMTOM_TRAFFIC_ENABLED==='true'&&process.env.TOMTOM_NONBILLING_CONFIRMED==='true'&&!!process.env.TOMTOM_TRAFFIC_KEY;
+const result=(x,s=200)=>Response.json(x,{status:s,headers:{'Cache-Control':'no-store'}});
+export async function GET(request){const q=new URL(request.url).searchParams;if(q.get('kind')==='status'&&q.size===1)return result({available:enabled(),provider:enabled()?'TomTom':null});if(!enabled())return result({error:'TRAFFIC_NOT_CONNECTED'},503);
+ if(q.size!==3||[...q.keys()].some(k=>!['z','x','y'].includes(k)||q.getAll(k).length!==1)||[...q.values()].some(v=>!/^\d{1,7}$/.test(v)))return result({error:'INVALID_TILE'},400);
+ const z=Number(q.get('z')),x=Number(q.get('x')),y=Number(q.get('y')),n=2**z;if(z<7||z>18||x>=n||y>=n)return result({error:'INVALID_TILE'},400);
+ const lon=t=>t/n*360-180,lat=t=>Math.atan(Math.sinh(Math.PI*(1-2*t/n)))*180/Math.PI;if(lon(x)>36||lon(x+1)<34||lat(y+1)>34||lat(y)<29)return result({error:'OUTSIDE_COVERAGE'},400);
+ try{const url=new URL('https://api.tomtom.com/traffic/map/4/tile/flow/relative/'+z+'/'+x+'/'+y+'.png');url.searchParams.set('key',process.env.TOMTOM_TRAFFIC_KEY);url.searchParams.set('thickness','3');const r=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(9000)});if(!r.ok||!(r.headers.get('content-type')||'').includes('image/png'))return result({error:'TRAFFIC_UNAVAILABLE'},r.status===429?429:502);const bytes=await r.arrayBuffer();if(bytes.byteLength>400000)return result({error:'TRAFFIC_INVALID_TILE'},502);return new Response(bytes,{headers:{'Content-Type':'image/png','Cache-Control':'private, max-age=30','X-Traffic-Retrieved-At':new Date().toISOString(),'X-Content-Type-Options':'nosniff'}})}catch{return result({error:'TRAFFIC_UNAVAILABLE'},502)}
+}
