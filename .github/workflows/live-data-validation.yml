@@ -1,0 +1,29 @@
+name: Live data backend validation
+on:
+  push:
+    branches: [work/live-data-20261009]
+    paths:
+      - 'backend/live-data/**/*.mjs'
+      - 'backend/live-data/api/**'
+      - 'backend/live-data/tests/**'
+      - 'backend/live-data/package.json'
+      - 'backend/live-data/vercel.json'
+      - '.github/workflows/live-data-validation.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Backend regression tests
+        working-directory: backend/live-data
+        run: npm test
+      - name: Verify deployed normalized HTTPS endpoints
+        working-directory: backend/live-data
+        env:
+          LIVE_BASE_URL: https://eifo-batuach-live-relay.vercel.app
+        run: npm run check:live

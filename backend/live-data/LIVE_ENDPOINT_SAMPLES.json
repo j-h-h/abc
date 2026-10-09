@@ -1,0 +1,1166 @@
+{
+  "deployment": {
+    "service": "https://eifo-batuach-live-relay.vercel.app",
+    "immutableUrl": "https://eifo-batuach-live-relay-8dulllsj1-s-0522.vercel.app",
+    "id": "dpl_FBKCc8GmUpo3J7WBSWeCcs7at5iv",
+    "codeCommit": "93682fdf172aa248bbb47e5a17fb7d969ca83d0f"
+  },
+  "checkedAt": "2026-10-09T11:09:15.426Z",
+  "workflow": "https://github.com/j-h-h/abc/actions/runs/37921919652",
+  "regression": {
+    "passed": 38,
+    "failed": 0
+  },
+  "liveChecks": 17,
+  "operationalLimits": {
+    "traffic": "disabled: credentials/licence/nonbilling entitlement unavailable",
+    "recentHistory": "UPSTREAM_TIMEOUT HTTP 502",
+    "historicalHistory": "22 ride associations, 10 route IDs, position query timeout; no manufactured GPS samples"
+  },
+  "evidence": [
+    {
+      "path": "/v1/health",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:47.252Z",
+      "elapsedMs": 303,
+      "data": {
+        "service": "eifo-batuach-live-data",
+        "version": "1.0.0",
+        "now": "2026-10-09T11:08:47.177Z",
+        "transit": "SIRI via curlbus; source freshness checked per response",
+        "trafficEnabled": false,
+        "history": "Open Bus archive on demand",
+        "gpsMeasurementClock": "unavailable in presently connected transit sources",
+        "paidDataServiceEnabled": false
+      }
+    },
+    {
+      "path": "/v1/routes?line=72&stopCode=2360&routeId=34120",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:47.777Z",
+      "elapsedMs": 525,
+      "data": {
+        "routes": [
+          {
+            "routeId": "34120",
+            "line": "72",
+            "operatorRef": "16",
+            "gtfsDirectionId": "1",
+            "routeDesc": "17072-2-0",
+            "shapeId": "158770",
+            "headsign": "רמות",
+            "stops": [
+              {
+                "code": "2360",
+                "lat": 31.733251,
+                "lon": 35.187968,
+                "name": "יפה רום/צביה ויצחק"
+              }
+            ],
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "coordinateCount": 1194,
+            "destinationStopCode": "2599"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/v1/stops/2360/arrivals?line=72&routeId=34120",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:48.469Z",
+      "elapsedMs": 692,
+      "data": {
+        "schemaVersion": 1,
+        "stopCode": "2360",
+        "source": "mot-siri-via-curlbus",
+        "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+        "retrievedAt": "2026-10-09T11:08:48.423Z",
+        "arrivals": [],
+        "unverified": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "34120",
+            "line": "72",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "55521104",
+            "vehicleKey": "il-mot-siri:16:55521104",
+            "tripId": "584954647_091026",
+            "sourceObservedAt": "2026-10-09T11:05:00.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 228.423,
+            "reportedArrivalAt": null,
+            "unverifiedArrivalAt": "2026-10-09T11:13:00.000Z",
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:10:00.000Z",
+            "realtime": false,
+            "etaKind": "unverified-source-value",
+            "confidence": "unverified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "reason": "STALE_OR_INVALID_SOURCE_TIME"
+          },
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "34120",
+            "line": "72",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "44891402",
+            "vehicleKey": "il-mot-siri:16:44891402",
+            "tripId": "584954648_091026",
+            "sourceObservedAt": "2026-10-09T04:38:31.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 23417.423,
+            "reportedArrivalAt": null,
+            "unverifiedArrivalAt": "2026-10-09T11:25:00.000Z",
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:22:00.000Z",
+            "realtime": false,
+            "etaKind": "unverified-source-value",
+            "confidence": "unverified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "reason": "STALE_OR_INVALID_SOURCE_TIME"
+          },
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "34120",
+            "line": "72",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "82090303",
+            "vehicleKey": "il-mot-siri:16:82090303",
+            "tripId": "584954649_091026",
+            "sourceObservedAt": "2026-10-09T01:03:44.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 36304.423,
+            "reportedArrivalAt": null,
+            "unverifiedArrivalAt": "2026-10-09T11:38:00.000Z",
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:34:00.000Z",
+            "realtime": false,
+            "etaKind": "unverified-source-value",
+            "confidence": "unverified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "reason": "STALE_OR_INVALID_SOURCE_TIME"
+          }
+        ],
+        "vehicles": [],
+        "status": "unverified",
+        "emptyMeans": "No usable report; this does not prove the bus did not depart",
+        "gpsTimeLimitation": "SIRI RecordedAtTime is a source report clock, not an independent GPS measurement clock",
+        "routes": [
+          {
+            "routeId": "34120",
+            "line": "72",
+            "operatorRef": "16",
+            "gtfsDirectionId": "1",
+            "routeDesc": "17072-2-0",
+            "shapeId": "158770",
+            "headsign": "רמות",
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "destinationStopCode": "2599"
+          }
+        ],
+        "stopInfo": {
+          "name": {
+            "AR": "يفه روم/تسڤيا ويتسحاك",
+            "EN": "Yefe Rom/Tsviya VeYitshak",
+            "HE": "יפה רום/צביה ויצחק"
+          },
+          "address": {
+            "street": "יפה רום 91",
+            "city": "Jerusalem",
+            "platform": "",
+            "floor": "",
+            "city_multilingual": {
+              "HE": "ירושלים",
+              "EN": "Jerusalem"
+            }
+          },
+          "location": {
+            "lat": 31.733251,
+            "lon": 35.187968
+          }
+        }
+      }
+    },
+    {
+      "path": "/v1/routes?line=531&stopCode=2360&routeId=33244",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:48.641Z",
+      "elapsedMs": 172,
+      "data": {
+        "routes": [
+          {
+            "routeId": "33244",
+            "line": "531",
+            "operatorRef": "16",
+            "gtfsDirectionId": "0",
+            "routeDesc": "12531-3-0",
+            "shapeId": "146312",
+            "headsign": "גילה",
+            "stops": [
+              {
+                "code": "2360",
+                "lat": 31.733251,
+                "lon": 35.187968,
+                "name": "יפה רום/צביה ויצחק"
+              }
+            ],
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "coordinateCount": 1111,
+            "destinationStopCode": "2535"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/v1/stops/2360/arrivals?line=531&routeId=33244",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:48.753Z",
+      "elapsedMs": 112,
+      "data": {
+        "schemaVersion": 1,
+        "stopCode": "2360",
+        "source": "mot-siri-via-curlbus",
+        "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+        "retrievedAt": "2026-10-09T11:08:48.423Z",
+        "arrivals": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "33244",
+            "line": "531",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "3",
+            "gtfsDirectionId": "0",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "70153902",
+            "vehicleKey": "il-mot-siri:16:70153902",
+            "tripId": "584864943_091026",
+            "sourceObservedAt": "2026-10-09T11:07:00.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 108.702,
+            "reportedArrivalAt": "2026-10-09T11:15:00.000Z",
+            "unverifiedArrivalAt": null,
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:12:00.000Z",
+            "realtime": true,
+            "etaKind": "reported-live",
+            "confidence": "source-fresh-route-verified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "minutes": 6.1883
+          }
+        ],
+        "unverified": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "33244",
+            "line": "531",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "3",
+            "gtfsDirectionId": "0",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "67574902",
+            "vehicleKey": "il-mot-siri:16:67574902",
+            "tripId": "584864944_091026",
+            "sourceObservedAt": "2026-10-09T01:03:41.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 36307.702,
+            "reportedArrivalAt": null,
+            "unverifiedArrivalAt": "2026-10-09T11:27:00.000Z",
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:24:00.000Z",
+            "realtime": false,
+            "etaKind": "unverified-source-value",
+            "confidence": "unverified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "reason": "STALE_OR_INVALID_SOURCE_TIME"
+          }
+        ],
+        "vehicles": [
+          {
+            "id": "mot-siri:16:584864943_091026",
+            "vehicleRef": "70153902",
+            "vehicleKey": "il-mot-siri:16:70153902",
+            "operatorRef": "16",
+            "tripId": "584864943_091026",
+            "routeId": "33244",
+            "line": "531",
+            "lat": 31.739946,
+            "lon": 35.181583,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-09T11:07:00.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "positionReportedAt": "2026-10-09T11:07:00.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 21663.574547406988,
+            "positionDistanceFromRouteMeters": 29.525084364137125,
+            "reportedArrivalAt": "2026-10-09T11:15:00.000Z"
+          }
+        ],
+        "status": "live",
+        "emptyMeans": "No usable report; this does not prove the bus did not depart",
+        "gpsTimeLimitation": "SIRI RecordedAtTime is a source report clock, not an independent GPS measurement clock",
+        "routes": [
+          {
+            "routeId": "33244",
+            "line": "531",
+            "operatorRef": "16",
+            "gtfsDirectionId": "0",
+            "routeDesc": "12531-3-0",
+            "shapeId": "146312",
+            "headsign": "גילה",
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "destinationStopCode": "2535"
+          }
+        ],
+        "stopInfo": {
+          "name": {
+            "AR": "يفه روم/تسڤيا ويتسحاك",
+            "EN": "Yefe Rom/Tsviya VeYitshak",
+            "HE": "יפה רום/צביה ויצחק"
+          },
+          "address": {
+            "street": "יפה רום 91",
+            "city": "Jerusalem",
+            "platform": "",
+            "floor": "",
+            "city_multilingual": {
+              "HE": "ירושלים",
+              "EN": "Jerusalem"
+            }
+          },
+          "location": {
+            "lat": 31.733251,
+            "lon": 35.187968
+          }
+        }
+      }
+    },
+    {
+      "path": "/v1/routes?line=92&stopCode=2360&routeId=33252",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:48.875Z",
+      "elapsedMs": 122,
+      "data": {
+        "routes": [
+          {
+            "routeId": "33252",
+            "line": "92",
+            "operatorRef": "16",
+            "gtfsDirectionId": "0",
+            "routeDesc": "39092-3-0",
+            "shapeId": "165133",
+            "headsign": "גילה",
+            "stops": [
+              {
+                "code": "2360",
+                "lat": 31.733251,
+                "lon": 35.187968,
+                "name": "יפה רום/צביה ויצחק"
+              }
+            ],
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "coordinateCount": 1554,
+            "destinationStopCode": "2535"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/v1/stops/2360/arrivals?line=92&routeId=33252",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:48.981Z",
+      "elapsedMs": 106,
+      "data": {
+        "schemaVersion": 1,
+        "stopCode": "2360",
+        "source": "mot-siri-via-curlbus",
+        "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+        "retrievedAt": "2026-10-09T11:08:48.423Z",
+        "arrivals": [],
+        "unverified": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "33252",
+            "line": "92",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "3",
+            "gtfsDirectionId": "0",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "69446803",
+            "vehicleKey": "il-mot-siri:16:69446803",
+            "tripId": "585017651_091026",
+            "sourceObservedAt": "2026-10-09T01:03:42.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 36306.938,
+            "reportedArrivalAt": null,
+            "unverifiedArrivalAt": "2026-10-09T11:18:00.000Z",
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:15:00.000Z",
+            "realtime": false,
+            "etaKind": "unverified-source-value",
+            "confidence": "unverified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "reason": "STALE_OR_INVALID_SOURCE_TIME"
+          },
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "33252",
+            "line": "92",
+            "stopCode": "2360",
+            "operatorRef": "16",
+            "siriDirectionRef": "3",
+            "gtfsDirectionId": "0",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "70142302",
+            "vehicleKey": "il-mot-siri:16:70142302",
+            "tripId": "585114592_091026",
+            "sourceObservedAt": "2026-10-09T03:38:29.000Z",
+            "sourceResponseAt": "2026-10-09T11:08:48.000Z",
+            "retrievedAt": "2026-10-09T11:08:48.423Z",
+            "sourceAgeSeconds": 27019.938,
+            "reportedArrivalAt": null,
+            "unverifiedArrivalAt": "2026-10-09T11:33:00.000Z",
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-09T11:30:00.000Z",
+            "realtime": false,
+            "etaKind": "unverified-source-value",
+            "confidence": "unverified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "reason": "STALE_OR_INVALID_SOURCE_TIME"
+          }
+        ],
+        "vehicles": [],
+        "status": "unverified",
+        "emptyMeans": "No usable report; this does not prove the bus did not depart",
+        "gpsTimeLimitation": "SIRI RecordedAtTime is a source report clock, not an independent GPS measurement clock",
+        "routes": [
+          {
+            "routeId": "33252",
+            "line": "92",
+            "operatorRef": "16",
+            "gtfsDirectionId": "0",
+            "routeDesc": "39092-3-0",
+            "shapeId": "165133",
+            "headsign": "גילה",
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "destinationStopCode": "2535"
+          }
+        ],
+        "stopInfo": {
+          "name": {
+            "AR": "يفه روم/تسڤيا ويتسحاك",
+            "EN": "Yefe Rom/Tsviya VeYitshak",
+            "HE": "יפה רום/צביה ויצחק"
+          },
+          "address": {
+            "street": "יפה רום 91",
+            "city": "Jerusalem",
+            "platform": "",
+            "floor": "",
+            "city_multilingual": {
+              "HE": "ירושלים",
+              "EN": "Jerusalem"
+            }
+          },
+          "location": {
+            "lat": 31.733251,
+            "lon": 35.187968
+          }
+        }
+      }
+    },
+    {
+      "path": "/v1/routes?line=5&stopCode=37487&routeId=2261",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:49.450Z",
+      "elapsedMs": 271,
+      "data": {
+        "routes": [
+          {
+            "routeId": "2261",
+            "line": "5",
+            "operatorRef": "5",
+            "gtfsDirectionId": "1",
+            "routeDesc": "25005-2-0",
+            "shapeId": "165044",
+            "headsign": "תל אביב יפו_רכבת מרכז",
+            "stops": [
+              {
+                "code": "37487",
+                "lat": 32.034209,
+                "lon": 34.770086,
+                "name": "משרד הרישוי/הלוחמים"
+              }
+            ],
+            "catalogVersion": "560a61f2a20156ec",
+            "catalogRetrievedAt": "2026-10-09T11:08:47.694Z",
+            "catalogSource": "MOT GTFS via application daily catalog",
+            "coordinateCount": 490,
+            "destinationStopCode": "27997"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/curlbus/2360",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:08:49.557Z",
+      "elapsedMs": 107,
+      "data": {
+        "timestamp": "2026-10-09T14:08:48+03:00",
+        "visits": [
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 14:05:00+03:00",
+            "stop_code": "2360",
+            "line_id": "34120",
+            "route_id": "34120",
+            "direction_id": "2",
+            "line_name": "72",
+            "operator_id": "16",
+            "destination_id": "2599",
+            "vehicle_ref": "55521104",
+            "eta": "2026-10-09 14:13:00+03:00",
+            "trip_id": "584954647_091026",
+            "status": null,
+            "departed": "2026-10-09 14:10:00+03:00",
+            "location": {
+              "lat": "31.739877",
+              "lon": "35.181297"
+            }
+          },
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 14:07:00+03:00",
+            "stop_code": "2360",
+            "line_id": "33244",
+            "route_id": "33244",
+            "direction_id": "3",
+            "line_name": "531",
+            "operator_id": "16",
+            "destination_id": "2535",
+            "vehicle_ref": "70153902",
+            "eta": "2026-10-09 14:15:00+03:00",
+            "trip_id": "584864943_091026",
+            "status": null,
+            "departed": "2026-10-09 14:12:00+03:00",
+            "location": {
+              "lat": "31.739946",
+              "lon": "35.181583"
+            }
+          },
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 04:03:42+03:00",
+            "stop_code": "2360",
+            "line_id": "33252",
+            "route_id": "33252",
+            "direction_id": "3",
+            "line_name": "92",
+            "operator_id": "16",
+            "destination_id": "2535",
+            "vehicle_ref": "69446803",
+            "eta": "2026-10-09 14:18:00+03:00",
+            "trip_id": "585017651_091026",
+            "status": null,
+            "departed": "2026-10-09 14:15:00+03:00",
+            "location": null
+          },
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 07:38:31+03:00",
+            "stop_code": "2360",
+            "line_id": "34120",
+            "route_id": "34120",
+            "direction_id": "2",
+            "line_name": "72",
+            "operator_id": "16",
+            "destination_id": "2599",
+            "vehicle_ref": "44891402",
+            "eta": "2026-10-09 14:25:00+03:00",
+            "trip_id": "584954648_091026",
+            "status": null,
+            "departed": "2026-10-09 14:22:00+03:00",
+            "location": null
+          },
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 04:03:41+03:00",
+            "stop_code": "2360",
+            "line_id": "33244",
+            "route_id": "33244",
+            "direction_id": "3",
+            "line_name": "531",
+            "operator_id": "16",
+            "destination_id": "2535",
+            "vehicle_ref": "67574902",
+            "eta": "2026-10-09 14:27:00+03:00",
+            "trip_id": "584864944_091026",
+            "status": null,
+            "departed": "2026-10-09 14:24:00+03:00",
+            "location": null
+          },
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 06:38:29+03:00",
+            "stop_code": "2360",
+            "line_id": "33252",
+            "route_id": "33252",
+            "direction_id": "3",
+            "line_name": "92",
+            "operator_id": "16",
+            "destination_id": "2535",
+            "vehicle_ref": "70142302",
+            "eta": "2026-10-09 14:33:00+03:00",
+            "trip_id": "585114592_091026",
+            "status": null,
+            "departed": "2026-10-09 14:30:00+03:00",
+            "location": null
+          },
+          {
+            "producer": "SIRI",
+            "timestamp": "2026-10-09 04:03:44+03:00",
+            "stop_code": "2360",
+            "line_id": "34120",
+            "route_id": "34120",
+            "direction_id": "2",
+            "line_name": "72",
+            "operator_id": "16",
+            "destination_id": "2599",
+            "vehicle_ref": "82090303",
+            "eta": "2026-10-09 14:38:00+03:00",
+            "trip_id": "584954649_091026",
+            "status": null,
+            "departed": "2026-10-09 14:34:00+03:00",
+            "location": null
+          }
+        ]
+      }
+    },
+    {
+      "path": "/v1/health",
+      "method": "GET",
+      "httpStatus": 403,
+      "fetchedAt": "2026-10-09T11:08:49.653Z",
+      "elapsedMs": 96,
+      "data": {
+        "error": "ORIGIN_NOT_ALLOWED",
+        "at": "2026-10-09T11:08:49.610Z"
+      }
+    },
+    {
+      "path": "/v1/health",
+      "method": "POST",
+      "httpStatus": 405,
+      "fetchedAt": "2026-10-09T11:08:49.754Z",
+      "elapsedMs": 101,
+      "data": {
+        "error": "GET_ONLY",
+        "at": "2026-10-09T11:08:49.711Z"
+      }
+    },
+    {
+      "path": "/proxy?url=https://example.com",
+      "method": "GET",
+      "httpStatus": 404,
+      "fetchedAt": "2026-10-09T11:08:49.777Z",
+      "elapsedMs": 23,
+      "data": {
+        "error": {
+          "code": "404",
+          "message": "The page could not be found"
+        }
+      }
+    },
+    {
+      "path": "/v1/health?url=https://example.com",
+      "method": "GET",
+      "httpStatus": 400,
+      "fetchedAt": "2026-10-09T11:08:49.879Z",
+      "elapsedMs": 102,
+      "data": {
+        "error": "UNKNOWN_OR_DUPLICATE_PARAMETER",
+        "parameters": [
+          "url"
+        ],
+        "at": "2026-10-09T11:08:49.836Z"
+      }
+    },
+    {
+      "path": "/v1/traffic/flow?bbox=34,29,36,34",
+      "method": "GET",
+      "httpStatus": 400,
+      "fetchedAt": "2026-10-09T11:08:49.984Z",
+      "elapsedMs": 105,
+      "data": {
+        "error": "INVALID_OR_TOO_LARGE_ISRAEL_BBOX",
+        "at": "2026-10-09T11:08:49.940Z"
+      }
+    },
+    {
+      "path": "/v1/traffic/flow?bbox=35.18,31.73,35.20,31.75&routeId=34120&stopCode=2360",
+      "method": "GET",
+      "httpStatus": 503,
+      "fetchedAt": "2026-10-09T11:08:50.103Z",
+      "elapsedMs": 119,
+      "data": {
+        "error": "TRAFFIC_PROVIDER_NOT_AUTHORIZED",
+        "missing": "HERE credentials, usage licence and provider-enforced nonbilling entitlement",
+        "at": "2026-10-09T11:08:50.059Z"
+      }
+    },
+    {
+      "path": "/v1/vehicles/70138502/history?operatorRef=16&days=14&limit=6",
+      "method": "GET",
+      "httpStatus": 502,
+      "fetchedAt": "2026-10-09T11:09:02.214Z",
+      "elapsedMs": 12111,
+      "data": {
+        "error": "UPSTREAM_TIMEOUT",
+        "at": "2026-10-09T11:09:02.165Z"
+      }
+    },
+    {
+      "path": "/v1/vehicles/89094003/history?operatorRef=15&from=2026-03-18T00%3A00%3A00Z&to=2026-03-21T00%3A00%3A00Z&limit=12",
+      "method": "GET",
+      "httpStatus": 200,
+      "fetchedAt": "2026-10-09T11:09:15.425Z",
+      "elapsedMs": 13211,
+      "data": {
+        "schemaVersion": 1,
+        "vehicleRef": "89094003",
+        "operatorRef": "15",
+        "vehicleKey": "il-mot-siri:15:89094003",
+        "source": "open-bus-stride-siri-archive",
+        "retrievedAt": "2026-10-09T11:09:03.375Z",
+        "from": "2026-03-18T00:00:00Z",
+        "to": "2026-03-21T00:00:00Z",
+        "rides": [
+          {
+            "rideId": "131850216",
+            "tripId": "2026-03-19-35940975",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23398",
+            "scheduledStartAt": "2026-03-19T18:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131850215",
+            "tripId": "2026-03-19-39306696",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23397",
+            "scheduledStartAt": "2026-03-19T17:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131840949",
+            "tripId": "2026-03-19-39306684",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23397",
+            "scheduledStartAt": "2026-03-19T15:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131835424",
+            "tripId": "2026-03-19-39306780",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23398",
+            "scheduledStartAt": "2026-03-19T14:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131831173",
+            "tripId": "2026-03-19-39306672",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23397",
+            "scheduledStartAt": "2026-03-19T13:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131826750",
+            "tripId": "2026-03-19-37588193",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23398",
+            "scheduledStartAt": "2026-03-19T12:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131822206",
+            "tripId": "2026-03-19-37588002",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23397",
+            "scheduledStartAt": "2026-03-19T11:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131802355",
+            "tripId": "2026-03-19-1347943",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "5224",
+            "scheduledStartAt": "2026-03-19T07:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131787128",
+            "tripId": "2026-03-19-6731614",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "5189",
+            "scheduledStartAt": "2026-03-19T04:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131746935",
+            "tripId": "2026-03-18-45091017",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "5224",
+            "scheduledStartAt": "2026-03-18T12:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131740807",
+            "tripId": "2026-03-18-0",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "7700",
+            "scheduledStartAt": "2026-03-18T10:29:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131739568",
+            "tripId": "2026-03-18-2200661",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "7700",
+            "scheduledStartAt": "2026-03-18T10:20:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131731778",
+            "tripId": "2026-03-18-3834874",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "5189",
+            "scheduledStartAt": "2026-03-18T08:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131722218",
+            "tripId": "2026-03-18-39341866",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "22825",
+            "scheduledStartAt": "2026-03-18T06:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131697169",
+            "tripId": "2026-03-17-1346809",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "5193",
+            "scheduledStartAt": "2026-03-17T18:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131696520",
+            "tripId": "2026-03-17-22347839",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "16352",
+            "scheduledStartAt": "2026-03-17T16:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131682607",
+            "tripId": "2026-03-17-33035897",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "16353",
+            "scheduledStartAt": "2026-03-17T15:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131676877",
+            "tripId": "2026-03-17-19065414",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "16352",
+            "scheduledStartAt": "2026-03-17T14:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131659407",
+            "tripId": "2026-03-17-2200602",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "7700",
+            "scheduledStartAt": "2026-03-17T10:20:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131650953",
+            "tripId": "2026-03-17-3569374",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "5189",
+            "scheduledStartAt": "2026-03-17T08:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131641744",
+            "tripId": "2026-03-17-39341865",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "22825",
+            "scheduledStartAt": "2026-03-17T06:30:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          },
+          {
+            "rideId": "131633724",
+            "tripId": "2026-03-17-35895811",
+            "vehicleRef": "89094003",
+            "operatorRef": "15",
+            "vehicleKey": "il-mot-siri:15:89094003",
+            "routeId": "23992",
+            "scheduledStartAt": "2026-03-17T05:00:00.000Z",
+            "sourceObservedAt": null,
+            "gpsMeasuredAt": null,
+            "evidenceKind": "archive-vehicle-trip-association",
+            "clockType": "scheduled-trip-start",
+            "retrievedAt": "2026-10-09T11:09:03.375Z",
+            "source": "open-bus-stride-siri-archive"
+          }
+        ],
+        "rideSelectionFrom": "2026-03-17T00:00:00.000Z",
+        "rideSelectionTruncated": false,
+        "rejectedRideRecords": 0,
+        "paginationWindowMustStayFixed": true,
+        "storage": "upstream-archive-on-demand",
+        "mechanicalFaultConclusion": null,
+        "limitations": [
+          "VehicleRef is provider-assigned; not guaranteed to be a licence plate or permanent for vehicle life",
+          "No independent GPS measurement clock in this source",
+          "Empty archive response does not prove no journeys",
+          "Ride association is not evidence of completed movement",
+          "At most 100 vehicle ride IDs per request; selection truncation is explicit",
+          "Duplicate source observations are deduplicated by trip/time/location"
+        ],
+        "observations": [],
+        "rejected": 0,
+        "truncated": false,
+        "nextOffset": null,
+        "observationStatus": "unavailable",
+        "observationError": {
+          "code": "UPSTREAM_TIMEOUT",
+          "status": 502
+        },
+        "partial": true
+      }
+    }
+  ]
+}

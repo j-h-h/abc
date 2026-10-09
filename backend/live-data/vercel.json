@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "regions": [
+    "fra1"
+  ],
+  "buildCommand": "npm test",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/v1/:__relayTail*",
+      "destination": "/api/index?relayPath=/v1/:__relayTail*"
+    },
+    {
+      "source": "/curlbus/:__relayStop",
+      "destination": "/api/index?relayPath=/curlbus/:__relayStop"
+    },
+    {
+      "source": "/mot/:__relayTail*",
+      "destination": "/api/index?relayPath=/mot/:__relayTail*"
+    }
+  ]
+}

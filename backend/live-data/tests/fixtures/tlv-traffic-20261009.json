@@ -1,0 +1,219 @@
+{
+  "source": "tlvWazeLatest",
+  "url": "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/892/query?where=1%3D1&outFields=OBJECTID%2Clevel%2CspeedKMH%2Clength%2Cdelay%2Cstreet%2CpubMillis%2CupdateDate%2CendNode%2Cuuid&orderByFields=updateDate+DESC&outSR=4326&resultRecordCount=3&returnGeometry=true&f=json",
+  "httpStatus": 200,
+  "retrievedAt": "2026-10-09T11:05:04.089Z",
+  "elapsedMs": 1046,
+  "data": {
+    "displayFieldName": "level",
+    "fieldAliases": {
+      "OBJECTID": "OBJECTID",
+      "level": "level",
+      "speedKMH": "speedKMH",
+      "length": "length",
+      "delay": "delay",
+      "street": "street",
+      "pubMillis": "pubMillis",
+      "updateDate": "updateDate",
+      "endNode": "endNode",
+      "uuid": "uuid"
+    },
+    "geometryType": "esriGeometryPolyline",
+    "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+    },
+    "fields": [
+      {
+        "name": "OBJECTID",
+        "type": "esriFieldTypeOID",
+        "alias": "OBJECTID"
+      },
+      {
+        "name": "level",
+        "type": "esriFieldTypeSmallInteger",
+        "alias": "level"
+      },
+      {
+        "name": "speedKMH",
+        "type": "esriFieldTypeDouble",
+        "alias": "speedKMH"
+      },
+      {
+        "name": "length",
+        "type": "esriFieldTypeDouble",
+        "alias": "length"
+      },
+      {
+        "name": "delay",
+        "type": "esriFieldTypeSmallInteger",
+        "alias": "delay"
+      },
+      {
+        "name": "street",
+        "type": "esriFieldTypeString",
+        "alias": "street",
+        "length": 50
+      },
+      {
+        "name": "pubMillis",
+        "type": "esriFieldTypeString",
+        "alias": "pubMillis",
+        "length": 50
+      },
+      {
+        "name": "updateDate",
+        "type": "esriFieldTypeDate",
+        "alias": "updateDate",
+        "length": 8
+      },
+      {
+        "name": "endNode",
+        "type": "esriFieldTypeString",
+        "alias": "endNode",
+        "length": 50
+      },
+      {
+        "name": "uuid",
+        "type": "esriFieldTypeString",
+        "alias": "uuid",
+        "length": 50
+      }
+    ],
+    "features": [
+      {
+        "attributes": {
+          "OBJECTID": 6440,
+          "level": 3,
+          "speedKMH": 6.93,
+          "length": 490,
+          "delay": 189,
+          "street": "צ`לנוב",
+          "pubMillis": "1791543440433",
+          "updateDate": 1791554584003,
+          "endNode": "דרך בגין",
+          "uuid": "1172727324"
+        },
+        "geometry": {
+          "paths": [
+            [
+              [
+                34.77417590471734,
+                32.05574588996449
+              ],
+              [
+                34.77435090000632,
+                32.05609394360064
+              ],
+              [
+                34.774420949993676,
+                32.0562629062051
+              ],
+              [
+                34.774560888582236,
+                32.05654491974327
+              ],
+              [
+                34.77465589758677,
+                32.05676600014142
+              ],
+              [
+                34.77492397035812,
+                32.05738697965379
+              ],
+              [
+                34.77503395106211,
+                32.05764499369205
+              ],
+              [
+                34.775199977322515,
+                32.058033055188616
+              ],
+              [
+                34.77541688903997,
+                32.05863609506622
+              ],
+              [
+                34.77566598634955,
+                32.05930913212155
+              ],
+              [
+                34.77589291716549,
+                32.05992221485209
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 6439,
+          "level": 5,
+          "speedKMH": 0,
+          "length": 80,
+          "delay": -1,
+          "street": "המלך ג`ורג`",
+          "pubMillis": "1790346933731",
+          "updateDate": 1791554584001,
+          "endNode": "מסריק",
+          "uuid": "1134229602"
+        },
+        "geometry": {
+          "paths": [
+            [
+              [
+                34.777760058827056,
+                32.07736847634702
+              ],
+              [
+                34.778208013341846,
+                32.07797553407693
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "attributes": {
+          "OBJECTID": 6438,
+          "level": 3,
+          "speedKMH": 4.03,
+          "length": 241,
+          "delay": 153,
+          "street": "עבאס",
+          "pubMillis": "1791543726222",
+          "updateDate": 1791554583999,
+          "endNode": "חנוך",
+          "uuid": "1172737552"
+        },
+        "geometry": {
+          "paths": [
+            [
+              [
+                34.78962988592711,
+                32.054064606072885
+              ],
+              [
+                34.78946294483986,
+                32.053632642716316
+              ],
+              [
+                34.78937390516059,
+                32.053348647635566
+              ],
+              [
+                34.78920790275289,
+                32.05282659800309
+              ],
+              [
+                34.78896992665859,
+                32.05197055918643
+              ]
+            ]
+          ]
+        }
+      }
+    ],
+    "exceededTransferLimit": true
+  }
+}

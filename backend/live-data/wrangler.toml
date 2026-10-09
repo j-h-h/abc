@@ -1,0 +1,8 @@
+name = "eifo-batuach-live-data"
+main = "cloudflare-worker.mjs"
+compatibility_date = "2026-10-09"
+workers_dev = true
+[observability]
+enabled = false
+# Deploy only into a Free Workers account or another explicitly approved plan.
+# No cron jobs, database, paid egress IP, or paid traffic provider are configured.
