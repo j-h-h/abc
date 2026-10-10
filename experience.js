@@ -3,12 +3,12 @@
  const $=id=>document.getElementById(id),C=root.SafeBusCore;
  let markerIds=[],lastState=null,focusBeforePanel=null;
  const esc=x=>String(x??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
- const busSvg='<svg viewBox="0 0 28 32" aria-hidden="true"><rect x="4" y="2" width="20" height="25" rx="5" fill="white"/><rect x="7" y="7" width="14" height="10" rx="2" fill="#1765d7"/><path d="M9 4h10" stroke="#1765d7" stroke-width="2"/><circle cx="9" cy="22" r="2" fill="#1765d7"/><circle cx="19" cy="22" r="2" fill="#1765d7"/><path d="M7 27v3m14-3v3" stroke="white" stroke-width="3"/></svg>';
+ const busSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 10h14M8 19v2m8-2v2M9 6h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8.5" cy="15" r="1" fill="currentColor"/><circle cx="15.5" cy="15" r="1" fill="currentColor"/></svg>';
  function marker(v,line,history,now=Date.now()){
   const age=C.gpsAge(v.observed_at,now),old=age>180;
   const bearing=typeof v.bearing==='number'&&Number.isFinite(v.bearing)&&v.bearing>=0&&v.bearing<360?v.bearing:null;
   const arrow=bearing===null?'':'<span class="bus-heading" style="transform:rotate('+bearing+'deg)" aria-hidden="true"></span>';
-  return '<div class="bus-marker '+(old?'reported-old':'')+' '+(history?.recurrent?'recurrent':'')+'">'+arrow+'<span class="bus-face">'+busSvg+'</span><span class="bus-marker-label">'+(history?.recurrent?'⚠ ':'')+(line==='?'?'אוטובוס':'קו '+esc(line))+'<small>'+(old?'מיקום אחרון · ':'דיווח לפני ')+esc(C.ageText(age))+'</small></span></div>';
+  return '<div class="bus-marker '+(old?'reported-old':'')+' '+(history?.recurrent?'recurrent':'')+'">'+arrow+'<span class="bus-face">'+busSvg+'</span><span class="bus-marker-label">'+(history?.recurrent?'⚠ ':'')+(line==='?'?'?':esc(line))+'<small>'+(old?'מיקום אחרון · ':'דיווח לפני ')+esc(C.ageText(age))+'</small></span></div>';
  }
  function trafficUrl(state){
   const p=state?.stopMarker?.getLatLng?.()||state?.map?.getCenter?.()||{lat:31.733251,lng:35.187968};
@@ -45,7 +45,7 @@
    card.append(title,detail);card.onclick=()=>focusVehicle(v);output.append(card);
   }
   const traffic=trafficUrl(state);$('trafficPageLink').href=traffic;$('trafficToggle').onclick=()=>{root.location.href=traffic;};
-  $('trafficApply').onclick=()=>{root.location.href=traffic;};
+  if(!root.SafeBusNational?.state.ready)$('trafficApply').onclick=()=>{root.location.href=traffic;};
   $('trafficToggle').textContent='🚦 מפת פקקים';$('trafficToggle').removeAttribute('aria-pressed');
   if(!state.trafficReport?.available)$('trafficStatus').textContent='פקקים זמינים במפת התנועה הנפרדת';
  }
@@ -58,12 +58,12 @@
    if($('panel').hidden)return;
    if(event.key==='Escape'){$('settingsClose').click();return;}
    if(event.key!=='Tab')return;
-   const items=[...$('panel').querySelectorAll('button,input,select,a[href]')].filter(e=>!e.disabled&&e.getClientRects().length),first=items[0],last=items.at(-1);
+   const items=[...$('panel').querySelectorAll('button,input,select,a[href],summary')].filter(e=>!e.disabled&&e.getClientRects().length),first=items[0],last=items.at(-1);
    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
   });
   if(root.ResizeObserver){new ResizeObserver(()=>root.SafeBusApp?.state.map?.invalidateSize()).observe($('map'));}
   if('serviceWorker' in navigator&&root.location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
  }
- root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.1.9'};
+ root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.3.0'};
  document.addEventListener('DOMContentLoaded',init);
 })(window);
