@@ -33,6 +33,7 @@ jobs:
           node tests/archive_contract.cjs
           node tests/national_contract.cjs
           node tests/dataset_refresh.cjs
+          node tests/metadata_wait.cjs
       - name: Install browser runner
         run: |
           npm install --no-save --no-audit --no-fund playwright@1.56.1
