@@ -1,6 +1,6 @@
 {
   "version": "DEV-9.3.5",
-  "state": "deployed-public-verification-pending",
+  "state": "verified-deployed-with-traffic-blocker",
   "scope": {
     "repo": "j-h-h/abc",
     "branch": "dev/vehicle-history-map-20261009",
@@ -48,7 +48,45 @@
     "activated": false,
     "blocker": "Unverified future update clock; municipal coverage only; nationwide feed requires partner approval"
   },
-  "realDataProof": "Pending exact-code CI and canonical public desktop/phone verification",
+  "realDataProof": {
+    "desktop": {
+      "Haifa": 1,
+      "Nazareth": 9
+    },
+    "phone": {
+      "Haifa": 10,
+      "Nazareth": 72
+    },
+    "station": {
+      "code": "23014",
+      "arrivals": 0,
+      "vehicles": 0,
+      "positiveLiveForecastWitnessed": false
+    },
+    "hebrewSuffixRoute": {
+      "line": "10א",
+      "points": 693
+    },
+    "cuaPhone": {
+      "viewport": [
+        390,
+        844
+      ],
+      "routeLine": "2",
+      "vehicle": "8125484",
+      "operator": "6",
+      "routeId": "17685",
+      "tripId": "150351758",
+      "reportedSpeedKmh": 36,
+      "sourceObservedAt": "2026-10-10T08:40:42.000Z",
+      "snapshotAt": "2026-10-10T08:41:00.000Z",
+      "sourceResponseAt": null,
+      "bearingShownAsText": false,
+      "plannedRouteVisible": true,
+      "vehiclesInRouteScreenshot": 65
+    },
+    "realTrafficActive": false
+  },
   "codeCommit": "0e1c9891745e47a1bbcb60cc00afef193dc2fd3b",
   "codeCI": {
     "run": 38038633692,
@@ -64,5 +102,33 @@
     "version": "560a61f2a20156ec",
     "lines": 911,
     "routes": 6680
-  }
+  },
+  "publicCI": {
+    "run": 38038777718,
+    "conclusion": "success",
+    "commit": "06176660a3f25e1d18470aec06db6c17472c59a7",
+    "jobs": [
+      114174680006,
+      114174680177
+    ],
+    "passedAt": "2026-10-10T08:43:04Z"
+  },
+  "artifacts": [
+    {
+      "id": 11665211822,
+      "name": "dev-live-browser-06176660a3f25e1d18470aec06db6c17472c59a7",
+      "digest": "sha256:7d68878e3485fb1ed5f04c81c5212791b03aa85dbc5b6838136cf8f1e5c54b1b"
+    },
+    {
+      "id": 11664394705,
+      "name": "dev-public-browser-06176660a3f25e1d18470aec06db6c17472c59a7",
+      "digest": "sha256:71536d8326a1e8b87d7c7f4b21a08a557085a7b8f0dfb8c94a4923a5dd9c0eb7"
+    }
+  ],
+  "repositoryScreenshot": {
+    "sha256": "12fb08af1baeccaa8feb6b18edeb44569580110796fe08cd35c54e404ad3e594",
+    "bytes": 91243,
+    "path": "tests/evidence/DEV-9.3.5-real-phone.jpg"
+  },
+  "syntheticFixturesAreRealTrafficEvidence": false
 }
