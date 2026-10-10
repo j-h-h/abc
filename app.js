@@ -60,7 +60,7 @@
  function chooseRoute(i,focus=false){clearRoute();if(state.trafficVector){state.map?.removeLayer(state.trafficVector);state.trafficVector=null;}state.trafficReport=null;state.trafficVisible=false;updateTrafficStatus();const f=state.allRoutes[i];if(!f)return;state.route=f;if(!state.map)return;
   if(state.routeLayer)state.routeLayer.addLayer(L.geoJSON(f,{style:{color:f.properties.suspect?'#bd721b':'#1765d7',weight:5,opacity:.85,dashArray:f.properties.suspect?'8,6':undefined}}));
   const s=f.properties.stopSequence.find(x=>String(x.code)===state.stop);
-  if(s){state.stopMarker=L.marker([s.lat,s.lon],{icon:L.divIcon({className:'stop-dot',iconSize:[15,15],iconAnchor:[8,8]})}).addTo(state.map).bindPopup('תחנה '+esc(state.stop)+' · '+esc(s.name));if(focus)state.map.setView([s.lat,s.lon],14);}
+  if(s){state.stopMarker=L.marker([s.lat,s.lon],{icon:L.divIcon({className:'stop-dot',iconSize:[15,15],iconAnchor:[8,8]})}).addTo(state.map).bindPopup('תחנה '+esc(state.stop)+' · '+esc(s.name));if(focus)state.map.setView([s.lat,s.lon],root.SafeBusNational?.state.ready?Math.max(16,state.map.getZoom()):14,{animate:false});}
   $('mapCaption').textContent='קו '+state.line+' · לכיוון '+(f.properties.headsign||f.properties.destination)+' · תחנה '+state.stop+(f.properties.suspect?' · נדרשת זהירות בתוואי':'');
   drawVehicles();updateHealth();
  }
