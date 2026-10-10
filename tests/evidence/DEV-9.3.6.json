@@ -1,0 +1,38 @@
+{
+  "version": "DEV-9.3.6",
+  "codeCommit": "3645414472f64b0534684746731ed7288aa9702a",
+  "ci": 38044487283,
+  "verifyJob": 114191147350,
+  "deployment": "dpl_HBkafW7aK4P3EEo4gyicXabD1zR2",
+  "gtfsVersion": "4945dd6a3d37688c",
+  "lines": 911,
+  "routes": 6680,
+  "publicVerification": "pending",
+  "diagnosis": {
+    "deployedBefore": "560a61f2a20156ec",
+    "liveDataset": "4945dd6a3d37688c",
+    "cause": "discarded old deployed index on live GTFS version mismatch",
+    "convoyProbe": {
+      "retrievedAt": "2026-10-10T10:10:20.826Z",
+      "vehicles": 58,
+      "distinctOperatorVehicle": 58,
+      "duplicateCoordinates": 0,
+      "reportedZeroKmh": 32,
+      "ageSeconds": [
+        85,
+        170
+      ],
+      "interpretation": "does not establish a moving convoy or independent GPS truth"
+    }
+  },
+  "traffic": {
+    "connected": true,
+    "available": false,
+    "state": "coverage-unavailable"
+  },
+  "scope": {
+    "branch": "dev/vehicle-history-map-20261009",
+    "project": "eifo-batuach-dev",
+    "liveWorkChanged": false
+  }
+}

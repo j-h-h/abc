@@ -1,6 +1,6 @@
 # DEV-9.3.6 — numbers after a daily GTFS update; recent searches
 
-Code and CI / public deployment pending.
+Code 3645414472f64b0534684746731ed7288aa9702a passed CI 38044487283 (verify 114191147350), including all source/history/traffic suites, metadata-refresh unit tests, real address and station flows, history reopen and GTFS 4945dd6a3d37688c / 911 lines / 6680 routes. DEV-only deployment dpl_HBkafW7aK4P3EEo4gyicXabD1zR2 created after success. Canonical public desktop/phone and mixed old-index / actual-provider recovery checks pending.
 
 Real diagnosis: DEV-9.3.5 deployed GTFS version 560a61f2a20156ec (2026-10-09T10:26:15+00:00), while the live dataset API returned 4945dd6a3d37688c (2026-10-10T08:47:25+00:00). The client silently discarded the deployed route index when versions differed, leaving all area reports without public numbers. All 58 Nazareth reports sampled at 2026-10-10T10:05:17.252Z matched deployed exact operator/route keys; those old values are diagnostic evidence, not permission to reuse outdated metadata.
 
