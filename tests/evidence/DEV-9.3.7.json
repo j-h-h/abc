@@ -1,0 +1,321 @@
+{
+  "release": "DEV-9.3.7",
+  "canonicalUrl": "https://eifo-batuach-dev.vercel.app/",
+  "branch": "dev/vehicle-history-map-20261009",
+  "runtimeCommit": "a9d20a8b64cdbe4eeae40e37ab815ecfabdb1c71",
+  "deployment": {
+    "id": "dpl_7Ezb7FdUGFt5nbT3qMtcCGJFY8UD",
+    "projectId": "prj_MOG4CqCbrnPDf3tTUKKdDwOtoXGJ",
+    "state": "READY"
+  },
+  "ci": {
+    "predeploy": {
+      "run": 38051679064,
+      "verifyJob": 114211916553,
+      "conclusion": "success"
+    },
+    "public": {
+      "run": 38051905551,
+      "commit": "a87391231f3a233587a50149b06f0e7e87e43a8f",
+      "verifyJob": 114212560222,
+      "publicJob": 114212560318,
+      "conclusion": "success"
+    }
+  },
+  "gtfs": {
+    "version": "4945dd6a3d37688c",
+    "lines": 911,
+    "routes": 6680
+  },
+  "realProof": [
+    {
+      "time": "2026-10-10T12:26:56.3461631Z",
+      "label": "PUBLIC REAL DEPLOYMENT",
+      "data": {
+        "version": "DEV-9.3.7",
+        "branch": "dev/vehicle-history-map-20261009",
+        "gtfsVersion": "4945dd6a3d37688c",
+        "gtfsGeneratedAt": "2026-10-10T08:47:25+00:00",
+        "routeDataOrigin": "https://j-h-h.github.io/abc/data/",
+        "lines": 911,
+        "routes": 6680
+      },
+      "raw": "2026-10-10T12:26:56.3461631Z PUBLIC REAL DEPLOYMENT {\"version\":\"DEV-9.3.7\",\"branch\":\"dev/vehicle-history-map-20261009\",\"gtfsVersion\":\"4945dd6a3d37688c\",\"gtfsGeneratedAt\":\"2026-10-10T08:47:25+00:00\",\"routeDataOrigin\":\"https://j-h-h.github.io/abc/data/\",\"lines\":911,\"routes\":6680}"
+    },
+    {
+      "time": "2026-10-10T12:26:58.9385759Z",
+      "label": "PUBLIC REAL BUS ROUTE FOCUS",
+      "data": {
+        "filter": {
+          "line": "23א",
+          "routeId": "3672",
+          "operatorRef": "3"
+        },
+        "shown": 1,
+        "allMatch": true
+      },
+      "raw": "2026-10-10T12:26:58.9385759Z PUBLIC REAL BUS ROUTE FOCUS {\"filter\":{\"line\":\"23א\",\"routeId\":\"3672\",\"operatorRef\":\"3\"},\"shown\":1,\"allMatch\":true}"
+    },
+    {
+      "time": "2026-10-10T12:27:00.4350041Z",
+      "label": "PUBLIC REAL PHONE BUS REPORTS מרכז חורב חיפה 15",
+      "data": null,
+      "raw": "2026-10-10T12:27:00.4350041Z PUBLIC REAL PHONE BUS REPORTS מרכז חורב חיפה 15"
+    },
+    {
+      "time": "2026-10-10T12:27:04.9129354Z",
+      "label": "PUBLIC REAL NAZARETH LINE LABELS",
+      "data": [
+        "1",
+        "15",
+        "3",
+        "44",
+        "44",
+        "34",
+        "34",
+        "57",
+        "18",
+        "25",
+        "54",
+        "7",
+        "20",
+        "18",
+        "1",
+        "332",
+        "2"
+      ],
+      "raw": "2026-10-10T12:27:04.9129354Z PUBLIC REAL NAZARETH LINE LABELS [\"1\",\"15\",\"3\",\"44\",\"44\",\"34\",\"34\",\"57\",\"18\",\"25\",\"54\",\"7\",\"20\",\"18\",\"1\",\"332\",\"2\"]"
+    },
+    {
+      "time": "2026-10-10T12:27:27.1465195Z",
+      "label": "PUBLIC REAL OPEN BUS SOURCE REFRESH",
+      "data": {
+        "before": {
+          "id": "6:31613101",
+          "at": "2026-10-10T12:25:41.000Z",
+          "lat": 32.700874,
+          "lon": 35.319919
+        },
+        "after": {
+          "id": "6:31613101",
+          "at": "2026-10-10T12:25:41.000Z",
+          "lat": 32.700874,
+          "lon": 35.319919,
+          "open": true,
+          "samePopup": true,
+          "sameReport": true,
+          "attached": true,
+          "expanded": true
+        },
+        "positionChanged": false,
+        "clockChanged": false
+      },
+      "raw": "2026-10-10T12:27:27.1465195Z PUBLIC REAL OPEN BUS SOURCE REFRESH {\"before\":{\"id\":\"6:31613101\",\"at\":\"2026-10-10T12:25:41.000Z\",\"lat\":32.700874,\"lon\":35.319919},\"after\":{\"id\":\"6:31613101\",\"at\":\"2026-10-10T12:25:41.000Z\",\"lat\":32.700874,\"lon\":35.319919,\"open\":true,\"samePopup\":true,\"sameReport\":true,\"attached\":true,\"expanded\":true},\"positionChanged\":false,\"clockChanged\":false}"
+    },
+    {
+      "time": "2026-10-10T12:27:27.6662905Z",
+      "label": "PUBLIC REAL BUS ROUTE FOCUS",
+      "data": {
+        "filter": {
+          "line": "3",
+          "routeId": "34106",
+          "operatorRef": "6"
+        },
+        "shown": 1,
+        "allMatch": true
+      },
+      "raw": "2026-10-10T12:27:27.6662905Z PUBLIC REAL BUS ROUTE FOCUS {\"filter\":{\"line\":\"3\",\"routeId\":\"34106\",\"operatorRef\":\"6\"},\"shown\":1,\"allMatch\":true}"
+    },
+    {
+      "time": "2026-10-10T12:27:29.1844000Z",
+      "label": "PUBLIC REAL PHONE BUS REPORTS נצרת 40",
+      "data": null,
+      "raw": "2026-10-10T12:27:29.1844000Z PUBLIC REAL PHONE BUS REPORTS נצרת 40"
+    },
+    {
+      "time": "2026-10-10T12:27:36.1626683Z",
+      "label": "MIXED GTFS VERSION REGRESSION: simulated old index / actual source vehicles",
+      "data": {
+        "labels": [
+          "17",
+          "15",
+          "15",
+          "332",
+          "23",
+          "15",
+          "25",
+          "5",
+          "57",
+          "6",
+          "18",
+          "56",
+          "23",
+          "5",
+          "25",
+          "54",
+          "27",
+          "7",
+          "332",
+          "9",
+          "24",
+          "22",
+          "3",
+          "57",
+          "18",
+          "52",
+          "7",
+          "20",
+          "3",
+          "1",
+          "57",
+          "331",
+          "28",
+          "13",
+          "40",
+          "6"
+        ],
+        "lineRequests": 64
+      },
+      "raw": "2026-10-10T12:27:36.1626683Z MIXED GTFS VERSION REGRESSION: simulated old index / actual source vehicles {\"labels\":[\"17\",\"15\",\"15\",\"332\",\"23\",\"15\",\"25\",\"5\",\"57\",\"6\",\"18\",\"56\",\"23\",\"5\",\"25\",\"54\",\"27\",\"7\",\"332\",\"9\",\"24\",\"22\",\"3\",\"57\",\"18\",\"52\",\"7\",\"20\",\"3\",\"1\",\"57\",\"331\",\"28\",\"13\",\"40\",\"6\"],\"lineRequests\":64}"
+    },
+    {
+      "time": "2026-10-10T12:27:36.8235685Z",
+      "label": "PUBLIC REAL COLORED ARRIVALS",
+      "data": {
+        "stop": "53994",
+        "error": null,
+        "arrivals": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "1253",
+            "line": "5",
+            "stopCode": "53994",
+            "operatorRef": "6",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "80392101",
+            "vehicleKey": "il-mot-siri:6:80392101",
+            "tripId": "585810406_101026",
+            "sourceObservedAt": "2026-10-10T12:27:20.000Z",
+            "sourceResponseAt": "2026-10-10T12:27:36.000Z",
+            "retrievedAt": "2026-10-10T12:27:36.770Z",
+            "sourceAgeSeconds": 16.77,
+            "reportedArrivalAt": "2026-10-10T12:42:00.000Z",
+            "unverifiedArrivalAt": null,
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-10T12:15:00.000Z",
+            "realtime": true,
+            "etaKind": "reported-live",
+            "confidence": "source-fresh-route-verified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "minutes": 14.387166666666667
+          }
+        ],
+        "frameAt": "2026-10-10T12:27:36.000Z",
+        "levels": [
+          {
+            "level": "fresh",
+            "label": "עדכון טרי",
+            "color": "rgb(24, 112, 68)",
+            "minutes": "15"
+          }
+        ]
+      },
+      "raw": "2026-10-10T12:27:36.8235685Z PUBLIC REAL COLORED ARRIVALS {\"stop\":\"53994\",\"error\":null,\"arrivals\":[{\"source\":\"mot-siri-via-curlbus\",\"routeId\":\"1253\",\"line\":\"5\",\"stopCode\":\"53994\",\"operatorRef\":\"6\",\"siriDirectionRef\":\"2\",\"gtfsDirectionId\":\"1\",\"directionVerified\":true,\"directionEvidence\":\"exact-line-ref+operator+stop-sequence+destination\",\"vehicleRef\":\"80392101\",\"vehicleKey\":\"il-mot-siri:6:80392101\",\"tripId\":\"585810406_101026\",\"sourceObservedAt\":\"2026-10-10T12:27:20.000Z\",\"sourceResponseAt\":\"2026-10-10T12:27:36.000Z\",\"retrievedAt\":\"2026-10-10T12:27:36.770Z\",\"sourceAgeSeconds\":16.77,\"reportedArrivalAt\":\"2026-10-10T12:42:00.000Z\",\"unverifiedArrivalAt\":null,\"scheduledArrivalAt\":null,\"originAimedDepartureAt\":\"2026-10-10T12:15:00.000Z\",\"realtime\":true,\"etaKind\":\"reported-live\",\"confidence\":\"source-fresh-route-verified\",\"trafficAlreadyIncluded\":\"unknown-assume-possible\",\"computedArrivalAt\":null,\"appliedTrafficDelaySeconds\":0,\"minutes\":14.387166666666667}],\"frameAt\":\"2026-10-10T12:27:36.000Z\",\"levels\":[{\"level\":\"fresh\",\"label\":\"עדכון טרי\",\"color\":\"rgb(24, 112, 68)\",\"minutes\":\"15\"}]}"
+    },
+    {
+      "time": "2026-10-10T12:27:37.6146741Z",
+      "label": "PUBLIC REAL TRAFFIC STATUS",
+      "data": {
+        "available": false,
+        "connected": true,
+        "provider": "TomTom",
+        "state": "coverage-unavailable",
+        "coverageCountry": "IL",
+        "clockType": "provider-response",
+        "maxAgeSeconds": 180
+      },
+      "raw": "2026-10-10T12:27:37.6146741Z PUBLIC REAL TRAFFIC STATUS {\"available\":false,\"connected\":true,\"provider\":\"TomTom\",\"state\":\"coverage-unavailable\",\"coverageCountry\":\"IL\",\"clockType\":\"provider-response\",\"maxAgeSeconds\":180}"
+    }
+  ],
+  "motionEvidence": {
+    "real": {
+      "positionChanged": false,
+      "clockChanged": false,
+      "popupPreserved": true,
+      "comment": "Actual source refresh preserved the popup; no changed coordinate or observation clock was witnessed in this sample."
+    },
+    "synthetic": {
+      "desktop": true,
+      "phone": true,
+      "positionChanged": true,
+      "newTrip": true,
+      "zeroSpeed": true,
+      "newClock": true,
+      "oldClockExpiry": true,
+      "sourceExpansion": true,
+      "keyboardFocus": true
+    }
+  },
+  "traffic": {
+    "connected": true,
+    "available": false,
+    "state": "coverage-unavailable",
+    "provider": "TomTom",
+    "billingChanges": false
+  },
+  "eta": {
+    "supplierUnmodified": true,
+    "sourceClockColors": {
+      "freshMaxSeconds": 60,
+      "agingMaxSeconds": 120,
+      "oldMaxSeconds": 180
+    },
+    "statisticalAccuracyProbability": false,
+    "historyTrafficPredictionActive": false
+  },
+  "artifacts": [
+    {
+      "id": 11669786186,
+      "name": "dev-public-browser-a87391231f3a233587a50149b06f0e7e87e43a8f",
+      "sha256": "sha256:bd39429a530838bd665f18288258c4a04b6153905c859710ce1ee3d59d5b1f15",
+      "bytes": 13070611
+    },
+    {
+      "id": 11669736340,
+      "name": "dev-live-browser-a87391231f3a233587a50149b06f0e7e87e43a8f",
+      "sha256": "sha256:c80aafba52a919414a9b3ec082bd6439a15f746b2a474457751e129b3d9796b3",
+      "bytes": 6481229
+    }
+  ],
+  "publicArchiveSha256Verified": "bd39429a530838bd665f18288258c4a04b6153905c859710ce1ee3d59d5b1f15",
+  "screenshots": [
+    {
+      "path": "tests/evidence/DEV-9.3.7-real-phone-popup.png",
+      "sha": "4fb63ccf5f5253002cf622b6ce2a9086c88c74bd",
+      "kind": "real",
+      "bytes": 322557,
+      "sha256": "d823100cfc600278b0cfb695c0e3bbbf70994e1d118edfc5d4304f290c920ec8"
+    },
+    {
+      "path": "tests/evidence/DEV-9.3.7-real-phone-arrivals.png",
+      "sha": "c67b4eb39513b7ffa51afa78c3ac2b2bb859314f",
+      "kind": "real",
+      "bytes": 258408,
+      "sha256": "696aa233f98c28e4bf2b555c36caa91b76b4a708ec50512c63393b5b9085d41b"
+    },
+    {
+      "path": "tests/evidence/DEV-9.3.7-synthetic-phone-arrival-colors.png",
+      "sha": "a6e19a73d69c08afca1b6cb55987e60071699929",
+      "kind": "synthetic",
+      "bytes": 260222,
+      "sha256": "2f2ceb6f44694a00327c8e1bc16770de9d0d80f6badc3114b87d43f535979737"
+    }
+  ],
+  "otherBranchesWritten": [],
+  "liveWorkWritten": false
+}
