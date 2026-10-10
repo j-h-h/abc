@@ -1,15 +1,19 @@
 /* DEV traffic gateway: free-only activation; provider response time is not road measurement time. */
 const MAX_AGE=180000,MAX_BYTES=400000,TTL=30000;
 const cache=new Map(),pending=new Map();let blockedUntil=0;
-const enabled=()=>process.env.TOMTOM_TRAFFIC_ENABLED==='true'&&process.env.TOMTOM_NONBILLING_CONFIRMED==='true'&&!!process.env.TOMTOM_TRAFFIC_KEY;
+const configured=()=>process.env.TOMTOM_TRAFFIC_ENABLED==='true'&&process.env.TOMTOM_NONBILLING_CONFIRMED==='true'&&!!process.env.TOMTOM_TRAFFIC_KEY;
+// 2026-09-15 official market tables omit Israel; activate only after real country coverage is verified.
+const coverageConfirmed=()=>process.env.TOMTOM_ISRAEL_COVERAGE_CONFIRMED==='true';
+const enabled=()=>configured()&&coverageConfirmed();
 const result=(body,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const failure=(code,status=502)=>result({error:code},status);
 function tileResponse(tile){return new Response(tile.bytes,{headers:{'Content-Type':'image/png','Cache-Control':'private, max-age=30','X-Traffic-Originated-At':tile.originatedAt,'X-Traffic-Source-Age':String(tile.sourceAge),'X-Traffic-Retrieved-At':tile.retrievedAt,'X-Traffic-Clock':'provider-response','X-Content-Type-Options':'nosniff'}});}
 function isFresh(tile,now){return now-Date.parse(tile.originatedAt)+tile.sourceAge*1000<=MAX_AGE;}
 export async function GET(request){
  const q=new URL(request.url).searchParams;
- if(q.get('kind')==='status'&&q.size===1)return result({available:enabled(),provider:enabled()?'TomTom':null,state:!enabled()?'not-connected':Date.now()<blockedUntil?'quota-exhausted':'configured',clockType:'provider-response',maxAgeSeconds:MAX_AGE/1000});
- if(!enabled())return failure('TRAFFIC_NOT_CONNECTED',503);
+ if(q.get('kind')==='status'&&q.size===1)return result({available:enabled(),connected:configured(),provider:configured()?'TomTom':null,state:!configured()?'not-connected':!coverageConfirmed()?'coverage-unavailable':Date.now()<blockedUntil?'quota-exhausted':'configured',coverageCountry:'IL',clockType:'provider-response',maxAgeSeconds:MAX_AGE/1000});
+ if(!configured())return failure('TRAFFIC_NOT_CONNECTED',503);
+ if(!coverageConfirmed())return failure('TRAFFIC_COVERAGE_UNAVAILABLE',503);
  if(q.size!==3||[...q.keys()].some(k=>!['z','x','y'].includes(k)||q.getAll(k).length!==1)||[...q.values()].some(v=>!/^\d{1,7}$/.test(v)))return failure('INVALID_TILE',400);
  const z=Number(q.get('z')),x=Number(q.get('x')),y=Number(q.get('y')),n=2**z;
  if(z<7||z>18||x>=n||y>=n)return failure('INVALID_TILE',400);
