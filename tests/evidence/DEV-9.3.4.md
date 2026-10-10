@@ -7,3 +7,6 @@ Synthetic regression fixtures explicitly exercise delayed area requests during m
 Real TomTom account: authenticated Freemium, no credit card, daily enforced request limit; key stored sensitive on DEV server only. Actual public run 38036642142 (2026-10-10T08:05:49Z) failed positive traffic proof with coloredPixels=0. Current official legacy/Orbis v2 country lists omit Israel. Coverage-confirmed flag remains unset; public expected behavior is connected=true, available=false, coverage-unavailable and compact ״אין כיסוי״ without traffic image requests.
 
 No paid plan, payment, card or credit enabled. History+traffic weighted ETA remains blocked by missing verified arrival observations and directed live flow. DEV and LIVE-WORK are separate; no WORK mutation.
+
+
+Canonical public CI 38038153299 passed verify and public-dev, code tested at 3d3294696ab29436fededcb625df03566c6fa105. Real source: Haifa 1 desktop / 10 phone; Nazareth 23 desktop / 65 phone. These are different viewports and source times, not comparable fleet totals. Actual TomTom status: connected=true, available=false, coverage-unavailable, no invented traffic pixels. Real marker/details/route and no-coverage screenshots in artifact 11665060924, sha256:1babcf0895971543be702c13b1fc5e0605bf3f2843d15d03a1a61bf0dcd26074; synthetic fixtures remain explicitly named separately.

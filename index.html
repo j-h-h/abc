@@ -3,29 +3,29 @@
 <head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f7f9fc"/><meta name="description" content="איפה בטוח? מפה אמיתית, גיל מיקום ותחזיות עם חותמת זמן ומקור ברור"/>
-<title>איפה בטוח? DEV-9.3.4</title>
+<title>איפה בטוח? DEV-9.3.5</title>
 <link rel="icon" href="./icon.svg" type="image/svg+xml"/>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="stylesheet" href="./vendor/leaflet.css" crossorigin="anonymous"/>
-<link rel="stylesheet" href="./styles.css?v=DEV-9.3.4"/>
-<script src="./gtfs-store.js?v=9.3.4"></script>
+<link rel="stylesheet" href="./styles.css?v=DEV-9.3.5"/>
+<script src="./gtfs-store.js?v=9.3.5"></script>
 <script defer src="./vendor/leaflet.js" crossorigin="anonymous"></script>
 <script defer src="./core.js"></script>
-<script defer src="./vehicle-history.js?v=DEV-9.3.4"></script>
-<script defer src="./traffic-analysis.js?v=DEV-9.3.4"></script>
+<script defer src="./vehicle-history.js?v=DEV-9.3.5"></script>
+<script defer src="./traffic-analysis.js?v=DEV-9.3.5"></script>
 
-<script defer src="./archive-contract.js?v=DEV-9.3.4"></script>
-<script defer src="./live-contract.js?v=DEV-9.3.4"></script>
-<link rel="stylesheet" href="./national.css?v=DEV-9.3.4"/>
-<script defer src="./national-contract.js?v=DEV-9.3.4"></script>
-<script defer src="./traffic-tiles.js?v=DEV-9.3.4"></script>
-<script defer src="./national.js?v=DEV-9.3.4"></script>
-<script defer src="./experience.js?v=DEV-9.3.4"></script>
-<script defer src="./app.js?v=DEV-9.3.4"></script>
+<script defer src="./archive-contract.js?v=DEV-9.3.5"></script>
+<script defer src="./live-contract.js?v=DEV-9.3.5"></script>
+<link rel="stylesheet" href="./national.css?v=DEV-9.3.5"/>
+<script defer src="./national-contract.js?v=DEV-9.3.5"></script>
+<script defer src="./traffic-tiles.js?v=DEV-9.3.5"></script>
+<script defer src="./national.js?v=DEV-9.3.5"></script>
+<script defer src="./experience.js?v=DEV-9.3.5"></script>
+<script defer src="./app.js?v=DEV-9.3.5"></script>
 </head><body>
 <div class="national-app">
  <main class="national-map" aria-label="מפת תחנות, אוטובוסים ותנועה בכל הארץ"><div id="map" aria-label="מפת התחבורה"></div><div id="mapError" class="map-fallback" hidden>לא ניתן לטעון את המפה. נסה לרענן.</div><div id="tileNotice" class="tile-notice" hidden>מפת הרקע אינה זמינה כרגע.</div></main>
- <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.3.4</span><button id="settingsOpen" type="button" aria-label="הגדרות ומקורות" aria-controls="panel" aria-expanded="false" title="הגדרות"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 3-.6 2.1-1.8 1L4.5 6 3 8.6l1.5 1.6v2.1L3 14l1.5 2.6 2.1-.2 1.8 1L9 20h3l.6-2.6 1.8-1 2.1.2L18 14l-1.5-1.7v-2.1L18 8.6 16.5 6l-2.1.2-1.8-1L12 3Z" transform="translate(1.5 .5)"/><circle cx="12" cy="12" r="3"/></svg></button></header>
+ <header class="national-brand"><strong>איפה בטוח?</strong><span>DEV-9.3.5</span><button id="settingsOpen" type="button" aria-label="הגדרות ומקורות" aria-controls="panel" aria-expanded="false" title="הגדרות"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 3-.6 2.1-1.8 1L4.5 6 3 8.6l1.5 1.6v2.1L3 14l1.5 2.6 2.1-.2 1.8 1L9 20h3l.6-2.6 1.8-1 2.1.2L18 14l-1.5-1.7v-2.1L18 8.6 16.5 6l-2.1.2-1.8-1L12 3Z" transform="translate(1.5 .5)"/><circle cx="12" cy="12" r="3"/></svg></button></header>
  <section class="map-search" aria-label="חיפוש בכל הארץ"><form id="searchForm"><input id="placeSearch" type="search" autocomplete="off" maxlength="120" placeholder="כתובת, מקום או תחנה בכל הארץ" aria-label="כתובת, מקום או תחנה" aria-expanded="false" aria-controls="searchResults"/><button id="searchSubmit" type="submit" aria-label="חיפוש"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form><ul id="searchResults" aria-label="תוצאות חיפוש" hidden></ul></section>
  <div class="map-layers" role="group" aria-label="שכבות המפה"><button id="busesToggle" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="16" rx="4"/><path d="M5 10h14M8 19v2m8-2v2M9 6h6"/><circle cx="8.5" cy="15" r=".8"/><circle cx="15.5" cy="15" r=".8"/></svg><span>אוטובוסים</span></button><button id="stationsToggle" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-7M8 21h8"/><rect x="5" y="3" width="14" height="11" rx="3"/><path d="M8 7h8m-8 3h5"/></svg><span>תחנות</span></button><button id="trafficLayerToggle" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 21 3-18m11 18L16 3M12 4v3m0 4v3m0 4v3"/></svg><span>פקקים<small id="trafficLayerNote" hidden></small></span></button></div>
  <div class="map-utilities"><button id="countryView" aria-label="הצג את כל הארץ" title="כל הארץ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m6 0h5v-5"/><path d="m9 9 6 6m0-6-6 6"/></svg></button><button id="myLocation" aria-label="המיקום שלי" title="המיקום שלי"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></button><button id="nationalFocus" disabled aria-label="מרכז על האוטובוסים המדווחים" title="מרכז על האוטובוסים"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="16" rx="4"/><path d="M5 10h14M8 19v2m8-2v2M9 6h6"/><circle cx="8.5" cy="15" r=".8"/><circle cx="15.5" cy="15" r=".8"/></svg></button></div>
@@ -54,7 +54,7 @@
  </section></details>
  <details><summary>מקורות הנתונים</summary><section><p id="catalogStatus"></p><div id="importStatus" class="muted">טוען מסלולים…</div><p>דיווחי האוטובוסים הם SIRI; זמן מדידת GPS עצמאי אינו מסופק. יעד מסלול ללא אימות כיוון מסומן ״כיוון חסר״. תחזיות ספק אינן מקבלות תוספת פקקים.</p><p>זמן TomTom הוא זמן תגובת הספק, ולא זמן מדידה נפרד של הכביש. צבעי תנועה מוסרים כשהמידע פג או אינו זמין.</p><details class="owner-connection"><summary>חיבור תנועה לבעל האתר</summary><a id="trafficAccountLink" href="https://my.tomtom.com/" target="_blank" rel="noopener noreferrer">חשבון TomTom ↗</a><small>חינמי בלבד · המפתח בשרת DEV</small></details></section></details>
  <details id="systemDetails"><summary>מצב המערכת</summary><section><button class="secondary" id="diagnose">בדוק חיבור</button> <button class="secondary" id="copyDiagnostic">העתק דוח</button><pre id="diagnostic" class="diagnostic">לחץ על בדוק חיבור.</pre></section></details>
- <section><h2>פרטיות</h2><p>העדפות נשמרות במכשיר. המיקום שלך נבדק רק בלחיצה על כפתור המיקום.</p><small class="version-note">DEV-9.3.4 · LIVE-WORK מקור נתונים נפרד</small></section>
+ <section><h2>פרטיות</h2><p>העדפות נשמרות במכשיר. המיקום שלך נבדק רק בלחיצה על כפתור המיקום.</p><small class="version-note">DEV-9.3.5 · LIVE-WORK מקור נתונים נפרד</small></section>
  <div hidden><input id="siriRef"/><input id="showOld" type="checkbox"/><input id="relayUrl" type="url"/><button id="relayApply"></button></div>
 </aside>
 </body></html>

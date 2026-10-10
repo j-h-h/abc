@@ -1,0 +1,52 @@
+{
+  "version": "DEV-9.3.5",
+  "state": "pre-deployment-verification",
+  "scope": {
+    "repo": "j-h-h/abc",
+    "branch": "dev/vehicle-history-map-20261009",
+    "project": "eifo-batuach-dev",
+    "otherBranchesModified": false
+  },
+  "reason": "Real DEV region response at 08:37:39Z had 65 vehicles with newest observations 119s old; 60s browser polling leaves expiry gaps",
+  "change": "20s visible-page polling, skip overlapping periodic request; original clocks and 180s expiry unchanged",
+  "tomtom": {
+    "signedIn": true,
+    "actualAccountPlan": "Freemium",
+    "providerEnforcedFreeLimit": true,
+    "secretLocation": "DEV production server sensitive environment variable",
+    "chargedOrCardAdded": false,
+    "actualTrafficActive": false,
+    "actualPublicTest": {
+      "run": 38036642142,
+      "job": 114168330873,
+      "commit": "ff76ec25cce9648f8733878d51045ecfea207e8f",
+      "time": "2026-10-10T08:05:49Z",
+      "result": "FAILED_NO_COLORED_TRAFFIC_PIXELS",
+      "coloredPixels": 0
+    },
+    "coverageReferences": [
+      "https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/v1/product-information/market-coverage",
+      "https://docs.tomtom.com/traffic-api/documentation/tomtom-orbis-maps/v2/product-information/market-coverage"
+    ],
+    "coverageConfirmedFlag": false
+  },
+  "arrivalEstimate": {
+    "providerForecastPreserved": true,
+    "historyTrafficWeightedEstimateActive": false,
+    "blocker": "No verified stop-arrival history or directed live traffic-flow samples"
+  },
+  "waze": {
+    "source": "Tel Aviv municipal ArcGIS layer 892",
+    "retrievedAt": "2026-10-10T08:34:09.962Z",
+    "httpStatus": 200,
+    "updatedAt": "2026-10-10T11:33:03.489Z",
+    "publicationAt": "2026-10-10T08:30:35.508Z",
+    "clockOffsetApplied": false,
+    "dateFieldsTimeReference": null,
+    "datesInUnknownTimezone": false,
+    "nationwideAuthorizedFeed": false,
+    "activated": false,
+    "blocker": "Unverified future update clock; municipal coverage only; nationwide feed requires partner approval"
+  },
+  "realDataProof": "Pending exact-code CI and canonical public desktop/phone verification"
+}

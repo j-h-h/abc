@@ -1,0 +1,760 @@
+{
+  "probe": [
+    {
+      "url": "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/892?f=pjson",
+      "status": 200,
+      "retrievedAt": "2026-10-10T08:34:09.886Z",
+      "data": {
+        "currentVersion": 11.1,
+        "cimVersion": "3.1.0",
+        "id": 892,
+        "name": "עומסי תנועה ווייז",
+        "type": "Feature Layer",
+        "description": "892",
+        "geometryType": "esriGeometryPolyline",
+        "sourceSpatialReference": {
+          "wkid": 2039,
+          "latestWkid": 2039,
+          "xyTolerance": 0.001,
+          "zTolerance": 0.001,
+          "mTolerance": 0.001,
+          "falseX": -5403700,
+          "falseY": -12887700,
+          "xyUnits": 10000,
+          "falseZ": -100000,
+          "zUnits": 10000,
+          "falseM": -100000,
+          "mUnits": 10000
+        },
+        "copyrightText": "",
+        "parentLayer": {
+          "id": 1012,
+          "name": "תנועה וחניה"
+        },
+        "subLayers": [],
+        "minScale": 0,
+        "maxScale": 0,
+        "referenceScale": 0,
+        "drawingInfo": {
+          "renderer": {
+            "type": "uniqueValue",
+            "field1": "level",
+            "uniqueValueInfos": [
+              {
+                "symbol": {
+                  "type": "esriSLS",
+                  "style": "esriSLSSolid",
+                  "color": [
+                    255,
+                    211,
+                    127,
+                    255
+                  ],
+                  "width": 8
+                },
+                "value": "1",
+                "label": "עומס קל"
+              },
+              {
+                "symbol": {
+                  "type": "esriSLS",
+                  "style": "esriSLSSolid",
+                  "color": [
+                    230,
+                    152,
+                    0,
+                    255
+                  ],
+                  "width": 8
+                },
+                "value": "2",
+                "label": "עומס בינוני"
+              },
+              {
+                "symbol": {
+                  "type": "esriSLS",
+                  "style": "esriSLSSolid",
+                  "color": [
+                    230,
+                    0,
+                    0,
+                    255
+                  ],
+                  "width": 8
+                },
+                "value": "3",
+                "label": "עומס כבד"
+              },
+              {
+                "symbol": {
+                  "type": "esriSLS",
+                  "style": "esriSLSSolid",
+                  "color": [
+                    168,
+                    56,
+                    0,
+                    255
+                  ],
+                  "width": 8
+                },
+                "value": "4",
+                "label": "עומס כבד מאוד"
+              },
+              {
+                "symbol": {
+                  "type": "esriSLS",
+                  "style": "esriSLSSolid",
+                  "color": [
+                    104,
+                    104,
+                    104,
+                    255
+                  ],
+                  "width": 8
+                },
+                "value": "5",
+                "label": "קטע סגור"
+              }
+            ],
+            "fieldDelimiter": ",",
+            "authoringInfo": {
+              "colorRamp": {
+                "type": "multipart",
+                "colorRamps": [
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      252,
+                      207,
+                      209,
+                      255
+                    ],
+                    "toColor": [
+                      252,
+                      207,
+                      209,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      191,
+                      252,
+                      182,
+                      255
+                    ],
+                    "toColor": [
+                      191,
+                      252,
+                      182,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      196,
+                      179,
+                      252,
+                      255
+                    ],
+                    "toColor": [
+                      196,
+                      179,
+                      252,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      179,
+                      250,
+                      252,
+                      255
+                    ],
+                    "toColor": [
+                      179,
+                      250,
+                      252,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      252,
+                      238,
+                      179,
+                      255
+                    ],
+                    "toColor": [
+                      252,
+                      238,
+                      179,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      204,
+                      217,
+                      252,
+                      255
+                    ],
+                    "toColor": [
+                      204,
+                      217,
+                      252,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      252,
+                      179,
+                      229,
+                      255
+                    ],
+                    "toColor": [
+                      252,
+                      179,
+                      229,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      199,
+                      252,
+                      222,
+                      255
+                    ],
+                    "toColor": [
+                      199,
+                      252,
+                      222,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      237,
+                      207,
+                      252,
+                      255
+                    ],
+                    "toColor": [
+                      237,
+                      207,
+                      252,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      252,
+                      235,
+                      215,
+                      255
+                    ],
+                    "toColor": [
+                      252,
+                      235,
+                      215,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      228,
+                      252,
+                      194,
+                      255
+                    ],
+                    "toColor": [
+                      228,
+                      252,
+                      194,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      252,
+                      194,
+                      222,
+                      255
+                    ],
+                    "toColor": [
+                      252,
+                      194,
+                      222,
+                      255
+                    ]
+                  },
+                  {
+                    "type": "algorithmic",
+                    "algorithm": "esriCIELabAlgorithm",
+                    "fromColor": [
+                      210,
+                      240,
+                      252,
+                      255
+                    ],
+                    "toColor": [
+                      210,
+                      240,
+                      252,
+                      255
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "scaleSymbols": true,
+          "transparency": 0,
+          "labelingInfo": null
+        },
+        "defaultVisibility": false,
+        "extent": {
+          "xmin": 176118.88999999966,
+          "ymin": 659336.8200000003,
+          "xmax": 186429.9500000002,
+          "ymax": 672293.6500000004,
+          "spatialReference": {
+            "wkid": 2039,
+            "latestWkid": 2039,
+            "xyTolerance": 0.001,
+            "zTolerance": 0.001,
+            "mTolerance": 0.001,
+            "falseX": -5403700,
+            "falseY": -12887700,
+            "xyUnits": 10000,
+            "falseZ": -100000,
+            "zUnits": 10000,
+            "falseM": -100000,
+            "mUnits": 10000
+          }
+        },
+        "hasAttachments": false,
+        "htmlPopupType": "esriServerHTMLPopupTypeAsHTMLText",
+        "displayField": "level",
+        "typeIdField": null,
+        "subtypeFieldName": null,
+        "subtypeField": null,
+        "defaultSubtypeCode": null,
+        "fields": [
+          {
+            "name": "OBJECTID",
+            "type": "esriFieldTypeOID",
+            "alias": "OBJECTID",
+            "domain": null
+          },
+          {
+            "name": "country",
+            "type": "esriFieldTypeString",
+            "alias": "[country]",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "city",
+            "type": "esriFieldTypeString",
+            "alias": "city",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "level",
+            "type": "esriFieldTypeSmallInteger",
+            "alias": "level",
+            "domain": null
+          },
+          {
+            "name": "speedKMH",
+            "type": "esriFieldTypeDouble",
+            "alias": "speedKMH",
+            "domain": null
+          },
+          {
+            "name": "length",
+            "type": "esriFieldTypeDouble",
+            "alias": "length",
+            "domain": null
+          },
+          {
+            "name": "turnType",
+            "type": "esriFieldTypeString",
+            "alias": "turnType",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "type",
+            "type": "esriFieldTypeString",
+            "alias": "type",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "uuid",
+            "type": "esriFieldTypeString",
+            "alias": "uuid",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "endNode",
+            "type": "esriFieldTypeString",
+            "alias": "endNode",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "speed",
+            "type": "esriFieldTypeSingle",
+            "alias": "speed",
+            "domain": null
+          },
+          {
+            "name": "roadType",
+            "type": "esriFieldTypeSmallInteger",
+            "alias": "roadType",
+            "domain": null
+          },
+          {
+            "name": "delay",
+            "type": "esriFieldTypeSmallInteger",
+            "alias": "delay",
+            "domain": null
+          },
+          {
+            "name": "street",
+            "type": "esriFieldTypeString",
+            "alias": "street",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "pubMillis",
+            "type": "esriFieldTypeString",
+            "alias": "pubMillis",
+            "length": 50,
+            "domain": null
+          },
+          {
+            "name": "updateDate",
+            "type": "esriFieldTypeDate",
+            "alias": "updateDate",
+            "length": 8,
+            "domain": null
+          },
+          {
+            "name": "SHAPE_Length",
+            "type": "esriFieldTypeDouble",
+            "alias": "SHAPE_Length",
+            "domain": null
+          },
+          {
+            "name": "SHAPE",
+            "type": "esriFieldTypeGeometry",
+            "alias": "SHAPE",
+            "domain": null
+          }
+        ],
+        "geometryField": {
+          "name": "SHAPE",
+          "type": "esriFieldTypeGeometry",
+          "alias": "SHAPE"
+        },
+        "indexes": [
+          {
+            "name": "FDO_OBJECTID",
+            "fields": "OBJECTID",
+            "isAscending": true,
+            "isUnique": true,
+            "description": ""
+          },
+          {
+            "name": "FDO_SHAPE",
+            "fields": "SHAPE",
+            "isAscending": true,
+            "isUnique": false,
+            "description": ""
+          }
+        ],
+        "subtypes": [],
+        "relationships": [],
+        "canModifyLayer": true,
+        "canScaleSymbols": false,
+        "hasLabels": false,
+        "capabilities": "Query,Map,Data",
+        "maxRecordCount": 2000,
+        "supportsStatistics": true,
+        "supportsExceedsLimitStatistics": true,
+        "supportsAdvancedQueries": true,
+        "supportedQueryFormats": "JSON, geoJSON, PBF",
+        "isDataVersioned": false,
+        "ownershipBasedAccessControlForFeatures": {
+          "allowOthersToQuery": true
+        },
+        "useStandardizedQueries": true,
+        "supportedSpatialRelationships": [
+          "esriSpatialRelIntersects",
+          "esriSpatialRelContains",
+          "esriSpatialRelCrosses",
+          "esriSpatialRelEnvelopeIntersects",
+          "esriSpatialRelIndexIntersects",
+          "esriSpatialRelOverlaps",
+          "esriSpatialRelTouches",
+          "esriSpatialRelWithin",
+          "esriSpatialRelRelation"
+        ],
+        "advancedQueryCapabilities": {
+          "useStandardizedQueries": true,
+          "supportsStatistics": true,
+          "supportsPercentileStatistics": true,
+          "supportsHavingClause": true,
+          "supportsOrderBy": true,
+          "supportsDistinct": true,
+          "supportsCountDistinct": true,
+          "supportsPagination": true,
+          "supportsLod": false,
+          "supportsQueryWithLodSR": false,
+          "supportsTrueCurve": true,
+          "supportsQueryWithDatumTransformation": true,
+          "supportsReturningQueryExtent": true,
+          "supportsQueryWithDistance": true,
+          "supportsSqlExpression": true,
+          "supportsTimeRelation": true,
+          "supportsSqlFormat": false,
+          "supportsQueryAnalytic": false
+        },
+        "supportsDatumTransformation": true,
+        "dateFieldsTimeReference": null,
+        "preferredTimeReference": null,
+        "datesInUnknownTimezone": false,
+        "hasGeometryProperties": true,
+        "geometryProperties": {
+          "shapeLengthFieldName": "SHAPE_Length",
+          "units": "esriMeters",
+          "mapUnits": {
+            "uwkid": 9001
+          }
+        },
+        "hasMetadata": true,
+        "isDataArchived": false,
+        "archivingInfo": {
+          "supportsQueryWithHistoricMoment": false,
+          "startArchivingMoment": -1
+        },
+        "supportsCoordinatesQuantization": true,
+        "supportsDynamicLegends": true
+      }
+    },
+    {
+      "url": "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/892/query?where=1%3D1&outFields=OBJECTID%2Clevel%2CspeedKMH%2Clength%2Cdelay%2Cstreet%2CpubMillis%2CupdateDate%2CendNode%2Cuuid&orderByFields=updateDate%20DESC&outSR=4326&resultRecordCount=3&returnGeometry=true&f=json",
+      "status": 200,
+      "retrievedAt": "2026-10-10T08:34:09.962Z",
+      "data": {
+        "displayFieldName": "level",
+        "fieldAliases": {
+          "OBJECTID": "OBJECTID",
+          "level": "level",
+          "speedKMH": "speedKMH",
+          "length": "length",
+          "delay": "delay",
+          "street": "street",
+          "pubMillis": "pubMillis",
+          "updateDate": "updateDate",
+          "endNode": "endNode",
+          "uuid": "uuid"
+        },
+        "geometryType": "esriGeometryPolyline",
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        },
+        "fields": [
+          {
+            "name": "OBJECTID",
+            "type": "esriFieldTypeOID",
+            "alias": "OBJECTID"
+          },
+          {
+            "name": "level",
+            "type": "esriFieldTypeSmallInteger",
+            "alias": "level"
+          },
+          {
+            "name": "speedKMH",
+            "type": "esriFieldTypeDouble",
+            "alias": "speedKMH"
+          },
+          {
+            "name": "length",
+            "type": "esriFieldTypeDouble",
+            "alias": "length"
+          },
+          {
+            "name": "delay",
+            "type": "esriFieldTypeSmallInteger",
+            "alias": "delay"
+          },
+          {
+            "name": "street",
+            "type": "esriFieldTypeString",
+            "alias": "street",
+            "length": 50
+          },
+          {
+            "name": "pubMillis",
+            "type": "esriFieldTypeString",
+            "alias": "pubMillis",
+            "length": 50
+          },
+          {
+            "name": "updateDate",
+            "type": "esriFieldTypeDate",
+            "alias": "updateDate",
+            "length": 8
+          },
+          {
+            "name": "endNode",
+            "type": "esriFieldTypeString",
+            "alias": "endNode",
+            "length": 50
+          },
+          {
+            "name": "uuid",
+            "type": "esriFieldTypeString",
+            "alias": "uuid",
+            "length": 50
+          }
+        ],
+        "features": [
+          {
+            "attributes": {
+              "OBJECTID": 2697,
+              "level": 5,
+              "speedKMH": 0,
+              "length": 80,
+              "delay": -1,
+              "street": "המלך ג`ורג`",
+              "pubMillis": "1790346933731",
+              "updateDate": 1791631983490,
+              "endNode": "מסריק",
+              "uuid": "1134229602"
+            },
+            "geometry": {
+              "paths": [
+                [
+                  [
+                    34.777760058827056,
+                    32.07736847634702
+                  ],
+                  [
+                    34.778208013341846,
+                    32.07797553407693
+                  ]
+                ]
+              ]
+            }
+          },
+          {
+            "attributes": {
+              "OBJECTID": 2696,
+              "level": 4,
+              "speedKMH": 4.28,
+              "length": 242,
+              "delay": 175,
+              "street": "וכטנגוב",
+              "pubMillis": "1791621035508",
+              "updateDate": 1791631983489,
+              "endNode": "",
+              "uuid": "1173547520"
+            },
+            "geometry": {
+              "paths": [
+                [
+                  [
+                    34.75766181926865,
+                    32.04365392274363
+                  ],
+                  [
+                    34.75838089333232,
+                    32.04342009488441
+                  ],
+                  [
+                    34.75916883051968,
+                    32.04317631451434
+                  ],
+                  [
+                    34.76001185435732,
+                    32.042793575879884
+                  ]
+                ]
+              ]
+            }
+          },
+          {
+            "attributes": {
+              "OBJECTID": 2695,
+              "level": 5,
+              "speedKMH": 0,
+              "length": 283,
+              "delay": -1,
+              "street": "ארלוזורוב",
+              "pubMillis": "1791179438302",
+              "updateDate": 1791631983488,
+              "endNode": "הנריטה סאלד",
+              "uuid": "1157004574"
+            },
+            "geometry": {
+              "paths": [
+                [
+                  [
+                    34.78920600529362,
+                    32.08360060566395
+                  ],
+                  [
+                    34.790535024312284,
+                    32.08331367648427
+                  ],
+                  [
+                    34.79211705467236,
+                    32.08300879965787
+                  ]
+                ]
+              ]
+            }
+          }
+        ],
+        "exceededTransferLimit": true
+      }
+    }
+  ],
+  "summary": "Read-only municipal source research; unverified future update clock; not activated in DEV"
+}

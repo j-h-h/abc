@@ -1,6 +1,6 @@
 {
   "version": "DEV-9.3.4",
-  "state": "deployed-public-verification-pending",
+  "state": "verified-deployed-with-traffic-blocker",
   "date": "2026-10-10",
   "scope": {
     "repo": "j-h-h/abc",
@@ -50,7 +50,25 @@
     "Number-only marker and larger arrow",
     "Blank/429/503 traffic rejection"
   ],
-  "realDataProof": "Pending exact-commit CI and canonical public verification; actual traffic inactive",
+  "realDataProof": {
+    "desktop": {
+      "Haifa": 1,
+      "Nazareth": 23
+    },
+    "phone": {
+      "Haifa": 10,
+      "Nazareth": 65
+    },
+    "station23014": {
+      "arrivals": 0,
+      "vehicles": 0
+    },
+    "hebrewSuffixRoute": {
+      "line": "10א",
+      "points": 693
+    },
+    "actualTrafficActive": false
+  },
   "codeCommit": "71e7eda125fe0f4a4965a4497de7df19cbe2d777",
   "codeCI": {
     "run": 38038005106,
@@ -67,5 +85,26 @@
     "lines": 911,
     "routes": 6680,
     "build": "published snapshot validated and assembled; no raw ZIP reimport"
-  }
+  },
+  "publicCI": {
+    "run": 38038153299,
+    "conclusion": "success",
+    "jobs": [
+      114172832865,
+      114172833107
+    ],
+    "commit": "3d3294696ab29436fededcb625df03566c6fa105"
+  },
+  "artifacts": [
+    {
+      "id": 11665275628,
+      "name": "dev-live-browser-3d3294696ab29436fededcb625df03566c6fa105",
+      "digest": "sha256:777dd8ed185b372cc136359b8a6a83651c9d8ffad7e3130d5f3189275305a716"
+    },
+    {
+      "id": 11665060924,
+      "name": "dev-public-browser-3d3294696ab29436fededcb625df03566c6fa105",
+      "digest": "sha256:1babcf0895971543be702c13b1fc5e0605bf3f2843d15d03a1a61bf0dcd26074"
+    }
+  ]
 }
