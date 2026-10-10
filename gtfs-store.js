@@ -40,10 +40,10 @@ async function routeIndexFor(vehicles){
  const hint=await state.hintPromise;
  if(hint?.catalogVersion===version&&hint.routes){state.routeIndex=hint.routes;return {catalogVersion:version,routes:state.routeIndex};}
  const missing=(vehicles||[]).filter(v=>!state.routeIndex[String(v.operatorRef)+':'+String(v.routeId)]);
- const candidates=new Set();for(const v of missing){const h=hint?.routes?.[String(v.operatorRef)+':'+String(v.routeId)];if(h&&state.index.lines.includes(h.line))candidates.add(h.line);}
+ const candidates=new Set(),addCandidate=line=>{if(state.index.lines.includes(line)&&!state.metaLines.has(line)&&(state.metaFailures.get(line)||0)<Date.now())candidates.add(line);};for(const v of missing){const h=hint?.routes?.[String(v.operatorRef)+':'+String(v.routeId)];if(h)addCandidate(h.line);}
  // Old metadata is a download hint only. The current official file must confirm operator + route.
  // Nearby served lines also cover routes newly added since the deployment.
- const unhinted=missing.filter(v=>!hint?.routes?.[String(v.operatorRef)+':'+String(v.routeId)]);for(const [code,s]of Object.entries(state.index.stops)){if(!unhinted.some(v=>validNearby(v,s)))continue;for(const line of state.index.served[code]||[])if(state.index.lines.includes(line))candidates.add(line);if(candidates.size>=64)break;}
+ for(const [code,s]of Object.entries(state.index.stops)){if(!missing.some(v=>validNearby(v,s)))continue;for(const line of state.index.served[code]||[])addCandidate(line);if(candidates.size>=64)break;}
  const lines=[...candidates].slice(0,64).filter(line=>!state.metaLines.has(line)&&(state.metaFailures.get(line)||0)<Date.now());let cursor=0;
  await Promise.all(Array.from({length:Math.min(4,lines.length)},async()=>{while(cursor<lines.length){const line=lines[cursor++];
   let task=state.metaPending.get(version+':'+line);if(!task){task=(async()=>{try{const rows=await rawLine(line);if(version!==state.version)return;
