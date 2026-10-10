@@ -1,6 +1,6 @@
 {
   "version": "DEV-9.3.5",
-  "state": "pre-deployment-verification",
+  "state": "deployed-public-verification-pending",
   "scope": {
     "repo": "j-h-h/abc",
     "branch": "dev/vehicle-history-map-20261009",
@@ -48,5 +48,21 @@
     "activated": false,
     "blocker": "Unverified future update clock; municipal coverage only; nationwide feed requires partner approval"
   },
-  "realDataProof": "Pending exact-code CI and canonical public desktop/phone verification"
+  "realDataProof": "Pending exact-code CI and canonical public desktop/phone verification",
+  "codeCommit": "0e1c9891745e47a1bbcb60cc00afef193dc2fd3b",
+  "codeCI": {
+    "run": 38038633692,
+    "conclusion": "success",
+    "job": 114174267468
+  },
+  "deployment": {
+    "id": "dpl_J4u1NunXKUMuZgHaNDmGMF68n5wQ",
+    "project": "eifo-batuach-dev",
+    "canonical": "https://eifo-batuach-dev.vercel.app/"
+  },
+  "gtfs": {
+    "version": "560a61f2a20156ec",
+    "lines": 911,
+    "routes": 6680
+  }
 }
