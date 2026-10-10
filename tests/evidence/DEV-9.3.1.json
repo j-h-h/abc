@@ -1,0 +1,252 @@
+{
+  "version": "DEV-9.3.1",
+  "canonical": "https://eifo-batuach-dev.vercel.app/",
+  "branch": "dev/vehicle-history-map-20261009",
+  "codeCommit": "7c4ac359f681e6d76e2b628580344128bf21b920",
+  "predeployCI": {
+    "id": 38033273446,
+    "conclusion": "success"
+  },
+  "deployment": {
+    "id": "dpl_tLiTBTYhU6M8J9kEV1Dt9sN4Vaec",
+    "state": "READY",
+    "projectId": "prj_MOG4CqCbrnPDf3tTUKKdDwOtoXGJ"
+  },
+  "publicCI": {
+    "id": 38033604561,
+    "commit": "d171fc7ceb0ba3cab29964faddf66151774bcbfd",
+    "conclusion": "success",
+    "artifact": {
+      "id": 11662263539,
+      "name": "dev-public-browser-d171fc7ceb0ba3cab29964faddf66151774bcbfd",
+      "size_in_bytes": 3531279,
+      "url": "https://api.github.com/repos/j-h-h/abc/actions/artifacts/11662263539",
+      "archive_download_url": "https://api.github.com/repos/j-h-h/abc/actions/artifacts/11662263539/zip",
+      "expired": false,
+      "created_at": "2026-10-10T07:13:19Z",
+      "expires_at": "2027-01-08T07:12:10Z",
+      "updated_at": "2026-10-10T07:13:19Z",
+      "digest": "sha256:3c6e33b25ba75e4383130458059d059d358917e06c104cfce8f6bae56bbbec4f",
+      "workflow_run": {
+        "id": 38033604561,
+        "repository_id": 1065921458,
+        "head_repository_id": 1065921458,
+        "head_branch": "dev/vehicle-history-map-20261009",
+        "head_sha": "d171fc7ceb0ba3cab29964faddf66151774bcbfd"
+      }
+    }
+  },
+  "publicDeployment": {
+    "version": "DEV-9.3.1",
+    "branch": "dev/vehicle-history-map-20261009",
+    "gtfsVersion": "560a61f2a20156ec",
+    "gtfsGeneratedAt": "2026-10-09T10:26:15+00:00",
+    "routeDataOrigin": "https://j-h-h.github.io/abc/data/",
+    "lines": 911,
+    "routes": 6680
+  },
+  "realData": {
+    "addressQueries": [
+      "רוטשילד תל אביב",
+      "מרכז חורב חיפה",
+      "אילת"
+    ],
+    "stationCode": "23014",
+    "stationArrivals": 0,
+    "stationVehicles": 0,
+    "desktopAreas": [
+      {
+        "error": null,
+        "rawCount": 1,
+        "shown": 1,
+        "source": "source-reports-in-viewport",
+        "vehicles": [
+          {
+            "id": "3:23353702",
+            "vehicleRef": "23353702",
+            "operatorRef": "3",
+            "vehicleKey": "il-mot-siri:3:23353702",
+            "tripId": "150351192",
+            "routeId": "3672",
+            "line": null,
+            "lat": 32.783581,
+            "lon": 34.999527,
+            "bearing": 136,
+            "sourceObservedAt": "2026-10-10T07:11:24.000Z",
+            "snapshotAt": "2026-10-10T07:11:00.000Z",
+            "sourceResponseAt": null,
+            "source": "open-bus-stride-siri",
+            "clockType": "source-report",
+            "gpsMeasuredAt": null,
+            "directionVerified": false,
+            "reportedArrivalAt": null,
+            "reportedSpeedKmh": 29,
+            "speedUnit": "km/h",
+            "speedEvidence": "mot-siri-profile-3.4.56",
+            "speedObservedAt": "2026-10-10T07:11:24.000Z",
+            "vehicle_ref": "23353702",
+            "observed_at": "2026-10-10T07:11:24.000Z",
+            "associationStopCode": null,
+            "velocity": null
+          }
+        ]
+      },
+      {
+        "error": null,
+        "rawCount": 13,
+        "shown": 13,
+        "source": "source-reports-in-viewport",
+        "vehicles": [
+          {
+            "id": "7:32982904",
+            "vehicleRef": "32982904",
+            "operatorRef": "7",
+            "vehicleKey": "il-mot-siri:7:32982904",
+            "tripId": "150350892",
+            "routeId": "1575",
+            "line": null,
+            "lat": 32.704792,
+            "lon": 35.317955,
+            "bearing": 26,
+            "sourceObservedAt": "2026-10-10T07:11:10.000Z",
+            "snapshotAt": "2026-10-10T07:11:00.000Z",
+            "sourceResponseAt": null,
+            "source": "open-bus-stride-siri",
+            "clockType": "source-report",
+            "gpsMeasuredAt": null,
+            "directionVerified": false,
+            "reportedArrivalAt": null,
+            "reportedSpeedKmh": 43,
+            "speedUnit": "km/h",
+            "speedEvidence": "mot-siri-profile-3.4.56",
+            "speedObservedAt": "2026-10-10T07:11:10.000Z",
+            "vehicle_ref": "32982904",
+            "observed_at": "2026-10-10T07:11:10.000Z",
+            "associationStopCode": null,
+            "velocity": null
+          },
+          {
+            "id": "6:69621103",
+            "vehicleRef": "69621103",
+            "operatorRef": "6",
+            "vehicleKey": "il-mot-siri:6:69621103",
+            "tripId": "150351246",
+            "routeId": "22009",
+            "line": null,
+            "lat": 32.69815,
+            "lon": 35.310993,
+            "bearing": 78,
+            "sourceObservedAt": "2026-10-10T07:11:09.000Z",
+            "snapshotAt": "2026-10-10T07:11:00.000Z",
+            "sourceResponseAt": null,
+            "source": "open-bus-stride-siri",
+            "clockType": "source-report",
+            "gpsMeasuredAt": null,
+            "directionVerified": false,
+            "reportedArrivalAt": null,
+            "reportedSpeedKmh": 0,
+            "speedUnit": "km/h",
+            "speedEvidence": "mot-siri-profile-3.4.56",
+            "speedObservedAt": "2026-10-10T07:11:09.000Z",
+            "vehicle_ref": "69621103",
+            "observed_at": "2026-10-10T07:11:09.000Z",
+            "associationStopCode": null,
+            "velocity": null
+          },
+          {
+            "id": "6:31623101",
+            "vehicleRef": "31623101",
+            "operatorRef": "6",
+            "vehicleKey": "il-mot-siri:6:31623101",
+            "tripId": "150351191",
+            "routeId": "34104",
+            "line": null,
+            "lat": 32.700191,
+            "lon": 35.317218,
+            "bearing": 256,
+            "sourceObservedAt": "2026-10-10T07:11:09.000Z",
+            "snapshotAt": "2026-10-10T07:11:00.000Z",
+            "sourceResponseAt": null,
+            "source": "open-bus-stride-siri",
+            "clockType": "source-report",
+            "gpsMeasuredAt": null,
+            "directionVerified": false,
+            "reportedArrivalAt": null,
+            "reportedSpeedKmh": 32,
+            "speedUnit": "km/h",
+            "speedEvidence": "mot-siri-profile-3.4.56",
+            "speedObservedAt": "2026-10-10T07:11:09.000Z",
+            "vehicle_ref": "31623101",
+            "observed_at": "2026-10-10T07:11:09.000Z",
+            "associationStopCode": null,
+            "velocity": null
+          }
+        ]
+      }
+    ],
+    "phoneMarkerCounts": {
+      "haifa": 6,
+      "nazareth": 22
+    },
+    "observedPhonePopup": {
+      "line": "332",
+      "operatorRef": "7",
+      "routeId": "1575",
+      "vehicleRef": "32982904",
+      "tripId": "150350892",
+      "reportedSpeedKmh": 43,
+      "speedUnit": "km/h",
+      "sourceObservedAt": "2026-10-10T07:11:10.000Z",
+      "snapshotAt": "2026-10-10T07:11:00.000Z",
+      "sourceResponseAt": null,
+      "gpsMeasuredAt": null,
+      "directionVerified": false
+    },
+    "route": "GTFS operator/route match, planned alternatives only",
+    "trafficStatus": {
+      "available": false,
+      "provider": null,
+      "state": "not-connected",
+      "clockType": "provider-response",
+      "maxAgeSeconds": 180
+    },
+    "screenshots": [
+      "dev-public-country.png",
+      "dev-public-real-bus.png",
+      "dev-public-phone-real-bus.png"
+    ]
+  },
+  "syntheticOnly": [
+    "default traffic activation",
+    "manual hide persists",
+    "combined bus + traffic map",
+    "tile expiry",
+    "429 quota circuit",
+    "provider 503",
+    "source future timestamp",
+    "speed fixture 32 km/h",
+    "operator collision",
+    "popup geometry"
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "limitations": [
+    "Real TomTom tiles are inactive: cloud sign-in not completed; no DEV server credential.",
+    "Local Chromium external basemap requests failed; a repeat station fetch returned SOURCE_TIMEOUT/502. CI and public verification passed separately.",
+    "GTFS build verified and assembled the existing published snapshot, without rebuilding the official ZIP or editing its publication branch."
+  ],
+  "unchangedBranches": [
+    "main",
+    "eifo-batuach-site",
+    "work/live-data-20261009"
+  ],
+  "billingActivated": false
+}
