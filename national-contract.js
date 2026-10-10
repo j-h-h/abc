@@ -19,9 +19,15 @@
  function area(raw,bbox,{now=Date.now()}={}){if(raw?.schemaVersion!==1||!Array.isArray(raw.vehicles)||!Array.isArray(raw.bbox)||raw.bbox.length!==4||raw.bbox.some((n,i)=>n!==bbox[i]))throw Error('תשובת האזור אינה תואמת למפה');return {...raw,vehicles:vehicles(raw.vehicles,{now,bbox})};}
  // Area responses may be partial. Preserve each valid observation without renewing its clocks.
  // Deduplicate before viewport clipping so a newer report outside the view removes the older in-view position.
- function mergeArea(previous,raw,bbox,{now=Date.now()}={}){
+ function mergeArea(previous,raw,bbox,{now=Date.now(),followedId=null}={}){
   const incoming=area(raw,bbox,{now});
-  return {...incoming,vehicles:vehicles(vehicles([...(previous?.vehicles||[]),...raw.vehicles],{now}),{now,bbox})};
+  const all=vehicles([...(previous?.vehicles||[]),...raw.vehicles],{now});return {...incoming,vehicles:all.filter(v=>v.id===followedId||(v.lon>=bbox[0]&&v.lon<=bbox[2]&&v.lat>=bbox[1]&&v.lat<=bbox[3]))};
+ }
+ // This describes update freshness, not a probability that the supplier ETA is accurate.
+ function arrivalUpdate(arrival,{now=Date.now(),sourceResponseAt=arrival?.sourceResponseAt}={}){
+  const clocks=[arrival?.sourceObservedAt,arrival?.sourceResponseAt,sourceResponseAt];if(clocks.some(at=>!fresh(at,now)))return {level:'missing',label:'עדכון חסר'};
+  const age=Math.max(0,...clocks.map(at=>(now-Date.parse(at))/1000));
+  return age<=60?{level:'fresh',label:'עדכון טרי'}:age<=120?{level:'aging',label:'מתיישן'}:{level:'old',label:'עדכון ישן'};
  }
  const fold=value=>String(value||'').normalize('NFKD').replace(/[\u0591-\u05c7]/g,'').toLowerCase().replace(/["'׳״/.,-]/g,' ').replace(/\s+/g,' ').trim();
  function stopSearch(stops,query,center=null,limit=8){const q=fold(query),tokens=q.split(' ');if(!q)return[];return stops.filter(s=>s.code===q||tokens.every(t=>s.search.includes(t))).map(s=>({...s,rank:s.code===q?-1:0,distance:center?Math.hypot((s.lon-center.lon)*Math.cos(center.lat*Math.PI/180),s.lat-center.lat):0})).sort((a,b)=>a.rank-b.rank||a.distance-b.distance||a.code.localeCompare(b.code)).slice(0,limit);}
@@ -33,5 +39,5 @@
  }return out;}
  function rememberSearch(history,item){return searchHistory([item,...(history||[])]);}
 
- root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta,searchHistory,rememberSearch};
+ root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta,arrivalUpdate,searchHistory,rememberSearch};
 })(typeof window!=='undefined'?window:globalThis);
