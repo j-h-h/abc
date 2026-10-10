@@ -1,6 +1,6 @@
 {
   "version": "DEV-9.3.4",
-  "state": "pre-deployment-verification",
+  "state": "deployed-public-verification-pending",
   "date": "2026-10-10",
   "scope": {
     "repo": "j-h-h/abc",
@@ -50,5 +50,22 @@
     "Number-only marker and larger arrow",
     "Blank/429/503 traffic rejection"
   ],
-  "realDataProof": "Pending exact-commit CI and canonical public verification; actual traffic inactive"
+  "realDataProof": "Pending exact-commit CI and canonical public verification; actual traffic inactive",
+  "codeCommit": "71e7eda125fe0f4a4965a4497de7df19cbe2d777",
+  "codeCI": {
+    "run": 38038005106,
+    "conclusion": "success",
+    "job": 114172396239
+  },
+  "deployment": {
+    "id": "dpl_8gvXQQhhhuUAacaJ55jaf97eALt1",
+    "project": "eifo-batuach-dev",
+    "canonical": "https://eifo-batuach-dev.vercel.app/"
+  },
+  "gtfs": {
+    "version": "560a61f2a20156ec",
+    "lines": 911,
+    "routes": 6680,
+    "build": "published snapshot validated and assembled; no raw ZIP reimport"
+  }
 }
