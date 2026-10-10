@@ -1,13 +1,13 @@
 {
   "version": "DEV-9.3.6",
-  "codeCommit": "3645414472f64b0534684746731ed7288aa9702a",
-  "ci": 38044487283,
-  "verifyJob": 114191147350,
-  "deployment": "dpl_HBkafW7aK4P3EEo4gyicXabD1zR2",
+  "codeCommit": "c0140605128d78c62ff9c11e3314311d6e9e9ad6",
+  "ci": 38044963013,
+  "verifyJob": 114192529316,
+  "deployment": "dpl_7bQkwP7BZrCnuRqSnZ6CCgnNBxoR",
   "gtfsVersion": "4945dd6a3d37688c",
   "lines": 911,
   "routes": 6680,
-  "publicVerification": "pending",
+  "publicVerification": "final deployment pending",
   "diagnosis": {
     "deployedBefore": "560a61f2a20156ec",
     "liveDataset": "4945dd6a3d37688c",
@@ -34,5 +34,30 @@
     "branch": "dev/vehicle-history-map-20261009",
     "project": "eifo-batuach-dev",
     "liveWorkChanged": false
-  }
+  },
+  "firstPublic": {
+    "run": 38044706968,
+    "conclusion": "success",
+    "verifyJob": 114191785309,
+    "publicJob": 114191785471,
+    "nazareth": {
+      "desktop": 27,
+      "phone": 32,
+      "allDesktopLabelsResolved": true
+    },
+    "haifa": {
+      "desktop": 3,
+      "phone": 14
+    },
+    "phoneHistory": true,
+    "mixedVersionTest": {
+      "simulatedOldIndex": true,
+      "actualGTFSAndVehicleProviders": true,
+      "markers": 29,
+      "currentLineRequests": 19
+    },
+    "artifact": 11667047659,
+    "digest": "sha256:ba87023b5614938599952dee79115ecf8f3bcfb8d76e70d14ff2130ae95399a3"
+  },
+  "additionalSyntheticRegression": "operator/route unchanged, public line number renamed; current files confirm new number"
 }
