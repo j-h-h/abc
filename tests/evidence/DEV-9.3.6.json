@@ -7,7 +7,7 @@
   "gtfsVersion": "4945dd6a3d37688c",
   "lines": 911,
   "routes": 6680,
-  "publicVerification": "latest deployment pending",
+  "publicVerification": "success",
   "diagnosis": {
     "deployedBefore": "560a61f2a20156ec",
     "liveDataset": "4945dd6a3d37688c",
@@ -64,6 +64,59 @@
     "run": 38045187611,
     "conclusion": "success"
   },
-  "pendingChange": "Route metadata wait limited to 1.2s; delayed exact metadata upgrades line without blocking source polling; old index rejected while current catalog changes",
-  "metadataWaitMaximumMs": 1200
+  "metadataWaitMaximumMs": 1200,
+  "publicRun": 38049502122,
+  "publicCommit": "fe51d0e50f42d3a44b7c5afede54ec458f2ed820",
+  "publicJob": 114205604640,
+  "publicVerifyJob": 114205604947,
+  "completedAt": "2026-10-10T11:46:30Z",
+  "real": {
+    "nazareth": {
+      "desktop": 21,
+      "phone": 69,
+      "allDesktopNumbersValidated": true
+    },
+    "haifa": {
+      "desktop": 1,
+      "phone": 10
+    },
+    "historyPersistsAfterReload": true,
+    "phoneHistoryFitsViewport": true,
+    "positiveRealStationETA": false,
+    "station23014ValidArrivals": 0,
+    "latestAPIProbe": {
+      "at": "2026-10-10T11:45:30.293Z",
+      "reports": 53,
+      "distinct": 53,
+      "reportedZeroKmh": 35
+    }
+  },
+  "mixed": {
+    "simulatedOldIndex": true,
+    "actualGTFSAndVehicleProviders": true,
+    "labelsResolved": 21,
+    "currentLineRequests": 64
+  },
+  "screenshots": [
+    {
+      "path": "tests/evidence/DEV-9.3.6-real-phone-history.png",
+      "bytes": 154733,
+      "sha256": "50559be8a52ad6336049a6ddd5fc28f608fae1395919168755401f018bbe547b",
+      "blobSha": "7066c9a114a2e4688890d9cd5c65bf240904e642"
+    },
+    {
+      "path": "tests/evidence/DEV-9.3.6-real-phone-bus.png",
+      "bytes": 254656,
+      "sha256": "caeae4e11550903da45d56861cbc36fb9f262742a6c9632788ca595962b5cee9",
+      "blobSha": "1ef0ee8cd7061769f64cae308513f9f6341bd261"
+    }
+  ],
+  "publicArtifact": {
+    "id": 11669450219,
+    "digest": "sha256:8a9c0bdd825fcc00da93514fe2c3cfc8cc2d74ff47d4eb61c16efa8cb1b2240d"
+  },
+  "verifyArtifact": {
+    "id": 11668349987,
+    "digest": "sha256:6f04ae68211dc59a48d311cc88d9918c518104b3b50d30d0df3b3c84844d46ef"
+  }
 }

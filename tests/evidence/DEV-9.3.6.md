@@ -1,26 +1,28 @@
-# DEV-9.3.6 — numbers after a daily GTFS update; recent searches
+# ראיות DEV-9.3.6 — אימות סופי
 
-Code 3645414472f64b0534684746731ed7288aa9702a passed CI 38044487283 (verify 114191147350), including all source/history/traffic suites, metadata-refresh unit tests, real address and station flows, history reopen and GTFS 4945dd6a3d37688c / 911 lines / 6680 routes. DEV-only deployment dpl_HBkafW7aK4P3EEo4gyicXabD1zR2 created after success. Canonical public desktop/phone and mixed old-index / actual-provider recovery checks pending.
+הקוד 736935da906fc82c7adbd2e6dfce5dcb4f145822 עבר CI 38049310703 לפני פריסה. פריסה dpl_FkLZbLvYFr3itVjEmLSBRJCjimc8 READY לפרויקט eifo-batuach-dev בלבד ובכתובת הקנונית. אימות ציבורי 38049502122, jobs 114205604640 / 114205604947, עבר ב־2026-10-10T11:46:30Z. בניית GTFS אימתה 911 קווים ו־6680 מסלולים, גרסה 4945dd6a3d37688c.
 
-Real diagnosis: DEV-9.3.5 deployed GTFS version 560a61f2a20156ec (2026-10-09T10:26:15+00:00), while the live dataset API returned 4945dd6a3d37688c (2026-10-10T08:47:25+00:00). The client silently discarded the deployed route index when versions differed, leaving all area reports without public numbers. All 58 Nazareth reports sampled at 2026-10-10T10:05:17.252Z matched deployed exact operator/route keys; those old values are diagnostic evidence, not permission to reuse outdated metadata.
+## נתונים אמיתיים
+חיפוש רוטשילד תל אביב, מרכז חורב חיפה ואילת; תחנה 23014 (ללא תחזיות חיות בזמן הבדיקה), מסלול 10א ותוואי אמיתי. נצרת: 21 סמנים במחשב עם מספרי קו תקפים, 69 דיווחים בטלפון. חיפה: 1 / 10. מספרים בדוגמת נצרת: 34, 44, 2, 9, 23, 1, 5, 6, 332, 16, 57, 3, 17, 28. אין קידום מזהה מסלול למספר קו ואין ערבוב בין מפעילים.
 
-Fix: deployed index is a download hint if its version differs. The current official per-line file must independently validate operator and route; new routes use nearby served lines as bounded download candidates. Missing, contradictory, or failed metadata stays missing. Version checks also refresh open pages once per minute. No GPS clocks, identity, speed units or ETA semantics change.
+היסטוריית חיפושים נשמרה אחרי טעינה ונפתחה במחשב ובטלפון. פרטי המקור והמסלול לחיצים ונשארים בתוך המסך. צילומי הטלפון של האימות הציבורי נבדקו חזותית ונשמרו במאגר.
 
-Search: eight recent place/station/query entries on this device, deduplicated and validated; quick selection, persistence after reload and clear action.
+בדיקת API אמיתית ב־2026-10-10T11:45:30.293Z: 53 זהויות רכב שונות באזור נצרת, 35 מדווחות מהירות 0 קמ״ש. בדיקה מוקדמת ב־10:10:20.826Z: 58 זהויות שונות, אין קואורדינטות כפולות, 32 מהירויות 0; גיל דיווח 85–170 שניות. הנתונים אינם מוכיחים תנועה בשיירה, GPS עצמאי או תקלה.
 
-Real convoy check at 2026-10-10T10:10:20.826Z: 58 distinct operator/vehicle identities, no exact coordinate duplicates, 32 reported speeds equal 0 km/h, report ages 85–170 seconds. This does not prove a moving convoy, fleet service status or independent GPS truth. No fabricated movement, route or mechanical fault.
+חלונית הטלפון: קו 17, מפעיל 6, רכב 57641404, מסלול 1323, נסיעה 150352951, 0 קמ״ש; sourceObservedAt=11:44:02Z, snapshotAt=11:44:00Z, sourceResponseAt=null. יעד המסלול ״בית חולים אנגלי״, ללא ניחוש יעד נסיעה.
 
-Synthetic tests cover a changed catalog version, current metadata confirmation, a route missing from old hints, operator collision, further update on an open page, versioned caches and provider failure; history validation and persistence. Public desktop/phone route-number and map flow verification required after green CI.
+## בדיקה מעורבת ובדיקות סינתטיות
+בדיקה מעורבת של אינדקס ישן מדומה מול מקורות GTFS ורכב אמיתיים פתרה 21 מספרי קו, עם 64 בקשות לקובצי קווים עדכניים. זו אינה הוכחה לשינוי מקור אמיתי בזמן הבדיקה.
 
-Traffic remains connected=true / available=false / coverage-unavailable (TomTom Israel). No fake traffic or adjusted provider ETA. DEV only; LIVE-WORK unchanged.
+בדיקות סינתטיות כוללות החלפת גרסת GTFS, מסלול חדש, שינוי מספר קו תחת אותו מזהה, התנגשות מפעיל, הפרדת מטמון לפי גרסה, כשל ספק ללא שימוש ברמז ישן, מטא־דאטה מתעכבת שאינה חוסמת מיקום, שמירת הזהות והזמן המקוריים, פקיעה, מקור עתידי, תשובות חלקיות וכשלי תנועה. בדיקת metadata_wait.cjs עברה גם מקומית וגם ב־CI.
 
+## חסימה אמיתית
+מצב תנועה באתר: connected=true / available=false / state=coverage-unavailable / coverageCountry=IL / provider=TomTom. אין תנועה אמיתית פעילה ואין ETA משוקלל היסטוריה ופקקים. ספק התחזיות אינו מקבל עיכוב מומצא.
 
-First canonical public run 38044706968 passed both jobs 114191785309 and 114191785471. Real Nazareth: 27 desktop line-number markers, 32 phone reports; real Haifa: 3 desktop / 14 phone. Phone history reopened and fit inside its viewport. Mixed old-index fixture/current real GTFS and live source proof resolved 29 reports with 19 current line-file requests; this is explicitly mixed testing, not a wholly real feed change. TomTom coverage blocker remains confirmed. Real stop 23014 had no valid live arrivals; no positive real ETA claim.
+## ראיות שמורות
+- ארטיפקט ציבורי: 11669450219, sha256:8a9c0bdd825fcc00da93514fe2c3cfc8cc2d74ff47d4eb61c16efa8cb1b2240d.
+- ארטיפקט verify: 11668349987, sha256:6f04ae68211dc59a48d311cc88d9918c518104b3b50d30d0df3b3c84844d46ef.
+- tests/evidence/DEV-9.3.6-real-phone-history.png, 154733 bytes, sha256:50559be8a52ad6336049a6ddd5fc28f608fae1395919168755401f018bbe547b, Git blob 7066c9a114a2e4688890d9cd5c65bf240904e642.
+- tests/evidence/DEV-9.3.6-real-phone-bus.png, 254656 bytes, sha256:caeae4e11550903da45d56861cbc36fb9f262742a6c9632788ca595962b5cee9, Git blob 1ef0ee8cd7061769f64cae308513f9f6341bd261.
 
-A further focused regression found that a public line rename under an unchanged operator/route id could remain unresolved. Nearby candidate lookup now also checks such remaining pairs, skipping already-verified or backed-off line files. Exact current file confirmation remains mandatory; no old hint number is reused. Bounded batches can advance across later polls. Updated GTFS test covers this transition. Final exact-code CI and re-deploy/public check pending.
-
-Final runtime commit c0140605128d78c62ff9c11e3314311d6e9e9ad6 passed CI 38044963013, verify job 114192529316, before deployment dpl_7bQkwP7BZrCnuRqSnZ6CCgnNBxoR. Exact DEV project and canonical alias READY. GTFS remains 4945dd6a3d37688c / 911 public lines / 6680 routes. Browser artifact 11667562378 digest sha256:baf3bdb217513205f86370314614748f0cc167d6b26c49bf8be665c60beeec3e. Final canonical verification queued.
-
-Previous final public run 38045187611 succeeded. Final resilience fix: metadata waiting is capped at 1.2 seconds so slow GTFS cannot hold validated position frames or periodic polls. Late current metadata upgrades route labels; old versions cannot supply numbers. Synthetic tests/metadata_wait.cjs preserves vehicle identity and original observation clocks. New exact-code CI/deployment/public proof required.
-
-Exact final code 736935da906fc82c7adbd2e6dfce5dcb4f145822 passed CI 38049310703 / verify 114205056028. GTFS 4945dd6a3d37688c, 911 lines / 6680 routes. DEV-only deployment dpl_FkLZbLvYFr3itVjEmLSBRJCjimc8 READY at canonical alias. Source polling responsiveness regression passed locally and CI. Final public run now requested.
+ענף dev/vehicle-history-map-20261009 בלבד, ללא מיזוג או שינוי main/eifo-batuach-site/WORK.
