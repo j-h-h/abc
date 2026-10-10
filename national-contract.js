@@ -26,5 +26,12 @@
  const fold=value=>String(value||'').normalize('NFKD').replace(/[\u0591-\u05c7]/g,'').toLowerCase().replace(/["'׳״/.,-]/g,' ').replace(/\s+/g,' ').trim();
  function stopSearch(stops,query,center=null,limit=8){const q=fold(query),tokens=q.split(' ');if(!q)return[];return stops.filter(s=>s.code===q||tokens.every(t=>s.search.includes(t))).map(s=>({...s,rank:s.code===q?-1:0,distance:center?Math.hypot((s.lon-center.lon)*Math.cos(center.lat*Math.PI/180),s.lat-center.lat):0})).sort((a,b)=>a.rank-b.rank||a.distance-b.distance||a.code.localeCompare(b.code)).slice(0,limit);}
  function routeMeta(vehicle,routes=[],index={}){return routes.find(r=>String(r.routeId)===String(vehicle.routeId)&&String(r.operatorRef)===String(vehicle.operatorRef)&&(!vehicle.line||String(r.line)===String(vehicle.line)))||(()=>{const r=index[String(vehicle.operatorRef)+':'+String(vehicle.routeId)];return r&&(!vehicle.line||String(r.line)===String(vehicle.line))?r:null})()||null;}
- root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta};
+
+ function searchHistory(rows){const out=[],keys=new Set();for(const r of Array.isArray(rows)?rows:[]){if(!r||!['place','stop','query'].includes(r.kind)||typeof r.label!=='string'||!r.label.trim()||r.label.length>200)continue;
+  const item={kind:r.kind,label:r.label.trim()};if(r.kind==='place'){if(!validCoord(r.lat,r.lon))continue;item.lat=r.lat;item.lon=r.lon;}if(r.kind==='stop'){if(!/^\d{3,7}$/.test(String(r.code)))continue;item.code=String(r.code);}
+  const key=r.kind+':'+(r.kind==='stop'?item.code:fold(item.label));if(keys.has(key))continue;keys.add(key);out.push(item);if(out.length===8)break;
+ }return out;}
+ function rememberSearch(history,item){return searchHistory([item,...(history||[])]);}
+
+ root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta,searchHistory,rememberSearch};
 })(typeof window!=='undefined'?window:globalThis);
