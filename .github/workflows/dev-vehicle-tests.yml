@@ -19,6 +19,7 @@ jobs:
           for file in app.js experience.js national.js traffic-tiles.js national-contract.js traffic-view.js core.js vehicle-history.js traffic-analysis.js sw.js live-contract.js archive-contract.js api/live.mjs api/national.mjs api/search.mjs api/dataset.mjs api/traffic.mjs backend/national/providers.mjs backend/national/transit.mjs backend/national/geometry.mjs scripts/build-vercel.mjs; do node --check "$file"; done
       - name: Exercise observed vehicle history and traffic logic
         run: |
+          node tests/bus_marker.cjs
           node tests/vehicle_traffic.cjs
           node tests/traffic_gateway.cjs
 

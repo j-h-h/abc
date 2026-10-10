@@ -6,8 +6,8 @@
  const busSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 10h14M8 19v2m8-2v2M9 6h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8.5" cy="15" r="1" fill="currentColor"/><circle cx="15.5" cy="15" r="1" fill="currentColor"/></svg>';
  function marker(v,line,history,now=Date.now()){
   const age=C.gpsAge(v.observed_at,now),old=age>180;
-  const bearing=typeof v.bearing==='number'&&Number.isFinite(v.bearing)&&v.bearing>=0&&v.bearing<360?v.bearing:null;
-  const arrow=bearing===null?'':'<span class="bus-heading" style="transform:rotate('+bearing+'deg)" aria-hidden="true"></span>';
+  const bearing=typeof v.bearing==='number'&&Number.isFinite(v.bearing)&&!old&&v.bearing>=0&&v.bearing<=360?v.bearing%360:null;
+  const arrow=bearing===null?'':'<span class="bus-heading" style="transform:rotate('+bearing+'deg)" aria-hidden="true"><svg viewBox="0 0 52 52"><path d="M26 2.5 22 9h8Z" fill="currentColor" stroke="white" stroke-width="1.4" stroke-linejoin="round"/><path d="M26 8v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>';
   return '<div class="bus-marker '+(old?'reported-old':'')+' '+(history?.recurrent?'recurrent':'')+'">'+arrow+'<span class="bus-face">'+busSvg+'</span><span class="bus-marker-label">'+(history?.recurrent?'⚠ ':'')+(line==='?'?'?':esc(line))+'<small>'+(old?'מיקום אחרון · ':'דיווח לפני ')+esc(C.ageText(age))+'</small></span></div>';
  }
  function trafficUrl(state){
@@ -64,6 +64,6 @@
   if(root.ResizeObserver){new ResizeObserver(()=>root.SafeBusApp?.state.map?.invalidateSize()).observe($('map'));}
   if('serviceWorker' in navigator&&root.location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
  }
- root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.3.1'};
+ root.SafeBusExperience={marker,update,panel,trafficUrl,focusBuses,version:'DEV-9.3.2'};
  document.addEventListener('DOMContentLoaded',init);
 })(window);

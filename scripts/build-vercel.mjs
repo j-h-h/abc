@@ -47,5 +47,5 @@ await writeFile(output+'/data/routes-index.json',JSON.stringify({catalogVersion:
 const vendor=['leaflet.js','leaflet.css','images/layers.png','images/layers-2x.png','images/marker-icon.png','images/marker-icon-2x.png','images/marker-shadow.png'];
 for(const file of vendor)await writeFile(output+'/vendor/'+file,await download('https://unpkg.com/leaflet@1.9.4/dist/'+file));
 await writeFile(output+'/vendor/leaflet-LICENSE',await download('https://unpkg.com/leaflet@1.9.4/LICENSE'));
-await writeFile(output+'/deployment.json',JSON.stringify({version:'DEV-9.3.1',branch:'dev/vehicle-history-map-20261009',gtfsVersion:before.version,gtfsGeneratedAt:before.generated_at,routeDataOrigin:base,lines:catalog.lines.length,routes:routeCount}));
+await writeFile(output+'/deployment.json',JSON.stringify({version:'DEV-9.3.2',branch:'dev/vehicle-history-map-20261009',gtfsVersion:before.version,gtfsGeneratedAt:before.generated_at,routeDataOrigin:base,lines:catalog.lines.length,routes:routeCount}));
 console.log('VERIFIED DEV BUILD:',catalog.lines.length,'lines;',routeCount,'routes; GTFS',before.version);
