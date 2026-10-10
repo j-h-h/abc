@@ -1,0 +1,54 @@
+{
+  "version": "DEV-9.3.4",
+  "state": "pre-deployment-verification",
+  "date": "2026-10-10",
+  "scope": {
+    "repo": "j-h-h/abc",
+    "branch": "dev/vehicle-history-map-20261009",
+    "project": "eifo-batuach-dev",
+    "otherBranchesModified": false
+  },
+  "tomtom": {
+    "signedIn": true,
+    "actualAccountPlan": "Freemium",
+    "providerEnforcedFreeLimit": true,
+    "secretLocation": "DEV production server sensitive environment variable",
+    "chargedOrCardAdded": false,
+    "actualTrafficActive": false,
+    "actualPublicTest": {
+      "run": 38036642142,
+      "job": 114168330873,
+      "commit": "ff76ec25cce9648f8733878d51045ecfea207e8f",
+      "time": "2026-10-10T08:05:49Z",
+      "result": "FAILED_NO_COLORED_TRAFFIC_PIXELS",
+      "coloredPixels": 0
+    },
+    "coverageReferences": [
+      "https://docs.tomtom.com/traffic-api/documentation/tomtom-maps/v1/product-information/market-coverage",
+      "https://docs.tomtom.com/traffic-api/documentation/tomtom-orbis-maps/v2/product-information/market-coverage"
+    ],
+    "coverageConfirmedFlag": false
+  },
+  "arrivalEstimate": {
+    "providerForecastPreserved": true,
+    "historyTrafficWeightedEstimateActive": false,
+    "blocker": "No verified stop-arrival history or directed live traffic-flow samples"
+  },
+  "changes": [
+    "Number-only upright vehicle label",
+    "Larger arrow only for valid source Bearing",
+    "Destination by exact operator/route; no textual degrees",
+    "Retain valid area observations during pan/delay/partial response/failure",
+    "Preserve original clocks; expiry timer",
+    "Deduplicate before viewport clipping; operator-scoped identity"
+  ],
+  "syntheticTests": [
+    "Delayed area request during pan",
+    "Partial area response",
+    "Area 503",
+    "Source-clock expiry",
+    "Number-only marker and larger arrow",
+    "Blank/429/503 traffic rejection"
+  ],
+  "realDataProof": "Pending exact-commit CI and canonical public verification; actual traffic inactive"
+}

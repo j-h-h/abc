@@ -9,6 +9,17 @@ for(const speed of [-1,161,'32',null,undefined,NaN,Infinity])assert.equal(normal
 for(const [bearing,expected]of [[0,0],[90,90],[180,180],[270,270],[360,0],[42.5,42.5]]){const v=normalizeArea([{...row,bearing}],bbox,now).vehicles[0];assert.equal(v.bearing,expected);assert.equal(N.vehicles([v],{now})[0].bearing,expected);}
 for(const bearing of [null,undefined,'90',false,-1,361,NaN,Infinity,-Infinity]){const v=normalizeArea([{...row,bearing}],bbox,now).vehicles[0];assert.equal(v.bearing,null);assert.equal(N.vehicles([{...vehicle,bearing}],{now})[0].bearing,null);}
 const fast=normalizeArea([{...row,velocity:32}],bbox,now).vehicles[0];for(const change of [{speedUnit:'m/s'},{speedEvidence:null},{speedObservedAt:new Date(now).toISOString()},{reportedSpeedKmh:161}])assert.equal(N.vehicles([{...fast,...change}],{now})[0].reportedSpeedKmh,null);
+// Synthetic regression: partial or failed refreshes cannot renew a vehicle's original observation.
+const older={...vehicle,vehicleRef:'retained'},newer={...vehicle,lat:32.081,tripId:'nextTrip',sourceObservedAt:new Date(now-5000).toISOString()};
+const frame=vehicles=>({schemaVersion:1,bbox,vehicles});
+let merged=N.mergeArea(frame([vehicle,older]),frame([newer]),bbox,{now});
+assert.equal(merged.vehicles.length,2,'A partial area frame preserves fresh absent vehicles');
+assert.equal(merged.vehicles.find(v=>v.vehicleRef===vehicle.vehicleRef).tripId,'nextTrip');
+assert.equal(merged.vehicles.find(v=>v.vehicleRef==='retained').sourceObservedAt,older.sourceObservedAt,'Retention must preserve the original clock');
+assert.equal(N.mergeArea(frame([vehicle]),frame([{...newer,operatorRef:'3'}]),bbox,{now}).vehicles.length,2,'Operator identity remains separate');
+assert.equal(N.mergeArea(frame([vehicle]),frame([{...newer,lon:35.2}]),bbox,{now}).vehicles.length,0,'A newer out-of-view report must remove an old in-view position');
+assert.equal(N.mergeArea(frame([vehicle]),frame([]),bbox,{now:now+181000}).vehicles.length,0,'An empty frame cannot extend the observation lifetime');
+assert.equal(N.mergeArea(frame([]),frame([{...vehicle,sourceObservedAt:'2038-01-01T00:00:00Z'}]),bbox,{now}).vehicles.length,0,'Future observations stay rejected');
 const destinations=[{operatorRef:'15',routeId:'23397',line:'5',headsign:'יעד א'},{operatorRef:'3',routeId:'23397',line:'5',headsign:'יעד אחר'}];assert.equal(N.routeMeta(vehicle,destinations).headsign,'יעד א');assert.equal(N.routeMeta({...vehicle,operatorRef:'97'},destinations),null,'Shared route numbers do not establish a destination across operators');assert.equal(N.routeMeta(vehicle,[],{'15:23397':{headsign:'יעד האינדקס'}}).headsign,'יעד האינדקס');
 const stops=[{code:'200',name:'תחנה חיפה',search:N.fold('תחנה חיפה 200'),lat:32.8,lon:35},{code:'300',name:'תחנה אילת',search:N.fold('תחנה אילת 300'),lat:29.6,lon:34.95}];assert.equal(N.stopSearch(stops,'אילת')[0].code,'300');assert.equal(N.stopSearch(stops,'200')[0].code,'200');
 const {decodePolyline}=await import('../backend/national/geometry.mjs');function encode(points){let a=0,b=0,out='';for(const [lon,lat]of points){const x=Math.round(lat*1e6),y=Math.round(lon*1e6);for(const delta of [x-a,y-b]){let n=delta<0?~(delta<<1):delta<<1;while(n>=32){out+=String.fromCharCode((32|(n&31))+63);n>>=5}out+=String.fromCharCode(n+63)}a=x;b=y}return out}

@@ -7,6 +7,7 @@ for(const [raw,angle] of [[0,0],[90,90],[180,180],[270,270],[360,0],[42.5,42.5]]
  const html=marker({...fresh,bearing:raw},'332',null,now);
  assert.ok(html.includes('rotate('+angle+'deg)'), 'Source bearing uses clockwise degrees from north, including zero');
  assert.ok(html.includes('class="bus-heading"')&&html.includes('viewBox="0 0 52 52"'));
+ assert.ok(!html.includes('class="bus-face"><svg'),'The map marker has no bus pictogram');
  assert.ok(html.includes('>332<small>'),'The public line remains an upright label');
 }
 for(const bearing of [null,undefined,'90',false,-1,361,NaN,Infinity,-Infinity]){
