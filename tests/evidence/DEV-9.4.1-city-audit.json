@@ -1,0 +1,256 @@
+{
+  "classification": "real municipal source audit only; not an active traffic layer",
+  "checkedAt": "2026-10-19T19:45:54.154Z",
+  "endpoint": "https://gisn.tel-aviv.gov.il/arcgis/rest/services/IView2/MapServer/892",
+  "metadata": {
+    "name": "עומסי תנועה ווייז",
+    "description": "892",
+    "copyrightText": "",
+    "dateFieldsTimeReference": null,
+    "datesInUnknownTimezone": false,
+    "timeInfo": null,
+    "fields": [
+      {
+        "name": "OBJECTID",
+        "alias": "OBJECTID",
+        "type": "esriFieldTypeOID"
+      },
+      {
+        "name": "country",
+        "alias": "[country]",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "city",
+        "alias": "city",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "level",
+        "alias": "level",
+        "type": "esriFieldTypeSmallInteger"
+      },
+      {
+        "name": "speedKMH",
+        "alias": "speedKMH",
+        "type": "esriFieldTypeDouble"
+      },
+      {
+        "name": "length",
+        "alias": "length",
+        "type": "esriFieldTypeDouble"
+      },
+      {
+        "name": "turnType",
+        "alias": "turnType",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "type",
+        "alias": "type",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "uuid",
+        "alias": "uuid",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "endNode",
+        "alias": "endNode",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "speed",
+        "alias": "speed",
+        "type": "esriFieldTypeSingle"
+      },
+      {
+        "name": "roadType",
+        "alias": "roadType",
+        "type": "esriFieldTypeSmallInteger"
+      },
+      {
+        "name": "delay",
+        "alias": "delay",
+        "type": "esriFieldTypeSmallInteger"
+      },
+      {
+        "name": "street",
+        "alias": "street",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "pubMillis",
+        "alias": "pubMillis",
+        "type": "esriFieldTypeString"
+      },
+      {
+        "name": "updateDate",
+        "alias": "updateDate",
+        "type": "esriFieldTypeDate"
+      },
+      {
+        "name": "SHAPE_Length",
+        "alias": "SHAPE_Length",
+        "type": "esriFieldTypeDouble"
+      },
+      {
+        "name": "SHAPE",
+        "alias": "SHAPE",
+        "type": "esriFieldTypeGeometry"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "attributes": {
+        "OBJECTID": 17690,
+        "country": "IL",
+        "city": "תל אביב - יפו",
+        "level": 3,
+        "speedKMH": 10.88,
+        "length": 439,
+        "turnType": "NONE",
+        "type": "",
+        "uuid": "1207533638",
+        "endNode": "",
+        "speed": 3.0222222805023193,
+        "roadType": 2,
+        "delay": 78,
+        "street": "ראול ולנברג",
+        "pubMillis": "1792438931032",
+        "updateDate": 1792449787177,
+        "SHAPE_Length": 439.00971433974115
+      },
+      "published": {
+        "raw": "1792438931032",
+        "iso": "2026-10-19T19:42:11.032Z",
+        "ageSeconds": 225
+      },
+      "updated": {
+        "raw": 1792449787177,
+        "iso": "2026-10-19T22:43:07.177Z",
+        "ageSeconds": -10631
+      },
+      "geometry": {
+        "pointCount": 8,
+        "withinIsrael": true,
+        "sample": [
+          [
+            34.841773015466025,
+            32.11553472432076
+          ],
+          [
+            34.84072105294789,
+            32.114654090280034
+          ],
+          [
+            34.84059004807267,
+            32.114504197998684
+          ]
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 17635,
+        "country": "IL",
+        "city": "תל אביב - יפו",
+        "level": 4,
+        "speedKMH": 4.22,
+        "length": 412,
+        "turnType": "NONE",
+        "type": "",
+        "uuid": "1207531836",
+        "endNode": "רוטשילד",
+        "speed": 1.1722222566604614,
+        "roadType": 1,
+        "delay": 96,
+        "street": "נחלת בנימין",
+        "pubMillis": "1792438930542",
+        "updateDate": 1792449786465,
+        "SHAPE_Length": 412.16243919644296
+      },
+      "published": {
+        "raw": "1792438930542",
+        "iso": "2026-10-19T19:42:10.542Z",
+        "ageSeconds": 225
+      },
+      "updated": {
+        "raw": 1792449786465,
+        "iso": "2026-10-19T22:43:06.465Z",
+        "ageSeconds": -10631
+      },
+      "geometry": {
+        "pointCount": 9,
+        "withinIsrael": true,
+        "sample": [
+          [
+            34.7702450206397,
+            32.06665514145641
+          ],
+          [
+            34.770401980093865,
+            32.066428157760356
+          ],
+          [
+            34.77055299580803,
+            32.06606922182085
+          ]
+        ]
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 17696,
+        "country": "IL",
+        "city": "בני ברק",
+        "level": 4,
+        "speedKMH": 4.76,
+        "length": 212,
+        "turnType": "NONE",
+        "type": "",
+        "uuid": "1207533622",
+        "endNode": "לח\"י",
+        "speed": 1.3222222328186035,
+        "roadType": 1,
+        "delay": 136,
+        "street": "רח’ 601",
+        "pubMillis": "1792438929956",
+        "updateDate": 1792449787258,
+        "SHAPE_Length": 211.8048233137443
+      },
+      "published": {
+        "raw": "1792438929956",
+        "iso": "2026-10-19T19:42:09.956Z",
+        "ageSeconds": 226
+      },
+      "updated": {
+        "raw": 1792449787258,
+        "iso": "2026-10-19T22:43:07.258Z",
+        "ageSeconds": -10631
+      },
+      "geometry": {
+        "pointCount": 6,
+        "withinIsrael": true,
+        "sample": [
+          [
+            34.84196604576684,
+            32.10306970807213
+          ],
+          [
+            34.84123804909968,
+            32.10300296475157
+          ],
+          [
+            34.84092407771392,
+            32.10299106235325
+          ]
+        ]
+      }
+    }
+  ],
+  "exceededTransferLimit": true,
+  "conclusion": "Timestamp values are unmodified. Publication is not assumed to be last update; unknown timezone is not corrected by subtracting hours. Reuse/license and clock semantics must be verified before activation."
+}

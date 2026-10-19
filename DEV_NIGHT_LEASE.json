@@ -1,8 +1,11 @@
 {
   "owner": "manual-20261019T1924Z",
-  "status": "active",
+  "status": "idle",
   "startedAt": "2026-10-19T19:26:05.041Z",
-  "expiresAt": "2026-10-19T20:06:05.041Z",
+  "expiresAt": "2026-10-19T19:51:26.213Z",
   "branch": "dev/vehicle-history-map-20261009",
-  "scope": "DEV-9.4.1: route selection, partial station continuity and real traffic diagnostics"
+  "scope": "DEV-9.4.1: route selection, partial station continuity and real traffic diagnostics",
+  "releasedAt": "2026-10-19T19:51:26.213Z",
+  "lastRuntimeCommit": "05d9324420253d0fb302ffb81dc631d4cf4374d2",
+  "lastPublicCI": 39313105874
 }

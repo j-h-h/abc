@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "release": "DEV-9.4.1",
+  "runtimeCommit": "05d9324420253d0fb302ffb81dc631d4cf4374d2",
+  "branch": "dev/vehicle-history-map-20261009",
+  "canonicalUrl": "https://eifo-batuach-dev.vercel.app/",
+  "deployment": {
+    "id": "dpl_4LmoyPfUvTXCSk5cugSPWdr8RDCx",
+    "project": "eifo-batuach-dev",
+    "projectId": "prj_MOG4CqCbrnPDf3tTUKKdDwOtoXGJ",
+    "state": "READY"
+  },
+  "gtfs": {
+    "version": "3cd650a2ac9d1a8c",
+    "lines": 910,
+    "routes": 6726
+  },
+  "preDeploymentCI": {
+    "id": 39312552909,
+    "jobId": 118265620148,
+    "conclusion": "success"
+  },
+  "publicCI": {
+    "id": 39313105874,
+    "headSha": "bed11ede1d70bda4b1e84ff6370a3f72fe84b00b",
+    "verifyJob": 118267540349,
+    "publicJob": 118267540857,
+    "conclusion": "success",
+    "completedAt": "2026-10-19T19:44:09Z"
+  },
+  "realSourceFrames": [
+    {
+      "testAt": "2026-10-19T19:42:18.8551278Z",
+      "label": "REAL NATIONAL ROUTE RANK AND FILTER",
+      "data": {
+        "first": "3:10865",
+        "total": 82
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:42:22.1685537Z",
+      "label": "PUBLIC REAL DEPLOYMENT",
+      "data": {
+        "version": "DEV-9.4.1",
+        "branch": "dev/vehicle-history-map-20261009",
+        "gtfsVersion": "3cd650a2ac9d1a8c",
+        "gtfsGeneratedAt": "2026-10-19T08:01:20+00:00",
+        "routeDataOrigin": "https://j-h-h.github.io/abc/data/",
+        "lines": 910,
+        "routes": 6726
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:42:23.7072655Z",
+      "label": "PUBLIC REAL AREA מרכז חורב חיפה",
+      "data": {
+        "error": null,
+        "rawCount": 0,
+        "shown": 0,
+        "source": "nearby-stop-reports",
+        "vehicles": []
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:42:25.6678222Z",
+      "label": "PUBLIC REAL AREA נצרת",
+      "data": {
+        "error": null,
+        "rawCount": 4,
+        "shown": 4,
+        "source": "nearby-stop-reports",
+        "vehicles": [
+          {
+            "id": "6:31613101",
+            "vehicleRef": "31613101",
+            "vehicleKey": "il-mot-siri:6:31613101",
+            "operatorRef": "6",
+            "tripId": "585764336_191026",
+            "routeId": "25549",
+            "line": "39",
+            "lat": 32.700866,
+            "lon": 35.311134,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:42:11.000Z",
+            "sourceResponseAt": "2026-10-19T19:42:25.000Z",
+            "positionReportedAt": "2026-10-19T19:42:11.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:42:25.357Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 5004.4803529769515,
+            "positionDistanceFromRouteMeters": 3.4910795804504664,
+            "reportedArrivalAt": "2026-10-19T19:45:00.000Z",
+            "vehicle_ref": "31613101",
+            "observed_at": "2026-10-19T19:42:11.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          },
+          {
+            "id": "6:8126084",
+            "vehicleRef": "8126084",
+            "vehicleKey": "il-mot-siri:6:8126084",
+            "operatorRef": "6",
+            "tripId": "585763985_191026",
+            "routeId": "34106",
+            "line": "3",
+            "lat": 32.699432,
+            "lon": 35.316619,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:41:57.000Z",
+            "sourceResponseAt": "2026-10-19T19:42:25.000Z",
+            "positionReportedAt": "2026-10-19T19:41:57.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:42:25.399Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 10047.535132394349,
+            "positionDistanceFromRouteMeters": 0.925456379224884,
+            "reportedArrivalAt": "2026-10-19T19:45:00.000Z",
+            "vehicle_ref": "8126084",
+            "observed_at": "2026-10-19T19:41:57.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          },
+          {
+            "id": "6:47169204",
+            "vehicleRef": "47169204",
+            "vehicleKey": "il-mot-siri:6:47169204",
+            "operatorRef": "6",
+            "tripId": "585810321_191026",
+            "routeId": "1253",
+            "line": "5",
+            "lat": 32.706188,
+            "lon": 35.31195,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:42:10.000Z",
+            "sourceResponseAt": "2026-10-19T19:42:25.000Z",
+            "positionReportedAt": "2026-10-19T19:42:10.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:42:25.399Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 5219.726497867328,
+            "positionDistanceFromRouteMeters": 7.133183255207182,
+            "reportedArrivalAt": "2026-10-19T19:51:00.000Z",
+            "vehicle_ref": "47169204",
+            "observed_at": "2026-10-19T19:42:10.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          }
+        ]
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:42:47.4655750Z",
+      "label": "PUBLIC REAL OPEN BUS SOURCE REFRESH",
+      "data": {
+        "before": {
+          "id": "6:8126084",
+          "at": "2026-10-19T19:41:57.000Z",
+          "lat": 32.699432,
+          "lon": 35.316619
+        },
+        "after": {
+          "id": "6:8126084",
+          "at": "2026-10-19T19:41:57.000Z",
+          "lat": 32.699432,
+          "lon": 35.316619,
+          "open": true,
+          "samePopup": true,
+          "sameReport": true,
+          "attached": true,
+          "expanded": true
+        },
+        "positionChanged": false,
+        "clockChanged": false
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:42:48.0183770Z",
+      "label": "PUBLIC REAL BUS ROUTE FOCUS",
+      "data": {
+        "filter": {
+          "line": "3",
+          "routeId": "34106",
+          "operatorRef": "6"
+        },
+        "shown": 1,
+        "allMatch": true
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:43:34.9538904Z",
+      "label": "PUBLIC REAL COLORED ARRIVALS",
+      "data": {
+        "stop": "53994",
+        "error": null,
+        "arrivals": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "1253",
+            "line": "5",
+            "stopCode": "53994",
+            "operatorRef": "6",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "47169204",
+            "vehicleKey": "il-mot-siri:6:47169204",
+            "tripId": "585810321_191026",
+            "sourceObservedAt": "2026-10-19T19:43:15.000Z",
+            "sourceResponseAt": "2026-10-19T19:43:34.000Z",
+            "retrievedAt": "2026-10-19T19:43:34.936Z",
+            "sourceAgeSeconds": 19.936,
+            "reportedArrivalAt": "2026-10-19T19:51:00.000Z",
+            "unverifiedArrivalAt": null,
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-19T19:30:00.000Z",
+            "realtime": true,
+            "etaKind": "reported-live",
+            "confidence": "source-fresh-route-verified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "minutes": 7.4177333333333335
+          }
+        ],
+        "frameAt": "2026-10-19T19:43:34.000Z",
+        "levels": [
+          {
+            "level": "fresh",
+            "label": "עדכון טרי",
+            "color": "rgb(24, 112, 68)",
+            "minutes": "8"
+          }
+        ]
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:43:35.7289838Z",
+      "label": "PUBLIC REAL TRAFFIC STATUS",
+      "data": {
+        "available": false,
+        "connected": true,
+        "provider": "TomTom",
+        "providerAPI": "classic",
+        "state": "coverage-unavailable",
+        "coverageCountry": "IL",
+        "clockType": "provider-response",
+        "maxAgeSeconds": 180
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.5280857Z",
+      "label": "REAL TOMTOM PROBE",
+      "data": {
+        "provider": "classic",
+        "city": "tel-aviv",
+        "status": 200,
+        "classification": "real provider diagnostic; not an active map layer",
+        "fresh": true,
+        "width": 256,
+        "height": 256,
+        "opaquePixels": 0,
+        "coloredPixels": 0,
+        "redPixels": 0,
+        "orangePixels": 0,
+        "providerOriginatedAt": "2026-10-19T19:44:03.000Z",
+        "sourceAge": "0"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.5978837Z",
+      "label": "REAL TOMTOM PROBE",
+      "data": {
+        "provider": "classic",
+        "city": "jerusalem",
+        "status": 200,
+        "classification": "real provider diagnostic; not an active map layer",
+        "fresh": true,
+        "width": 256,
+        "height": 256,
+        "opaquePixels": 0,
+        "coloredPixels": 0,
+        "redPixels": 0,
+        "orangePixels": 0,
+        "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+        "sourceAge": "0"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.6500791Z",
+      "label": "REAL TOMTOM PROBE",
+      "data": {
+        "provider": "classic",
+        "city": "haifa",
+        "status": 200,
+        "classification": "real provider diagnostic; not an active map layer",
+        "fresh": true,
+        "width": 256,
+        "height": 256,
+        "opaquePixels": 0,
+        "coloredPixels": 0,
+        "redPixels": 0,
+        "orangePixels": 0,
+        "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+        "sourceAge": "0"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.7252632Z",
+      "label": "REAL TOMTOM PROBE",
+      "data": {
+        "provider": "orbis-v2",
+        "city": "tel-aviv",
+        "status": 200,
+        "classification": "real provider diagnostic; not an active map layer",
+        "fresh": true,
+        "width": 256,
+        "height": 256,
+        "opaquePixels": 0,
+        "coloredPixels": 0,
+        "redPixels": 0,
+        "orangePixels": 0,
+        "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+        "sourceAge": "0"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.7827457Z",
+      "label": "REAL TOMTOM PROBE",
+      "data": {
+        "provider": "orbis-v2",
+        "city": "jerusalem",
+        "status": 200,
+        "classification": "real provider diagnostic; not an active map layer",
+        "fresh": true,
+        "width": 256,
+        "height": 256,
+        "opaquePixels": 0,
+        "coloredPixels": 0,
+        "redPixels": 0,
+        "orangePixels": 0,
+        "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+        "sourceAge": "0"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.8724559Z",
+      "label": "REAL TOMTOM PROBE",
+      "data": {
+        "provider": "orbis-v2",
+        "city": "haifa",
+        "status": 200,
+        "classification": "real provider diagnostic; not an active map layer",
+        "fresh": true,
+        "width": 256,
+        "height": 256,
+        "opaquePixels": 0,
+        "coloredPixels": 0,
+        "redPixels": 0,
+        "orangePixels": 0,
+        "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+        "sourceAge": "0"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:44:04.8983349Z",
+      "label": "REAL TOMTOM PROBE SUMMARY",
+      "data": {
+        "activeMapTraffic": false,
+        "connected": true,
+        "positiveSamples": [],
+        "clockType": "provider-response; road measurement time unavailable"
+      }
+    }
+  ],
+  "mixedFrames": [
+    {
+      "testAt": "2026-10-19T19:43:34.5698544Z",
+      "label": "MIXED GTFS VERSION REGRESSION: simulated old index / actual source vehicles",
+      "data": {
+        "labels": [
+          "7"
+        ],
+        "lineRequests": 54
+      }
+    }
+  ],
+  "sourceAudit": {
+    "tomtom": {
+      "testedApis": [
+        "classic",
+        "orbis-v2"
+      ],
+      "cities": [
+        "tel-aviv",
+        "jerusalem",
+        "haifa"
+      ],
+      "sampleCount": 6,
+      "nonemptySamples": 0,
+      "trafficActuallyActive": false,
+      "samples": [
+        {
+          "provider": "classic",
+          "city": "tel-aviv",
+          "status": 200,
+          "classification": "real provider diagnostic; not an active map layer",
+          "fresh": true,
+          "width": 256,
+          "height": 256,
+          "opaquePixels": 0,
+          "coloredPixels": 0,
+          "redPixels": 0,
+          "orangePixels": 0,
+          "providerOriginatedAt": "2026-10-19T19:44:03.000Z",
+          "sourceAge": "0"
+        },
+        {
+          "provider": "classic",
+          "city": "jerusalem",
+          "status": 200,
+          "classification": "real provider diagnostic; not an active map layer",
+          "fresh": true,
+          "width": 256,
+          "height": 256,
+          "opaquePixels": 0,
+          "coloredPixels": 0,
+          "redPixels": 0,
+          "orangePixels": 0,
+          "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+          "sourceAge": "0"
+        },
+        {
+          "provider": "classic",
+          "city": "haifa",
+          "status": 200,
+          "classification": "real provider diagnostic; not an active map layer",
+          "fresh": true,
+          "width": 256,
+          "height": 256,
+          "opaquePixels": 0,
+          "coloredPixels": 0,
+          "redPixels": 0,
+          "orangePixels": 0,
+          "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+          "sourceAge": "0"
+        },
+        {
+          "provider": "orbis-v2",
+          "city": "tel-aviv",
+          "status": 200,
+          "classification": "real provider diagnostic; not an active map layer",
+          "fresh": true,
+          "width": 256,
+          "height": 256,
+          "opaquePixels": 0,
+          "coloredPixels": 0,
+          "redPixels": 0,
+          "orangePixels": 0,
+          "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+          "sourceAge": "0"
+        },
+        {
+          "provider": "orbis-v2",
+          "city": "jerusalem",
+          "status": 200,
+          "classification": "real provider diagnostic; not an active map layer",
+          "fresh": true,
+          "width": 256,
+          "height": 256,
+          "opaquePixels": 0,
+          "coloredPixels": 0,
+          "redPixels": 0,
+          "orangePixels": 0,
+          "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+          "sourceAge": "0"
+        },
+        {
+          "provider": "orbis-v2",
+          "city": "haifa",
+          "status": 200,
+          "classification": "real provider diagnostic; not an active map layer",
+          "fresh": true,
+          "width": 256,
+          "height": 256,
+          "opaquePixels": 0,
+          "coloredPixels": 0,
+          "redPixels": 0,
+          "orangePixels": 0,
+          "providerOriginatedAt": "2026-10-19T19:44:04.000Z",
+          "sourceAge": "0"
+        }
+      ]
+    },
+    "municipal": {
+      "run": 39313674725,
+      "job": 118269495948,
+      "evidenceFile": "DEV-9.4.1-city-audit.json",
+      "active": false,
+      "reason": "future updateDate without verified timezone mapping; pubMillis not assumed to be last measurement",
+      "rawClockValuesPreserved": true
+    }
+  },
+  "syntheticChecks": [
+    "partial station observations retained without missing ETAs or renewed source clocks",
+    "expiry and future clock rejection",
+    "operator and catalog isolation",
+    "loading Enter does not reload page",
+    "source failures and catalog recovery",
+    "moving popup and focused action retention",
+    "320x568 and 844x390 geometry",
+    "bounded free-only diagnostic request guards"
+  ],
+  "actualSelectedBusRefresh": {
+    "vehicleKey": "6:8126084",
+    "samePopup": true,
+    "sameReport": true,
+    "expanded": true,
+    "attached": true,
+    "actualPositionChanged": false,
+    "actualClockChanged": false,
+    "movementVerifiedBy": "synthetic tests only"
+  },
+  "artifact": {
+    "id": 12216912803,
+    "size": 16779286,
+    "digest": "sha256:89aae2274d4525f54fdcb0b43348c0b9bc3aa4b886bbaeab1f4d6e82610d6731",
+    "localDownloadVerified": false,
+    "url": "https://github.com/j-h-h/abc/actions/runs/39313105874/artifacts/12216912803"
+  },
+  "nightContinuation": {
+    "registered": true,
+    "enabled": true,
+    "timezone": "Asia/Jerusalem",
+    "schedule": "BEGIN:VEVENT\nDTSTART;TZID=Asia/Jerusalem:20261019T230000\nRRULE:FREQ=HOURLY;COUNT=8\nEND:VEVENT",
+    "otherAutomationsModified": false
+  },
+  "workReadOnly": {
+    "head": "d7a2cc3dcff42332d6e5238bc937236b2c02885a",
+    "files": [
+      "WORK_LIVE_DATA_AND_TRAFFIC.md",
+      "backend/live-data/INTEGRATION.md",
+      "backend/live-data/README.md",
+      "backend/live-data/VALIDATION.md",
+      "backend/live-data/lib/traffic.mjs"
+    ],
+    "liveTrafficStillRequiresProviderAuthorization": true,
+    "modified": false
+  },
+  "historyTrafficETAActive": false,
+  "billingEnabled": false,
+  "secretsExposed": false
+}
