@@ -31,13 +31,16 @@
  }
  const fold=value=>String(value||'').normalize('NFKD').replace(/[\u0591-\u05c7]/g,'').toLowerCase().replace(/["'׳״/.,-]/g,' ').replace(/\s+/g,' ').trim();
  function stopSearch(stops,query,center=null,limit=8){const q=fold(query),tokens=q.split(' ');if(!q)return[];return stops.filter(s=>s.code===q||tokens.every(t=>s.search.includes(t))).map(s=>({...s,rank:s.code===q?-1:0,distance:center?Math.hypot((s.lon-center.lon)*Math.cos(center.lat*Math.PI/180),s.lat-center.lat):0})).sort((a,b)=>a.rank-b.rank||a.distance-b.distance||a.code.localeCompare(b.code)).slice(0,limit);}
- function routeMeta(vehicle,routes=[],index={}){return routes.find(r=>String(r.routeId)===String(vehicle.routeId)&&String(r.operatorRef)===String(vehicle.operatorRef)&&(!vehicle.line||String(r.line)===String(vehicle.line)))||(()=>{const r=index[String(vehicle.operatorRef)+':'+String(vehicle.routeId)];return r&&(!vehicle.line||String(r.line)===String(vehicle.line))?r:null})()||null;}
+ function routeMeta(vehicle,routes=[],index={}){const matches=routes.filter(r=>String(r.routeId)===String(vehicle.routeId)&&String(r.operatorRef)===String(vehicle.operatorRef)&&(!vehicle.line||String(r.line)===String(vehicle.line)));if(matches.length){const lines=new Set(matches.map(r=>String(r.line||''))),destinations=new Set(matches.map(r=>typeof r.headsign==='string'&&r.headsign.trim()?r.headsign.trim():null));if(lines.size!==1)return null;return {...matches[0],headsign:destinations.size===1?[...destinations][0]:null,ambiguousDestination:destinations.size!==1};}const r=index[String(vehicle.operatorRef)+':'+String(vehicle.routeId)];return r&&(!vehicle.line||String(r.line)===String(vehicle.line))?r:null;}
+ function lineSearch(lines,query,limit=6){const q=fold(query).replace(/^קו\s*/,'');if(!/^\d{1,4}[א-תa-z]?$/.test(q))return[];return (lines||[]).map(String).filter(line=>fold(line).startsWith(q)).sort((a,b)=>(fold(a)===q?-1:fold(b)===q?1:a.localeCompare(b,'he',{numeric:true}))).slice(0,limit);}
+ function arrivalKey(a){return JSON.stringify([String(a.operatorRef||''),String(a.routeId||''),String(a.vehicleRef||''),String(a.tripId||''),a.vehicleRef||a.tripId?'':String(a.reportedArrivalAt||'')]);}
 
- function searchHistory(rows){const out=[],keys=new Set();for(const r of Array.isArray(rows)?rows:[]){if(!r||!['place','stop','query'].includes(r.kind)||typeof r.label!=='string'||!r.label.trim()||r.label.length>200)continue;
+ function searchHistory(rows){const out=[],keys=new Set();for(const r of Array.isArray(rows)?rows:[]){if(!r||!['place','stop','query','route'].includes(r.kind)||typeof r.label!=='string'||!r.label.trim()||r.label.length>200)continue;
   const item={kind:r.kind,label:r.label.trim()};if(r.kind==='place'){if(!validCoord(r.lat,r.lon))continue;item.lat=r.lat;item.lon=r.lon;}if(r.kind==='stop'){if(!/^\d{3,7}$/.test(String(r.code)))continue;item.code=String(r.code);}
-  const key=r.kind+':'+(r.kind==='stop'?item.code:fold(item.label));if(keys.has(key))continue;keys.add(key);out.push(item);if(out.length===8)break;
+  if(r.kind==='route'){if(!/^\d{1,4}[א-תA-Za-z]?$/.test(String(r.line))||!/^\d{1,12}$/.test(String(r.routeId))||!/^\d{1,12}$/.test(String(r.operatorRef)))continue;item.line=String(r.line);item.routeId=String(r.routeId);item.operatorRef=String(r.operatorRef);}
+  const key=r.kind+':'+(r.kind==='stop'?item.code:r.kind==='route'?item.operatorRef+':'+item.routeId:fold(item.label));if(keys.has(key))continue;keys.add(key);out.push(item);if(out.length===8)break;
  }return out;}
  function rememberSearch(history,item){return searchHistory([item,...(history||[])]);}
 
- root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta,arrivalUpdate,searchHistory,rememberSearch};
+ root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta,lineSearch,arrivalKey,arrivalUpdate,searchHistory,rememberSearch};
 })(typeof window!=='undefined'?window:globalThis);

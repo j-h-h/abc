@@ -39,5 +39,17 @@ assert.equal(N.arrivalUpdate({...update(5),sourceResponseAt:clock(90)},{now}).le
 assert.equal(N.arrivalUpdate(update(-31),{now}).level,'missing');assert.equal(N.arrivalUpdate({}, {now}).level,'missing');
 assert.equal(N.mergeArea(frame([vehicle]),frame([{...newer,lon:35.2}]),bbox,{now,followedId:vehicle.operatorRef+':'+vehicle.vehicleRef}).vehicles[0].lon,35.2,'A selected fresh vehicle is retained when its new report leaves the query view');
 assert.equal(N.mergeArea(frame([vehicle]),frame([]),bbox,{now:now+181000,followedId:vehicle.operatorRef+':'+vehicle.vehicleRef}).vehicles.length,0,'Following never extends the original source lifetime');
+
+assert.deepEqual(Array.from(N.lineSearch(['72','5','50','10א','10','73'],'5')),['5','50']);
+assert.deepEqual(Array.from(N.lineSearch(['10א','10','101'],'קו 10א')),['10א']);
+assert.equal(N.lineSearch(['72'],'כתובת').length,0);
+assert.equal(N.routeMeta(vehicle,[destinations[0],{...destinations[0],headsign:'יעד סותר'}]).headsign,null,'Conflicting variants cannot guess a destination');
+assert.equal(N.routeMeta({...vehicle,line:'72'},[{...destinations[0],line:'73'}]),null);
+const savedRoute={kind:'route',label:'קו 72 · יעד',line:'72',operatorRef:'16',routeId:'34120'};
+assert.equal(N.rememberSearch([savedRoute],{...savedRoute,label:'קו 72 · מעודכן'}).length,1);
+assert.equal(N.searchHistory([{...savedRoute,operatorRef:'../secret'}, {...savedRoute,routeId:'bad'}, {...savedRoute,line:'קו 72'}]).length,0);
+assert.equal(N.searchHistory([savedRoute,{...savedRoute,operatorRef:'3'}]).length,2,'History keeps distinct operator routes');
+assert.equal(N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'t',reportedArrivalAt:clock(0)}),N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'t',reportedArrivalAt:clock(60)}),'ETA refresh preserves vehicle/trip row identity');
+assert.notEqual(N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'t'}),N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'other'}));
 console.log('PASS: national identity and clocks, future/archive rejection, all-line station matching, countrywide search, viewport isolation and bounded APIs');
 })().catch(e=>{console.error(e);process.exitCode=1});
