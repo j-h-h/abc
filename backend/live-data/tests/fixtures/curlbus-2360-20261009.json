@@ -1,0 +1,529 @@
+{
+  "capturedAt": "2026-10-09T10:36:55.043Z",
+  "sourceUrl": "https://curlbus.app/2360",
+  "payload": {
+    "errors": null,
+    "timestamp": "2026-10-09T13:36:54+03:00",
+    "visits": {
+      "2360": [
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 13:36:20+03:00",
+          "stop_code": "2360",
+          "line_id": "12421",
+          "route_id": "12421",
+          "direction_id": "3",
+          "line_name": "30",
+          "operator_id": "3",
+          "destination_id": "2721",
+          "vehicle_ref": "7770469",
+          "eta": "2026-10-09 13:37:00+03:00",
+          "trip_id": "58985443_091026",
+          "status": null,
+          "departed": "2026-10-09 13:30:00+03:00",
+          "location": {
+            "lat": "31.73156",
+            "lon": "35.185951"
+          },
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2721",
+                "name": {
+                  "AR": "محطة طرفية غيلو/همرغليت",
+                  "EN": "Gilo Terminus/HaMargalit",
+                  "HE": "מסוף גילה/המרגלית"
+                },
+                "address": {
+                  "street": "המרגלית",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.739311,
+                  "lon": 35.181218
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "אגד",
+                  "EN": "Egged"
+                },
+                "url": "http://www.egged.co.il"
+              },
+              "headsign": {
+                "AR": "چيلو",
+                "EN": "Gilo",
+                "HE": "גילה"
+              }
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 13:36:30+03:00",
+          "stop_code": "2360",
+          "line_id": "34120",
+          "route_id": "34120",
+          "direction_id": "2",
+          "line_name": "72",
+          "operator_id": "16",
+          "destination_id": "2599",
+          "vehicle_ref": "31625601",
+          "eta": "2026-10-09 13:37:00+03:00",
+          "trip_id": "584954644_091026",
+          "status": null,
+          "departed": "2026-10-09 13:34:00+03:00",
+          "location": {
+            "lat": "31.732505",
+            "lon": "35.184619"
+          },
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2599",
+                "name": {
+                  "AR": "ميرسكي/مينتس",
+                  "EN": "Mirsky/Mintz",
+                  "HE": "מירסקי/מינץ"
+                },
+                "address": {
+                  "street": "יצחק מירסקי",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.821159,
+                  "lon": 35.194612
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": {
+                "AR": "رموت",
+                "EN": "Ramot",
+                "HE": "רמות"
+              }
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 13:36:28+03:00",
+          "stop_code": "2360",
+          "line_id": "33244",
+          "route_id": "33244",
+          "direction_id": "3",
+          "line_name": "531",
+          "operator_id": "16",
+          "destination_id": "2535",
+          "vehicle_ref": "70138502",
+          "eta": "2026-10-09 13:39:00+03:00",
+          "trip_id": "584864940_091026",
+          "status": null,
+          "departed": "2026-10-09 13:36:00+03:00",
+          "location": {
+            "lat": "31.733835",
+            "lon": "35.181941"
+          },
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2535",
+                "name": {
+                  "AR": "محطة طرفية غيلو/همرغليت",
+                  "EN": "Gilo Terminus/HaMargalit",
+                  "HE": "מסוף גילה/המרגלית"
+                },
+                "address": {
+                  "street": "",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.739643,
+                  "lon": 35.181099
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": {
+                "AR": "چيلو",
+                "EN": "Gilo",
+                "HE": "גילה"
+              }
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 07:26:17+03:00",
+          "stop_code": "2360",
+          "line_id": "33252",
+          "route_id": "33252",
+          "direction_id": "3",
+          "line_name": "92",
+          "operator_id": "16",
+          "destination_id": "2535",
+          "vehicle_ref": "70144002",
+          "eta": "2026-10-09 13:49:00+03:00",
+          "trip_id": "585031613_091026",
+          "status": null,
+          "departed": "2026-10-09 13:45:00+03:00",
+          "location": null,
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2535",
+                "name": {
+                  "AR": "محطة طرفية غيلو/همرغليت",
+                  "EN": "Gilo Terminus/HaMargalit",
+                  "HE": "מסוף גילה/המרגלית"
+                },
+                "address": {
+                  "street": "",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.739643,
+                  "lon": 35.181099
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": {
+                "AR": "چيلو",
+                "EN": "Gilo",
+                "HE": "גילה"
+              }
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 04:03:44+03:00",
+          "stop_code": "2360",
+          "line_id": "34120",
+          "route_id": "34120",
+          "direction_id": "2",
+          "line_name": "72",
+          "operator_id": "16",
+          "destination_id": "2599",
+          "vehicle_ref": "44891302",
+          "eta": "2026-10-09 13:50:00+03:00",
+          "trip_id": "584954645_091026",
+          "status": null,
+          "departed": "2026-10-09 13:46:00+03:00",
+          "location": null,
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2599",
+                "name": {
+                  "AR": "ميرسكي/مينتس",
+                  "EN": "Mirsky/Mintz",
+                  "HE": "מירסקי/מינץ"
+                },
+                "address": {
+                  "street": "יצחק מירסקי",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.821159,
+                  "lon": 35.194612
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": {
+                "AR": "رموت",
+                "EN": "Ramot",
+                "HE": "רמות"
+              }
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 04:03:38+03:00",
+          "stop_code": "2360",
+          "line_id": "33244",
+          "route_id": "33244",
+          "direction_id": "3",
+          "line_name": "531",
+          "operator_id": "16",
+          "destination_id": "2535",
+          "vehicle_ref": "31621501",
+          "eta": "2026-10-09 13:51:00+03:00",
+          "trip_id": "584864941_091026",
+          "status": null,
+          "departed": "2026-10-09 13:48:00+03:00",
+          "location": null,
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2535",
+                "name": {
+                  "AR": "محطة طرفية غيلو/همرغليت",
+                  "EN": "Gilo Terminus/HaMargalit",
+                  "HE": "מסוף גילה/המרגלית"
+                },
+                "address": {
+                  "street": "",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.739643,
+                  "lon": 35.181099
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": {
+                "AR": "چيلو",
+                "EN": "Gilo",
+                "HE": "גילה"
+              }
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 04:03:38+03:00",
+          "stop_code": "2360",
+          "line_id": "33244",
+          "route_id": "33244",
+          "direction_id": "3",
+          "line_name": "531",
+          "operator_id": "16",
+          "destination_id": "2535",
+          "vehicle_ref": "31618601",
+          "eta": "2026-10-09 14:03:00+03:00",
+          "trip_id": "584864942_091026",
+          "status": null,
+          "departed": "2026-10-09 14:00:00+03:00",
+          "location": null,
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2535",
+                "name": {
+                  "AR": "محطة طرفية غيلو/همرغليت",
+                  "EN": "Gilo Terminus/HaMargalit",
+                  "HE": "מסוף גילה/המרגלית"
+                },
+                "address": {
+                  "street": "",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.739643,
+                  "lon": 35.181099
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": null
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 05:54:43+03:00",
+          "stop_code": "2360",
+          "line_id": "33252",
+          "route_id": "33252",
+          "direction_id": "3",
+          "line_name": "92",
+          "operator_id": "16",
+          "destination_id": "2535",
+          "vehicle_ref": "70143802",
+          "eta": "2026-10-09 14:03:00+03:00",
+          "trip_id": "584867337_091026",
+          "status": null,
+          "departed": "2026-10-09 14:00:00+03:00",
+          "location": null,
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2535",
+                "name": {
+                  "AR": "محطة طرفية غيلو/همرغليت",
+                  "EN": "Gilo Terminus/HaMargalit",
+                  "HE": "מסוף גילה/המרגלית"
+                },
+                "address": {
+                  "street": "",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.739643,
+                  "lon": 35.181099
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": null
+            }
+          }
+        },
+        {
+          "producer": "SIRI",
+          "timestamp": "2026-10-09 05:38:14+03:00",
+          "stop_code": "2360",
+          "line_id": "34120",
+          "route_id": "34120",
+          "direction_id": "2",
+          "line_name": "72",
+          "operator_id": "16",
+          "destination_id": "2599",
+          "vehicle_ref": "44981502",
+          "eta": "2026-10-09 14:03:00+03:00",
+          "trip_id": "584954646_091026",
+          "status": null,
+          "departed": "2026-10-09 13:58:00+03:00",
+          "location": null,
+          "static_info": {
+            "route": {
+              "destination": {
+                "code": "2599",
+                "name": {
+                  "AR": "ميرسكي/مينتس",
+                  "EN": "Mirsky/Mintz",
+                  "HE": "מירסקי/מינץ"
+                },
+                "address": {
+                  "street": "יצחק מירסקי",
+                  "city": "Jerusalem",
+                  "platform": "",
+                  "floor": "",
+                  "city_multilingual": {
+                    "HE": "ירושלים",
+                    "EN": "Jerusalem"
+                  }
+                },
+                "location": {
+                  "lat": 31.821159,
+                  "lon": 35.194612
+                }
+              },
+              "agency": {
+                "name": {
+                  "HE": "סופרבוס",
+                  "EN": "Superbus"
+                },
+                "url": "http://www.superbus.co.il"
+              },
+              "headsign": {
+                "AR": "رموت",
+                "EN": "Ramot",
+                "HE": "רמות"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "stop_info": {
+      "name": {
+        "AR": "يفه روم/تسڤيا ويتسحاك",
+        "EN": "Yefe Rom/Tsviya VeYitshak",
+        "HE": "יפה רום/צביה ויצחק"
+      },
+      "address": {
+        "street": "יפה רום 91",
+        "city": "Jerusalem",
+        "platform": "",
+        "floor": "",
+        "city_multilingual": {
+          "HE": "ירושלים",
+          "EN": "Jerusalem"
+        }
+      },
+      "location": {
+        "lat": 31.733251,
+        "lon": 35.187968
+      }
+    }
+  }
+}
