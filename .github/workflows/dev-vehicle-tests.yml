@@ -84,3 +84,22 @@ jobs:
           name: dev-public-browser-${{ github.sha }}
           path: dev-public-*.png
           if-no-files-found: ignore
+
+  city-source-audit:
+    if: contains(github.event.head_commit.message, '[city-audit]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/checkout@v4
+      - name: Audit the real municipal Waze source without activating traffic
+        run: node tests/city_traffic_audit.cjs
+      - name: Save municipal source audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: city-source-audit-${{ github.sha }}
+          path: city-traffic-audit.json
