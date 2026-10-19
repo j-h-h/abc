@@ -1,0 +1,8 @@
+{
+  "owner": "manual-20261019T1924Z",
+  "status": "active",
+  "startedAt": "2026-10-19T19:26:05.041Z",
+  "expiresAt": "2026-10-19T20:06:05.041Z",
+  "branch": "dev/vehicle-history-map-20261009",
+  "scope": "DEV-9.4.1: route selection, partial station continuity and real traffic diagnostics"
+}
