@@ -1,0 +1,600 @@
+{
+  "schemaVersion": 1,
+  "release": "DEV-9.4.0",
+  "branch": "dev/vehicle-history-map-20261009",
+  "runtimeCommit": "707ca7f4eedf9d5d7569f585d59b84deab0c87bd",
+  "canonicalUrl": "https://eifo-batuach-dev.vercel.app/",
+  "deployment": {
+    "id": "dpl_2s7Mn4bgbEucPQGvKhRXhivsTuEL",
+    "projectId": "prj_MOG4CqCbrnPDf3tTUKKdDwOtoXGJ",
+    "project": "eifo-batuach-dev",
+    "state": "READY",
+    "aliases": [
+      "eifo-batuach-dev.vercel.app",
+      "eifo-batuach-dev-s-0522.vercel.app"
+    ]
+  },
+  "gtfs": {
+    "version": "3cd650a2ac9d1a8c",
+    "generatedAt": "2026-10-19T08:01:20+00:00",
+    "lines": 910,
+    "routes": 6726
+  },
+  "preDeploymentCI": {
+    "runId": 39308086233,
+    "jobId": 118250244666,
+    "conclusion": "success"
+  },
+  "postDeploymentCI": {
+    "runId": 39308528678,
+    "headSha": "959af5a5ebf75eb09e1b909d0afab1af04e85505",
+    "publicJob": 118251779320,
+    "verifyJob": 118251779604,
+    "conclusion": "success",
+    "completedAt": "2026-10-19T19:11:30Z"
+  },
+  "realSources": [
+    {
+      "testAt": "2026-10-19T19:09:54.2519041Z",
+      "label": "REAL GTFS LINE SEARCH AND ORDERED STOPS",
+      "data": {
+        "line": "72",
+        "routeId": "9783",
+        "operatorRef": "5",
+        "code": "34401"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:09:55.0833986Z",
+      "label": "REAL GTFS LINE SEARCH AND ORDERED STOPS",
+      "data": {
+        "line": "5",
+        "routeId": "2259",
+        "operatorRef": "5",
+        "code": "21139"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:09:55.9167320Z",
+      "label": "REAL GTFS LINE SEARCH AND ORDERED STOPS",
+      "data": {
+        "line": "10א",
+        "routeId": "2153",
+        "operatorRef": "37",
+        "code": "39267"
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:09:56.3486750Z",
+      "label": "REAL SHORT STOP 72",
+      "data": {
+        "code": "72",
+        "error": null,
+        "source": null
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:09:56.9887879Z",
+      "label": "REAL NATIONAL STATION",
+      "data": {
+        "code": "23014",
+        "arrivals": 11,
+        "vehicles": 9,
+        "partial": false
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:09:57.7692825Z",
+      "label": "PUBLIC REAL DEPLOYMENT",
+      "data": {
+        "version": "DEV-9.4.0",
+        "branch": "dev/vehicle-history-map-20261009",
+        "gtfsVersion": "3cd650a2ac9d1a8c",
+        "gtfsGeneratedAt": "2026-10-19T08:01:20+00:00",
+        "routeDataOrigin": "https://j-h-h.github.io/abc/data/",
+        "lines": 910,
+        "routes": 6726
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:09:59.3106856Z",
+      "label": "PUBLIC REAL AREA מרכז חורב חיפה",
+      "data": {
+        "error": null,
+        "rawCount": 3,
+        "shown": 3,
+        "source": "nearby-stop-reports",
+        "vehicles": [
+          {
+            "id": "3:23299702",
+            "vehicleRef": "23299702",
+            "vehicleKey": "il-mot-siri:3:23299702",
+            "operatorRef": "3",
+            "tripId": "25310418_191026",
+            "routeId": "3709",
+            "line": "28",
+            "lat": 32.79174,
+            "lon": 34.986298,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:09:17.000Z",
+            "sourceResponseAt": "2026-10-19T19:09:17.000Z",
+            "positionReportedAt": "2026-10-19T19:09:17.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:09:58.831Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 9385.777089844223,
+            "positionDistanceFromRouteMeters": 2.328732485892218,
+            "reportedArrivalAt": "2026-10-19T19:11:00.000Z",
+            "vehicle_ref": "23299702",
+            "observed_at": "2026-10-19T19:09:17.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          },
+          {
+            "id": "3:23399202",
+            "vehicleRef": "23399202",
+            "vehicleKey": "il-mot-siri:3:23399202",
+            "operatorRef": "3",
+            "tripId": "17026071_191026",
+            "routeId": "15763",
+            "line": "136",
+            "lat": 32.791561,
+            "lon": 34.986404,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:09:25.000Z",
+            "sourceResponseAt": "2026-10-19T19:09:17.000Z",
+            "positionReportedAt": "2026-10-19T19:09:25.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:09:58.831Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 7715.665625514581,
+            "positionDistanceFromRouteMeters": 3.960101430888826,
+            "reportedArrivalAt": "2026-10-19T19:12:00.000Z",
+            "vehicle_ref": "23399202",
+            "observed_at": "2026-10-19T19:09:25.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          },
+          {
+            "id": "3:23354602",
+            "vehicleRef": "23354602",
+            "vehicleKey": "il-mot-siri:3:23354602",
+            "operatorRef": "3",
+            "tripId": "3886037_191026",
+            "routeId": "4134",
+            "line": "123",
+            "lat": 32.778179,
+            "lon": 34.986721,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:09:00.000Z",
+            "sourceResponseAt": "2026-10-19T19:09:17.000Z",
+            "positionReportedAt": "2026-10-19T19:09:00.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:09:58.831Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 4736.926930976181,
+            "positionDistanceFromRouteMeters": 1.0048260563889508,
+            "reportedArrivalAt": "2026-10-19T19:13:00.000Z",
+            "vehicle_ref": "23354602",
+            "observed_at": "2026-10-19T19:09:00.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          }
+        ]
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:10:00.5664228Z",
+      "label": "PUBLIC REAL BUS ROUTE FOCUS",
+      "data": {
+        "filter": {
+          "line": "136",
+          "routeId": "15763",
+          "operatorRef": "3"
+        },
+        "shown": 1,
+        "allMatch": true
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:10:06.7681021Z",
+      "label": "PUBLIC REAL AREA נצרת",
+      "data": {
+        "error": null,
+        "rawCount": 9,
+        "shown": 9,
+        "source": "nearby-stop-reports",
+        "vehicles": [
+          {
+            "id": "6:8125684",
+            "vehicleRef": "8125684",
+            "vehicleKey": "il-mot-siri:6:8125684",
+            "operatorRef": "6",
+            "tripId": "585763842_191026",
+            "routeId": "17423",
+            "line": "34",
+            "lat": 32.698459,
+            "lon": 35.311882,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:09:43.000Z",
+            "sourceResponseAt": "2026-10-19T19:10:06.000Z",
+            "positionReportedAt": "2026-10-19T19:09:43.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:10:06.713Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 5235.683683358888,
+            "positionDistanceFromRouteMeters": 0.8216953021069696,
+            "reportedArrivalAt": "2026-10-19T19:13:00.000Z",
+            "vehicle_ref": "8125684",
+            "observed_at": "2026-10-19T19:09:43.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          },
+          {
+            "id": "6:37832703",
+            "vehicleRef": "37832703",
+            "vehicleKey": "il-mot-siri:6:37832703",
+            "operatorRef": "6",
+            "tripId": "23399662_191026",
+            "routeId": "17685",
+            "line": "2",
+            "lat": 32.697776,
+            "lon": 35.315059,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:09:50.000Z",
+            "sourceResponseAt": "2026-10-19T19:10:06.000Z",
+            "positionReportedAt": "2026-10-19T19:09:50.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:10:06.713Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 3754.509149023226,
+            "positionDistanceFromRouteMeters": 0.6446237262746294,
+            "reportedArrivalAt": "2026-10-19T19:13:00.000Z",
+            "vehicle_ref": "37832703",
+            "observed_at": "2026-10-19T19:09:50.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          },
+          {
+            "id": "6:31619301",
+            "vehicleRef": "31619301",
+            "vehicleKey": "il-mot-siri:6:31619301",
+            "operatorRef": "6",
+            "tripId": "585764240_191026",
+            "routeId": "40925",
+            "line": "40",
+            "lat": 32.701232,
+            "lon": 35.311317,
+            "bearing": null,
+            "speedKmh": null,
+            "source": "mot-siri-via-curlbus",
+            "sourceObservedAt": "2026-10-19T19:09:57.000Z",
+            "sourceResponseAt": "2026-10-19T19:10:06.000Z",
+            "positionReportedAt": "2026-10-19T19:09:57.000Z",
+            "gpsMeasuredAt": null,
+            "gpsFreshnessVerified": false,
+            "clockType": "source-report",
+            "retrievedAt": "2026-10-19T19:10:06.713Z",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "positionRouteOffsetMeters": 4897.475961187742,
+            "positionDistanceFromRouteMeters": 5.75341623849863,
+            "reportedArrivalAt": "2026-10-19T19:13:00.000Z",
+            "vehicle_ref": "31619301",
+            "observed_at": "2026-10-19T19:09:57.000Z",
+            "associationStopCode": null,
+            "velocity": null,
+            "reportedSpeedKmh": null,
+            "speedUnit": null,
+            "speedEvidence": null,
+            "speedObservedAt": null
+          }
+        ]
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:10:29.5673910Z",
+      "label": "PUBLIC REAL OPEN BUS SOURCE REFRESH",
+      "data": {
+        "before": {
+          "id": "6:31613001",
+          "at": "2026-10-19T19:09:55.000Z",
+          "lat": 32.701362,
+          "lon": 35.321491
+        },
+        "after": {
+          "id": "6:31613001",
+          "at": "2026-10-19T19:09:55.000Z",
+          "lat": 32.701362,
+          "lon": 35.321491,
+          "open": true,
+          "samePopup": true,
+          "sameReport": true,
+          "attached": true,
+          "expanded": true
+        },
+        "positionChanged": false,
+        "clockChanged": false
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:10:29.9447410Z",
+      "label": "PUBLIC REAL BUS ROUTE FOCUS",
+      "data": {
+        "filter": {
+          "line": "36",
+          "routeId": "15354",
+          "operatorRef": "6"
+        },
+        "shown": 1,
+        "allMatch": true
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:10:57.3496300Z",
+      "label": "PUBLIC REAL COLORED ARRIVALS",
+      "data": {
+        "stop": "53994",
+        "error": null,
+        "arrivals": [
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "25549",
+            "line": "39",
+            "stopCode": "53994",
+            "operatorRef": "6",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "37830403",
+            "vehicleKey": "il-mot-siri:6:37830403",
+            "tripId": "57151665_191026",
+            "sourceObservedAt": "2026-10-19T19:10:34.000Z",
+            "sourceResponseAt": "2026-10-19T19:10:57.000Z",
+            "retrievedAt": "2026-10-19T19:10:57.296Z",
+            "sourceAgeSeconds": 23.296,
+            "reportedArrivalAt": "2026-10-19T19:17:00.000Z",
+            "unverifiedArrivalAt": null,
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-19T19:10:00.000Z",
+            "realtime": true,
+            "etaKind": "reported-live",
+            "confidence": "source-fresh-route-verified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "minutes": 6.045066666666667
+          },
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "1253",
+            "line": "5",
+            "stopCode": "53994",
+            "operatorRef": "6",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "47168004",
+            "vehicleKey": "il-mot-siri:6:47168004",
+            "tripId": "20720402_191026",
+            "sourceObservedAt": "2026-10-19T19:10:34.000Z",
+            "sourceResponseAt": "2026-10-19T19:10:57.000Z",
+            "retrievedAt": "2026-10-19T19:10:57.296Z",
+            "sourceAgeSeconds": 23.296,
+            "reportedArrivalAt": "2026-10-19T19:21:00.000Z",
+            "unverifiedArrivalAt": null,
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-19T19:00:00.000Z",
+            "realtime": true,
+            "etaKind": "reported-live",
+            "confidence": "source-fresh-route-verified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "minutes": 10.045066666666667
+          },
+          {
+            "source": "mot-siri-via-curlbus",
+            "routeId": "14023",
+            "line": "44",
+            "stopCode": "53994",
+            "operatorRef": "6",
+            "siriDirectionRef": "2",
+            "gtfsDirectionId": "1",
+            "directionVerified": true,
+            "directionEvidence": "exact-line-ref+operator+stop-sequence+destination",
+            "vehicleRef": "51439303",
+            "vehicleKey": "il-mot-siri:6:51439303",
+            "tripId": "585764105_191026",
+            "sourceObservedAt": "2026-10-19T19:10:00.000Z",
+            "sourceResponseAt": "2026-10-19T19:10:57.000Z",
+            "retrievedAt": "2026-10-19T19:10:57.296Z",
+            "sourceAgeSeconds": 57.296,
+            "reportedArrivalAt": "2026-10-19T19:23:00.000Z",
+            "unverifiedArrivalAt": null,
+            "scheduledArrivalAt": null,
+            "originAimedDepartureAt": "2026-10-19T19:10:00.000Z",
+            "realtime": true,
+            "etaKind": "reported-live",
+            "confidence": "source-fresh-route-verified",
+            "trafficAlreadyIncluded": "unknown-assume-possible",
+            "computedArrivalAt": null,
+            "appliedTrafficDelaySeconds": 0,
+            "minutes": 12.045066666666667
+          }
+        ],
+        "frameAt": "2026-10-19T19:10:57.000Z",
+        "levels": [
+          {
+            "level": "fresh",
+            "label": "עדכון טרי",
+            "color": "rgb(24, 112, 68)",
+            "minutes": "7"
+          },
+          {
+            "level": "fresh",
+            "label": "עדכון טרי",
+            "color": "rgb(24, 112, 68)",
+            "minutes": "11"
+          },
+          {
+            "level": "fresh",
+            "label": "עדכון טרי",
+            "color": "rgb(24, 112, 68)",
+            "minutes": "13"
+          }
+        ]
+      }
+    },
+    {
+      "testAt": "2026-10-19T19:10:58.1685720Z",
+      "label": "PUBLIC REAL TRAFFIC STATUS",
+      "data": {
+        "available": false,
+        "connected": true,
+        "provider": "TomTom",
+        "state": "coverage-unavailable",
+        "coverageCountry": "IL",
+        "clockType": "provider-response",
+        "maxAgeSeconds": 180
+      }
+    }
+  ],
+  "mixedSources": [
+    {
+      "testAt": "2026-10-19T19:10:56.8970198Z",
+      "label": "MIXED GTFS VERSION REGRESSION: simulated old index / actual source vehicles",
+      "data": {
+        "labels": [
+          "23",
+          "9",
+          "57",
+          "3"
+        ],
+        "lineRequests": 35
+      }
+    }
+  ],
+  "observedMovement": {
+    "actualSourceRefresh": true,
+    "actualPositionChanged": false,
+    "actualClockChanged": false,
+    "movingPopupAndClockReplacementVerified": "synthetic"
+  },
+  "syntheticChecks": [
+    "moving popup and focus",
+    "arrival DOM identity",
+    "green amber red source ages and expiry",
+    "station request race",
+    "source failures and retained original vehicle clocks",
+    "traffic empty/stale/429/503",
+    "catalog retry without reload",
+    "320x568 and 844x390 popup geometry"
+  ],
+  "traffic": {
+    "available": false,
+    "connected": true,
+    "provider": "TomTom",
+    "state": "coverage-unavailable",
+    "coverageCountry": "IL",
+    "clockType": "provider-response",
+    "maxAgeSeconds": 180
+  },
+  "trafficActuallyActive": false,
+  "historyTrafficETAActive": false,
+  "liveWorkModified": false,
+  "otherBranchesModified": false,
+  "evidenceArtifact": {
+    "id": 12215131509,
+    "url": "https://github.com/j-h-h/abc/actions/runs/39308528678/artifacts/12215131509",
+    "size": 12835465,
+    "githubDigest": "sha256:679d8c9b502843e78dc97b725f2dcef5c29ef4accb30f8c03ebd4c1171fbfe20",
+    "localDownloadVerified": false,
+    "expiresAt": "2027-01-17T19:08:58Z"
+  },
+  "screenshots": [
+    {
+      "file": "dev-public-phone-real-bus-compact.png",
+      "classification": "real source"
+    },
+    {
+      "file": "dev-public-phone-real-bus.png",
+      "classification": "real source"
+    },
+    {
+      "file": "dev-public-phone-real-arrival-updates.png",
+      "classification": "real source"
+    },
+    {
+      "file": "dev-public-phone-search-history.png",
+      "classification": "real navigation/history"
+    },
+    {
+      "file": "dev-public-synthetic-popup-320x568.png",
+      "classification": "synthetic vehicles"
+    },
+    {
+      "file": "dev-public-synthetic-popup-844x390.png",
+      "classification": "synthetic vehicles"
+    },
+    {
+      "file": "dev-public-synthetic-arrival-colors-phone.png",
+      "classification": "synthetic arrivals"
+    },
+    {
+      "file": "dev-public-phone-coverage-unavailable.png",
+      "classification": "real provider status; traffic not active"
+    }
+  ],
+  "overnightAutomation": {
+    "created": false,
+    "reason": "Account plan allows only five active automations; existing unrelated automations were not modified"
+  }
+}
