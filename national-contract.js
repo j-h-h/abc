@@ -16,6 +16,25 @@
   const arrivals=raw.arrivals.filter(r=>String(r.stopCode)===String(stopCode)&&routeMatches(r)&&r.directionVerified===true&&r.directionEvidence==='exact-line-ref+operator+stop-sequence+destination'&&r.realtime===true&&r.etaKind==='reported-live'&&fresh(raw.sourceResponseAt,now)&&fresh(r.sourceResponseAt,now)&&fresh(r.sourceObservedAt,now)&&Number.isFinite(Date.parse(r.reportedArrivalAt))&&Date.parse(r.reportedArrivalAt)>=now-60000&&Date.parse(r.reportedArrivalAt)<=now+10800000);
   return {...raw,arrivals,vehicles:fresh(raw.sourceResponseAt,now)?vehicles(raw.vehicles.filter(routeMatches),{now,stopCode}):[]};
  }
+
+ // A partial station frame may omit vehicles after a route-provider failure.
+ // Retain only separately validated original observations; never retain absent ETAs.
+ function mergeStation(previous,raw,stopCode,{now=Date.now()}={}){
+  const incoming=station(raw,stopCode,{now});
+  if(raw.partial!==true||!fresh(raw.sourceResponseAt,now)||!previous||String(previous.stopCode)!==String(stopCode)||previous.catalogVersion!==raw.catalogVersion)return {...incoming,retainedVehicleCount:0};
+  let prior;try{prior=station(previous,stopCode,{now});}catch{return {...incoming,retainedVehicleCount:0};}
+  const merged=vehicles([...prior.vehicles,...incoming.vehicles],{now,stopCode}),incomingIds=new Set(incoming.vehicles.map(v=>v.id)),routes=new Map();
+  for(const r of [...prior.routes,...incoming.routes])routes.set(JSON.stringify([String(r.operatorRef),String(r.routeId),String(r.line),r.headsign||null]),r);
+  return {...incoming,routes:[...routes.values()],vehicles:merged,retainedVehicleCount:merged.filter(v=>!incomingIds.has(v.id)).length};
+ }
+ function routeGroups(routes,center=null){
+  const groups=new Map();for(const route of routes||[]){const p=route.properties,key=String(p.agencyId)+':'+String(p.routeId);if(!groups.has(key))groups.set(key,{key,variants:[],distance:Infinity,order:groups.size});groups.get(key).variants.push(route);}
+  const nearby=center&&validCoord(center.lat,center.lon);
+  for(const g of groups.values()){const origins=new Set(),destinations=new Set(),words=[];for(const r of g.variants){const p=r.properties;origins.add(p.origin);destinations.add(p.destination);words.push(p.origin,p.destination,p.headsign,...p.stopSequence.flatMap(s=>[s.name,String(s.code)]));if(nearby)for(const s of p.stopSequence)if(validCoord(s.lat,s.lon))g.distance=Math.min(g.distance,Math.hypot((s.lon-center.lon)*Math.cos(center.lat*Math.PI/180),s.lat-center.lat));}g.origin=origins.size===1?[...origins][0]:'כמה נקודות מוצא';g.destination=destinations.size===1?[...destinations][0]:'כמה יעדים';g.search=fold(words.join(' '));}
+  return [...groups.values()].sort((a,b)=>nearby?a.distance-b.distance||a.order-b.order:a.order-b.order);
+ }
+ function filterRouteGroups(groups,query){const words=fold(query).split(' ').filter(Boolean);return groups.filter(g=>words.every(w=>g.search.includes(w)));}
+
  function area(raw,bbox,{now=Date.now()}={}){if(raw?.schemaVersion!==1||!Array.isArray(raw.vehicles)||!Array.isArray(raw.bbox)||raw.bbox.length!==4||raw.bbox.some((n,i)=>n!==bbox[i]))throw Error('תשובת האזור אינה תואמת למפה');return {...raw,vehicles:vehicles(raw.vehicles,{now,bbox})};}
  // Area responses may be partial. Preserve each valid observation without renewing its clocks.
  // Deduplicate before viewport clipping so a newer report outside the view removes the older in-view position.
@@ -42,5 +61,5 @@
  }return out;}
  function rememberSearch(history,item){return searchHistory([item,...(history||[])]);}
 
- root.SafeBusNationalContract={fresh,vehicles,station,area,mergeArea,fold,stopSearch,routeMeta,lineSearch,arrivalKey,arrivalUpdate,searchHistory,rememberSearch};
+ root.SafeBusNationalContract={fresh,vehicles,station,mergeStation,area,mergeArea,routeGroups,filterRouteGroups,fold,stopSearch,routeMeta,lineSearch,arrivalKey,arrivalUpdate,searchHistory,rememberSearch};
 })(typeof window!=='undefined'?window:globalThis);

@@ -51,5 +51,23 @@ assert.equal(N.searchHistory([{...savedRoute,operatorRef:'../secret'}, {...saved
 assert.equal(N.searchHistory([savedRoute,{...savedRoute,operatorRef:'3'}]).length,2,'History keeps distinct operator routes');
 assert.equal(N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'t',reportedArrivalAt:clock(0)}),N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'t',reportedArrivalAt:clock(60)}),'ETA refresh preserves vehicle/trip row identity');
 assert.notEqual(N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'t'}),N.arrivalKey({...savedRoute,vehicleRef:'v',tripId:'other'}));
+
+const partial={...data,partial:true,arrivals:[data.arrivals[0]],vehicles:[data.vehicles[0]],routes:[data.routes[0]]};
+const combined=N.mergeStation(data,partial,station,{now});
+assert.equal(combined.vehicles.length,2,'Partial station retains missing but fresh original observations');
+assert.equal(combined.retainedVehicleCount,1);
+assert.equal(combined.vehicles[1].sourceObservedAt,data.vehicles[1].sourceObservedAt);
+assert.equal(combined.arrivals.length,1,'An absent supplier ETA is never retained');
+assert.equal(N.mergeStation(data,{...partial,partial:false},station,{now}).vehicles.length,1,'Complete source frames may withdraw a report');
+assert.equal(N.mergeStation({...data,stopCode:'other'},partial,station,{now}).vehicles.length,1,'Another station cannot donate a vehicle');
+assert.equal(N.mergeStation({...data,catalogVersion:'older'},partial,station,{now}).vehicles.length,1,'A superseded catalog cannot donate route metadata');
+assert.equal(N.mergeStation(data,{...partial,sourceResponseAt:'2038-01-01T00:00:00Z'},station,{now}).vehicles.length,0);
+assert.equal(N.mergeStation(data,{...partial,arrivals:[],vehicles:[],sourceResponseAt:new Date(now+181000).toISOString()},station,{now:now+181000}).vehicles.length,0,'Partial frames cannot renew expired original clocks');
+const routeFeature=(operator,id,lat,lon,destination)=>({properties:{agencyId:operator,routeId:id,line:'5',origin:'מוצא',destination,headsign:destination,stopSequence:[{name:'מרכז',code:'72',lat,lon},{name:destination,code:'73',lat:lat+.001,lon:lon+.001}]}});
+const ranked=N.routeGroups([routeFeature('1','10',32.08,34.8,'תל אביב'),routeFeature('2','10',29.56,34.95,'אילת'),routeFeature('2','10',29.57,34.95,'יעד אחר')],{lat:29.55,lon:34.95});
+assert.equal(ranked.length,2,'Nearby sorting retains every national operator/route group');
+assert.equal(ranked[0].key,'2:10');assert.equal(ranked[0].variants.length,2);assert.equal(ranked[0].destination,'כמה יעדים');
+assert.equal(N.routeGroups([routeFeature('1','10',32.08,34.8,'תל אביב'),routeFeature('2','10',29.56,34.95,'אילת')])[0].key,'1:10','Country overview preserves its source order');
+assert.equal(N.filterRouteGroups(ranked,'יעד אחר').length,1);assert.equal(N.filterRouteGroups(ranked,'72').length,2);assert.equal(N.filterRouteGroups(ranked,'לא קיים').length,0);
 console.log('PASS: national identity and clocks, future/archive rejection, all-line station matching, countrywide search, viewport isolation and bounded APIs');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('nod
 const source=fs.readFileSync(require('node:path').join(__dirname,'../national.js'),'utf8');
 const body=source.slice(source.indexOf('async function refreshStation(){'),source.indexOf(' function currentBBox(){'));
 const pending=[],elements={},state={station:{code:'23014'},revision:1,stationRequest:0},context={state,AbortController,Date,encodeURIComponent,
- json:()=>new Promise((resolve,reject)=>pending.push({resolve,reject})),N:{station:(r,code)=>({...r,code}),fresh:()=>true},D:{linesAt:()=>['1']},
+ json:()=>new Promise((resolve,reject)=>pending.push({resolve,reject})),N:{mergeStation:(previous,r,code)=>({...r,code}),fresh:()=>true},D:{linesAt:()=>['1']},
  $:id=>elements[id]||(elements[id]={}),renderArrivals(){},renderBuses(){},renderLineChoices(){},stationController:null};
 vm.createContext(context);vm.runInContext(body+';this.refresh=refreshStation',context);
 (async()=>{

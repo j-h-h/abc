@@ -1,4 +1,4 @@
-/* DEV-9.4.0: one search deck, a clear map and compact context panels. */
+/* DEV-9.4.1: one search deck, a clear map and compact context panels. */
 :root{--ink:#183347;--muted:#627585;--blue:#1765d7;--border:#dce5ec;--shadow:0 3px 18px #17334b16;--deck-bottom:180px;--bottom-panel-height:0px}
 html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#e9eff3;color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color-scheme:light}
 button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{cursor:default;opacity:.5}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #d79514;outline-offset:2px}[hidden]{display:none!important}
@@ -35,3 +35,6 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 }
 @media(max-height:500px) and (min-width:701px){.control-deck{width:350px;gap:4px;padding:6px 8px}.national-brand{min-height:32px}.national-brand strong{font-size:14px}.national-brand button{height:32px}.map-search form{height:40px}.map-layers{position:fixed;top:12px;left:12px;width:auto;padding:4px;background:white;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}.map-layers button{flex:none;width:40px;padding:7px}.map-layers button span{display:none}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Route choices keep the national catalog; filtering is local and preserves input focus. */
+.route-filter{position:sticky;top:-5px;z-index:1;background:white;padding:4px 7px 9px}.route-filter input{width:100%;min-height:44px;border:1px solid var(--border);border-radius:9px;padding:8px 10px;background:#f7f9fc;color:var(--ink);font-size:16px}.route-filter input:focus{border-color:#7aa9e8}.route-filter input::-webkit-search-cancel-button{cursor:pointer}

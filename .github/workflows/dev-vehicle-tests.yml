@@ -23,6 +23,7 @@ jobs:
           node tests/bus_marker.cjs
           node tests/vehicle_traffic.cjs
           node tests/traffic_gateway.cjs
+          node tests/traffic_probe.cjs
 
       - name: Verify existing route and source regressions
         run: node tests/logic_regressions.cjs
@@ -72,6 +73,10 @@ jobs:
         env:
           DEV_BASE_URL: https://eifo-batuach-dev.vercel.app
         run: node tests/dev_national_browser.cjs
+      - name: Probe actual DEV TomTom city images without activating traffic
+        env:
+          DEV_BASE_URL: https://eifo-batuach-dev.vercel.app
+        run: node tests/dev_traffic_probe.cjs
       - name: Save public DEV evidence
         if: always()
         uses: actions/upload-artifact@v4
