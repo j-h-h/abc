@@ -36,6 +36,7 @@ jobs:
           node tests/dataset_refresh.cjs
           node tests/metadata_wait.cjs
           node tests/station_refresh.cjs
+          node tests/search_submit.cjs
       - name: Install browser runner
         run: |
           npm install --no-save --no-audit --no-fund playwright@1.56.1

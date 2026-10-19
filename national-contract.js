@@ -36,7 +36,7 @@
  function arrivalKey(a){return JSON.stringify([String(a.operatorRef||''),String(a.routeId||''),String(a.vehicleRef||''),String(a.tripId||''),a.vehicleRef||a.tripId?'':String(a.reportedArrivalAt||'')]);}
 
  function searchHistory(rows){const out=[],keys=new Set();for(const r of Array.isArray(rows)?rows:[]){if(!r||!['place','stop','query','route'].includes(r.kind)||typeof r.label!=='string'||!r.label.trim()||r.label.length>200)continue;
-  const item={kind:r.kind,label:r.label.trim()};if(r.kind==='place'){if(!validCoord(r.lat,r.lon))continue;item.lat=r.lat;item.lon=r.lon;}if(r.kind==='stop'){if(!/^\d{3,7}$/.test(String(r.code)))continue;item.code=String(r.code);}
+  const item={kind:r.kind,label:r.label.trim()};if(r.kind==='place'){if(!validCoord(r.lat,r.lon))continue;item.lat=r.lat;item.lon=r.lon;}if(r.kind==='stop'){if(!/^\d{1,7}$/.test(String(r.code)))continue;item.code=String(r.code);}
   if(r.kind==='route'){if(!/^\d{1,4}[א-תA-Za-z]?$/.test(String(r.line))||!/^\d{1,12}$/.test(String(r.routeId))||!/^\d{1,12}$/.test(String(r.operatorRef)))continue;item.line=String(r.line);item.routeId=String(r.routeId);item.operatorRef=String(r.operatorRef);}
   const key=r.kind+':'+(r.kind==='stop'?item.code:r.kind==='route'?item.operatorRef+':'+item.routeId:fold(item.label));if(keys.has(key))continue;keys.add(key);out.push(item);if(out.length===8)break;
  }return out;}
