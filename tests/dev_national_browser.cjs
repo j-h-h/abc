@@ -208,7 +208,7 @@ await page.locator('#settingsOpen').click();await page.locator('#systemDetails s
 const retryPage=await browser.newPage({viewport:{width:390,height:844}});let catalogFailed=true;
 await retryPage.route('**/api/dataset?**',route=>{const u=new URL(route.request().url());return catalogFailed&&u.searchParams.get('file')==='catalog.json'?route.fulfill({status:503,contentType:'application/json',body:'{"error":"SYNTHETIC_CATALOG_OUTAGE"}'}):route.continue()});
 await retryPage.goto(base,{waitUntil:'domcontentloaded'});await retryPage.locator('#dataRetry').waitFor({state:'visible',timeout:40000});
-assert.equal(await retryPage.evaluate(()=>SafeBusNational.state.ready),false);catalogFailed=false;await retryPage.locator('#dataRetry').click();
+assert.equal(await retryPage.evaluate(()=>SafeBusNational.state.ready),false);assert.equal(await retryPage.locator('#searchSubmit').isDisabled(),true);await retryPage.evaluate(()=>window.loadingGuardToken='same-document');await retryPage.locator('#placeSearch').fill('72');await retryPage.locator('#placeSearch').press('Enter');await retryPage.waitForTimeout(200);assert.equal(await retryPage.evaluate(()=>window.loadingGuardToken),'same-document','Enter during catalog loading cannot reload the document');catalogFailed=false;await retryPage.locator('#dataRetry').click();
 await retryPage.waitForFunction(()=>SafeBusNational.state.ready,null,{timeout:40000});assert.equal(await retryPage.locator('#dataRetry').isVisible(),false);assert.equal(await retryPage.locator('.leaflet-map-pane').count(),1,'Recovery preserves one map instance');
 console.log('SYNTHETIC CATALOG OUTAGE: retry recovered actual official catalog without reload');await retryPage.close();
 assert.deepEqual(errors,[]);
